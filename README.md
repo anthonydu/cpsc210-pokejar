@@ -24,5 +24,7 @@ The targeted user group of this app are Pokémon trainers.
 - As a user, I want to be able to remove Pokémon from my roster.
 - As a user, I want to be able to change the stat of each Pokémon.
 - As a user, I want to be able to view the stats of each Pokémon.
+- As a user, I want to be able to form teams with my Pokémon.
+- As a user, I want to be able to create multiple teams. 
 - As a user, I want to be able to view the combined stats of my team.
-- As a user, I want to be able to create multiple teams and compare them against each other. 
+
