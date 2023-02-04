@@ -76,4 +76,28 @@ public enum Type {
             default:        throw new IllegalCallerException();
         }
     }
+
+    public static Type fromString(String str) {
+        switch (str) {
+            case "normal": return NORMAL;
+            case "fire": return FIRE;
+            case "water": return WATER;
+            case "grass": return GRASS;
+            case "electric": return ELECTRIC;
+            case "ice": return ICE;
+            case "fighting": return FIGHTING;
+            case "poison": return POISON;
+            case "ground": return GROUND;
+            case "flying": return FLYING;
+            case "psychic": return PSYCHIC;
+            case "bug": return BUG;
+            case "rock": return ROCK;
+            case "ghost": return GHOST;
+            case "dragon": return DRAGON;
+            case "dark": return DARK;
+            case "steel": return STEEL;
+            case "fairy": return FAIRY;
+            default: throw new IllegalArgumentException();
+        }
+    }
 }

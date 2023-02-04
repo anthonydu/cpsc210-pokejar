@@ -5,11 +5,11 @@ public class Move {
     private Type type;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Type getType() {
-        return type;
+        return this.type;
     }
 
     public void setName(String name) {

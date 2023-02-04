@@ -28,4 +28,14 @@ public class Box {
         // index is used because Pokémon's attributes aren't unique
         this.pokemons.remove(index);
     }
+
+    // REQUIRES: this.pokemons.size() < 100
+    @Override
+    public String toString() {
+        String result = "";
+        for (int i = 0; i < this.pokemons.size(); i++) {
+            result += i + (i < 10 ? "  " : " ") + this.pokemons.get(i).toString() + "\n";
+        }
+        return result.trim();
+    }
 }
