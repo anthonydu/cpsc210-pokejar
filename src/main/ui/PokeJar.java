@@ -9,7 +9,67 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class TUI {
+public class PokeJar {
+
+    private Pokemon tinkaton = new Pokemon(
+            "Tinkaton",
+            Arrays.asList(Type.FAIRY, Type.STEEL),
+            Arrays.asList(
+                    new Move("Gigaton Hammer", Type.STEEL, false),
+                    new Move("Play Rough", Type.FAIRY, false),
+                    new Move("Swords Dance", Type.NORMAL, true),
+                    new Move("Encore", Type.NORMAL, true)
+            )
+    );
+    private Pokemon rotom = new Pokemon(
+            "Rotom",
+            Arrays.asList(Type.ELECTRIC, Type.WATER),
+            Arrays.asList(
+                    new Move("Hydro Pump", Type.WATER, false),
+                    new Move("Thunderbolt", Type.ELECTRIC, false),
+                    new Move("Hex", Type.GHOST, false),
+                    new Move("Nasty Plot", Type.DARK, true)
+
+            )
+    );
+    private Pokemon cetitan = new Pokemon(
+            "Cetitan",
+            Arrays.asList(Type.ICE),
+            Arrays.asList(
+                    new Move("Avalanche", Type.ICE, false),
+                    new Move("Ice Shard", Type.ICE, false),
+                    new Move("Earthquake", Type.GROUND, false),
+                    new Move("Heavy Slam", Type.STEEL, false)
+
+            )
+    );
+    private Box box = new Box(new ArrayList<>(Arrays.asList(tinkaton, rotom, cetitan)));
+    private Scanner console = new Scanner(System.in);
+
+    public PokeJar() {
+        this.run();
+    }
+
+    public void run() {
+        welcomeMessage();
+
+        while (true) {
+            System.out.print("PokéJar > ");
+            switch (this.console.nextLine()) {
+                case "l":
+                    System.out.println(box);
+                    break;
+                case "n":
+                    box.addPokemon(newPokemon(this.console));
+                    break;
+                case "a":
+                    System.out.println(getPokemon(this.console, box).analyzePokemon());
+                    break;
+                case "q": System.exit(0);
+            }
+        }
+    }
+
     private static void welcomeMessage() {
         System.out.println();
         System.out.println("Welcome to PokéJar!");
@@ -68,53 +128,6 @@ public class TUI {
                 return box.getPokemon(index);
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Invalid index, please try again!");
-            }
-        }
-    }
-
-    static Pokemon tinkaton = new Pokemon(
-            "Tinkaton",
-            Arrays.asList(Type.FAIRY, Type.STEEL),
-            Arrays.asList(
-                    new Move("Gigaton Hammer", Type.STEEL, false),
-                    new Move("Play Rough", Type.FAIRY, false),
-                    new Move("Swords Dance", Type.NORMAL, true),
-                    new Move("Encore", Type.NORMAL, true)
-            )
-    );
-
-    static Pokemon rotom = new Pokemon(
-            "Rotom",
-            Arrays.asList(Type.ELECTRIC, Type.WATER),
-            Arrays.asList(
-                    new Move("Hydro Pump", Type.WATER, false),
-                    new Move("Thunderbolt", Type.ELECTRIC, false),
-                    new Move("Hex", Type.GHOST, false),
-                    new Move("Nasty Plot", Type.DARK, true)
-
-            )
-    );
-
-    public static void main(String[] args) {
-        welcomeMessage();
-
-        Scanner console = new Scanner(System.in);
-
-        Box box = new Box(new ArrayList<>(Arrays.asList(tinkaton, rotom)));
-
-        while (true) {
-            System.out.print("PokéJar > ");
-            switch (console.nextLine()) {
-                case "l":
-                    System.out.println(box);
-                    break;
-                case "n":
-                    box.addPokemon(newPokemon(console));
-                    break;
-                case "a":
-                    System.out.println(getPokemon(console, box).analyzePokemon());
-                    break;
-                case "q": System.exit(0);
             }
         }
     }

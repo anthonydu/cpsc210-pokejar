@@ -1,7 +1,7 @@
 package ui;
 
-public class GUI {
+public class Main {
     public static void main(String[] args) {
-
+        new PokeJar();
     }
 }

@@ -160,6 +160,9 @@ public enum Type {
 
     public static Map<Type, Double> defensiveMultipliers(List<Type> types) {
         Map<Type, Double> multipliers = new HashMap<>();
+        if (types.size() == 1) {
+            return types.get(0).defensiveMultipliers();
+        }
         for (Type t : Type.values()) {
             multipliers.put(t, types.get(0).defensiveMultipliers().get(t) * types.get(1).defensiveMultipliers().get(t));
         }
@@ -184,6 +187,9 @@ public enum Type {
 
     public static Map<Type, Double> offensiveMultipliers(List<Type> types) {
         Map<Type, Double> multipliers = new HashMap<>();
+        if (types.size() == 1) {
+            return types.get(0).offensiveMultipliers();
+        }
         for (Type t : Type.values()) {
             multipliers.put(t, types.get(0).offensiveMultipliers().get(t) * types.get(1).offensiveMultipliers().get(t));
         }

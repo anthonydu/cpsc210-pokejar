@@ -58,7 +58,7 @@ public class Pokemon {
                 + this.movesToString() + "\n"
                 + "Your moveset is very effective against:\n"
                 + this.analyzeMoves().get("strongAgainst") + "\n"
-                + "Your moveset have normal effectiveness against:\n"
+                + "Your moveset has normal effectiveness against:\n"
                 + this.analyzeMoves().get("normalAgainst") + "\n"
                 + "Your moveset is not very effective against:\n"
                 + this.analyzeMoves().get("weakAgainst") + "\n"
