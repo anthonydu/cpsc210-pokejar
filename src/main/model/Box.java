@@ -11,6 +11,14 @@ public class Box {
         this.pokemons = new ArrayList<>();
     }
 
+    public Box(List<Pokemon> box) {
+        this.pokemons = box;
+    }
+
+    public Pokemon getPokemon(int index) throws ArrayIndexOutOfBoundsException {
+        return this.pokemons.get(index);
+    }
+
     public List<Pokemon> getPokemons() {
         return this.pokemons;
     }
@@ -32,9 +40,12 @@ public class Box {
     // REQUIRES: this.pokemons.size() < 100
     @Override
     public String toString() {
+        if (this.pokemons.size() == 0) {
+            return "Box empty";
+        }
         String result = "";
         for (int i = 0; i < this.pokemons.size(); i++) {
-            result += i + (i < 10 ? "  " : " ") + this.pokemons.get(i).toString() + "\n";
+            result += i + (i < 10 ? "  " : " ") + this.pokemons.get(i) + "\n";
         }
         return result.trim();
     }

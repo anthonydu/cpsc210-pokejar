@@ -14,9 +14,9 @@ class TypeTest {
     }
 
     private boolean hasConflict(Type type) {
-        for (Type s : type.getStrengths()) {
-            for (Type w : type.getWeaknesses()) {
-                for (Type i : type.getImmunities()) {
+        for (Type s : type.strengths()) {
+            for (Type w : type.weaknesses()) {
+                for (Type i : type.immunities()) {
                     if (s == w || s == i || w == i) {
                         return true;
                     }
