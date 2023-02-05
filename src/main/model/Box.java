@@ -32,17 +32,14 @@ public class Box {
     // REQUIRES: 0 <= index < pokemons.size()
     // MODIFIES: this
     // EFFECTS:  Remove a Pokémon from the box
-    public void removePokemon(int index) {
+    public void removePokemon(Pokemon pokemon) {
         // index is used because Pokémon's attributes aren't unique
-        this.pokemons.remove(index);
+        this.pokemons.remove(pokemon);
     }
 
     // REQUIRES: this.pokemons.size() < 100
     @Override
     public String toString() {
-        if (this.pokemons.size() == 0) {
-            return "Box empty";
-        }
         String result = "";
         for (int i = 0; i < this.pokemons.size(); i++) {
             result += i + (i < 10 ? "  " : " ") + this.pokemons.get(i) + "\n";
