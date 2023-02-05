@@ -50,7 +50,7 @@ public class Pokemon {
         return this.name + " ".repeat(16 - this.name.length()) + typesStr;
     }
 
-    public String analyzePokemon() {
+    public String analyze() {
         return this + "\n"
                 + "Multipliers when attacked by moves of type:\n"
                 + Type.defensiveMultipliers(this.types) + "\n"
