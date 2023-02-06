@@ -56,6 +56,7 @@ public class PokeJar {
         this.startTUI();
     }
 
+    // @SuppressWarnings("methodlength")s
     public void startTUI() {
         welcomeMessage();
 
@@ -87,6 +88,7 @@ public class PokeJar {
                     System.out.println(getTeam().analyze());
                     break;
                 case "q": System.exit(0);
+                default: showCommands();
             }
         }
     }
@@ -94,9 +96,13 @@ public class PokeJar {
     private static void welcomeMessage() {
         System.out.println();
         System.out.println("Welcome to PokéJar!");
+        showCommands();
+        System.out.println();
+    }
+
+    private static void showCommands() {
         System.out.println("[b]List Box [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
         System.out.println("[t]List Teams [nt]New Team [rt]Remove Team [at]Analyse Team [q]Quit");
-        System.out.println();
     }
 
     private Pokemon newPokemon() {
@@ -156,7 +162,7 @@ public class PokeJar {
             try {
                 int index = Integer.parseInt(console.nextLine());
                 return listOfThings.get(index);
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
                 System.out.println("Invalid index, please try again!");
             }
         }
