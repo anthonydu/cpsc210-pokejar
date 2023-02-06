@@ -138,7 +138,7 @@ public enum Type {
             case "dark": return DARK;
             case "steel": return STEEL;
             case "fairy": return FAIRY;
-            default: throw new IllegalArgumentException();
+            default: throw new IllegalArgumentException("Invalid type!");
         }
     }
 
@@ -203,7 +203,15 @@ public enum Type {
         }
         ArrayList<Type> types = new ArrayList<>();
         for (String s : strs) {
-            types.add(Type.fromString(s));
+            if (types.contains(Type.fromString(s))) {
+                throw new IllegalArgumentException("Duplicate type found!");
+            } else {
+                try {
+                    types.add(Type.fromString(s));
+                } catch (IllegalArgumentException ex) {
+                    ex.getMessage();
+                }
+            }
         }
         return types;
     }

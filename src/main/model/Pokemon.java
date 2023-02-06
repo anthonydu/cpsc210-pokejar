@@ -7,9 +7,6 @@ public class Pokemon {
     private List<Type> types;
     private List<Move> moves;
 
-    // REQUIRES: name.length() <= 16
-    //           types.length <= 2 with no duplicates
-    //           moves.length <= 4 with no duplicates
     // EFFECTS: Constructs a Pokémon with name, types, and moves
     public Pokemon(String name, List<Type> types, List<Move> moves) {
         this.name = name;
@@ -43,11 +40,16 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        String typesStr = "";
-        for (Type type : this.types) {
-            typesStr += type.name() + " ".repeat(16 - type.name().length());
+        String str = "";
+        if (this.name.length() >= 16) {
+            str += this.name.substring(0, 14) + "… ";
+        } else {
+            str += this.name + " ".repeat(16 - this.name.length());
         }
-        return this.name + " ".repeat(16 - this.name.length()) + typesStr;
+        for (Type type : this.types) {
+            str += type.name() + " ".repeat(16 - type.name().length());
+        }
+        return str;
     }
 
     public String analyze() {

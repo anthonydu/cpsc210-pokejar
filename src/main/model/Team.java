@@ -16,13 +16,20 @@ public class Team extends Box {
     }
 
     @Override
-    public String toString() {
-        String pokemonsStr = "";
-        for (Pokemon p : this.get()) {
-            pokemonsStr += p.getName() + " ".repeat(16 - p.getName().length());
+    public void add(Pokemon pokemon) throws IllegalArgumentException {
+        if (this.get().contains(pokemon)) {
+            throw new IllegalArgumentException("Pokémon already in list!");
         }
-        return this.name + " ".repeat(16 - name.length())
-                + pokemonsStr;
+        super.add(pokemon);
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (Pokemon p : this.get()) {
+            str += p.getName() + " ".repeat(16 - p.getName().length());
+        }
+        return this.name + " ".repeat(16 - name.length()) + str;
     }
 
     public String analyze() {

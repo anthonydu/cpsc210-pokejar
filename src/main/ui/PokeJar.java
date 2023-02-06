@@ -56,14 +56,14 @@ public class PokeJar {
         this.startTUI();
     }
 
-    // @SuppressWarnings("methodlength")s
+    // @SuppressWarnings("methodlength")
     public void startTUI() {
         welcomeMessage();
 
         while (true) {
             System.out.print("PokéJar > ");
             switch (console.nextLine()) {
-                case "b":
+                case "p":
                     System.out.println(box);
                     break;
                 case "np":
@@ -101,8 +101,8 @@ public class PokeJar {
     }
 
     private static void showCommands() {
-        System.out.println("[b]List Box [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
-        System.out.println("[t]List Teams [nt]New Team [rt]Remove Team [at]Analyse Team [q]Quit");
+        System.out.println("[p]List Box   [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
+        System.out.println("[t]List Teams [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
     }
 
     private Pokemon newPokemon() {
@@ -169,17 +169,22 @@ public class PokeJar {
     }
 
     private Team newTeam() {
-        Team team;
         System.out.print("What is the name for this team? ");
-        String name = console.nextLine();
-        ArrayList<Pokemon> members = new ArrayList<>();
+        Team team = new Team(console.nextLine());
         for (int i = 1; i <= 6; i++) {
-            members.add(getPokemon());
+            while (true) {
+                try {
+                    team.add(getPokemon());
+                    break;
+                } catch (IllegalArgumentException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
             System.out.print("Would you like to add another Pokémon [y/n]? ");
             if (console.nextLine().equals("n")) {
                 break;
             }
         }
-        return new Team(name, members);
+        return team;
     }
 }

@@ -37,7 +37,13 @@ public class Move {
 
     @Override
     public String toString() {
-        return this.name + " ".repeat(16 - this.name.length())
+        String str = "";
+        if (this.name.length() >= 16) {
+            str += this.name.substring(0, 14) + "… ";
+        } else {
+            str += this.name + " ".repeat(16 - this.name.length());
+        }
+        return str
                 + this.type.name() + " ".repeat(16 - this.type.name().length())
                 + (this.isStatus ? "Status" : "Attacking");
     }

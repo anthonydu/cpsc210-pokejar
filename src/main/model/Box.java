@@ -36,7 +36,6 @@ public class Box {
         this.pokemons.remove(pokemon);
     }
 
-    // REQUIRES: this.pokemons.size() < 100
     @Override
     public String toString() {
         String result = "";
