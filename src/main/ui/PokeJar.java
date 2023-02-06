@@ -56,7 +56,7 @@ public class PokeJar {
         this.startTUI();
     }
 
-    // @SuppressWarnings("methodlength")
+    @SuppressWarnings("methodlength")
     public void startTUI() {
         welcomeMessage();
 
@@ -179,6 +179,10 @@ public class PokeJar {
                 } catch (IllegalArgumentException ex) {
                     System.out.println(ex.getMessage());
                 }
+            }
+            if (team.get().size() == this.box.get().size()) {
+                System.out.println("You have no more Pokémon in your box to add!");
+                break;
             }
             System.out.print("Would you like to add another Pokémon [y/n]? ");
             if (console.nextLine().equals("n")) {
