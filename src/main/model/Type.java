@@ -2,10 +2,23 @@ package model;
 
 import java.util.*;
 
+/**
+ * Contains all Pokémon Types,
+ * methods that give their strengths, weaknesses, and immunities,
+ * and static methods for working with Strings.
+ *
+ * @author Anthony Du
+ */
 public enum Type {
     NORMAL, FIRE, WATER, GRASS, ELECTRIC, ICE, FIGHTING, POISON, GROUND,
     FLYING, PSYCHIC, BUG, ROCK, GHOST, DRAGON, DARK, STEEL, FAIRY;
 
+    /**
+     * Returns a list of Types that this Type receives 0.5x damage from
+     *
+     * @return a list of Types that this Type receives 0.5x damage from
+     * @throws IllegalCallerException if this Type is not handled by this method
+     */
     public List<Type> strengths() throws IllegalCallerException {
         switch (this) {
             case NORMAL:    return List.of();
@@ -30,6 +43,12 @@ public enum Type {
         }
     }
 
+    /**
+     * Returns a list of Types that this Type receives 2x damage from
+     *
+     * @return a list of Types that this Type receives 2x damage from
+     * @throws IllegalCallerException if this Type is not handled by this method
+     */
     public List<Type> weaknesses() throws IllegalCallerException {
         switch (this) {
             case NORMAL:    return List.of(FIGHTING);
@@ -54,6 +73,12 @@ public enum Type {
         }
     }
 
+    /**
+     * Returns a list of Types that this Type receives 0x damage from
+     *
+     * @return a list of Types that this Type receives 0x damage from
+     * @throws IllegalCallerException if this Type is not handled by this method
+     */
     public List<Type> immunities() throws IllegalCallerException {
         switch (this) {
             case NORMAL:    return List.of(GHOST);
@@ -78,6 +103,11 @@ public enum Type {
         }
     }
 
+    /**
+     * Returns a list of Types that receives 1x damage from this Type
+     *
+     * @return a list of Types that receives 1x damage from this Type
+     */
     public List<Type> normalAgainst() {
         List<Type> types = new ArrayList<>(Arrays.asList(Type.values()));
         for (Type t : Type.values()) {
@@ -88,6 +118,11 @@ public enum Type {
         return types;
     }
 
+    /**
+     * Returns a list of Types that receives 2x damage from this Type
+     *
+     * @return a list of Types that receives 2x damage from this Type
+     */
     public List<Type> strongAgainst() {
         List<Type> types = new ArrayList<>();
         for (Type t : Type.values()) {
@@ -98,6 +133,11 @@ public enum Type {
         return types;
     }
 
+    /**
+     * Returns a list of Types that receives 0.5x damage from this Type
+     *
+     * @return a list of Types that receives 0.5x damage from this Type
+     */
     public List<Type> weakAgainst() {
         List<Type> types = new ArrayList<>();
         for (Type t : Type.values()) {
@@ -108,6 +148,11 @@ public enum Type {
         return types;
     }
 
+    /**
+     * Returns a list of Types that receives 0x damage from this Type
+     *
+     * @return a list of Types that receives 0x damage from this Type
+     */
     public List<Type> noEffectAgainst() {
         List<Type> types = new ArrayList<>();
         for (Type t : Type.values()) {
@@ -118,7 +163,79 @@ public enum Type {
         return types;
     }
 
-    private static Type fromString(String str) throws IllegalArgumentException {
+    /**
+     * Returns a Map of multipliers when this Type is attacked by each Type
+     *
+     * @return a Map of multipliers when this Type is attacked by each Type
+     */
+    public Map<Type, Double> defensiveMultipliers() {
+        Map<Type, Double> multipliers = new HashMap<>();
+        for (Type t : Type.values()) {
+            if (this.strengths().contains(t)) {
+                multipliers.put(t, 0.5);
+            } else if (this.weaknesses().contains(t)) {
+                multipliers.put(t, 2.0);
+            } else if (this.immunities().contains(t)) {
+                multipliers.put(t, 0.0);
+            } else {
+                multipliers.put(t, 1.0);
+            }
+        }
+        return multipliers;
+    }
+
+    /**
+     * Returns a Map of combined multipliers when a set of arbitrary number of Types are attacked by each Type
+     *
+     * @param types a list of Types of arbitrary size
+     * @return a Map of combined multipliers when a set of arbitrary number of Types are attacked by each Type
+     */
+    public static Map<Type, Double> defensiveMultipliers(List<Type> types) {
+        Map<Type, Double> multipliers = new HashMap<>();
+        if (types.size() == 1) {
+            return types.get(0).defensiveMultipliers();
+        }
+        for (Type t : Type.values()) {
+            Double multiplier = 1.0;
+            for (int i = 0; i < types.size(); i++) {
+                multiplier *= types.get(i).defensiveMultipliers().get(t);
+            }
+            multipliers.put(t, multiplier);
+        }
+        return multipliers;
+    }
+
+    /**
+     * Returns a Map of multipliers when this Type is attacking each Type
+     *
+     * @return a Map of multipliers when this Type is attacking each Type
+     */
+    public Map<Type, Double> offensiveMultipliers() {
+        Map<Type, Double> multipliers = new HashMap<>();
+        for (Type t : Type.values()) {
+            if (this.strongAgainst().contains(t)) {
+                multipliers.put(t, 2.0);
+            } else if (this.weakAgainst().contains(t)) {
+                multipliers.put(t, 0.5);
+            } else if (this.noEffectAgainst().contains(t)) {
+                multipliers.put(t, 0.0);
+            } else {
+                multipliers.put(t, 1.0);
+            }
+        }
+        return multipliers;
+    }
+
+    /**
+     * Parses a Type from a String
+     *
+     * REQUIRES: str is the name of a Type
+     *
+     * @param str a String that has the name of a Type
+     * @return a Type parsed from a String
+     * @throws IllegalArgumentException if the String cannot be parsed to Type
+     */
+    public static Type fromString(String str) throws IllegalArgumentException {
         switch (str) {
             case "normal": return NORMAL;
             case "fire": return FIRE;
@@ -142,86 +259,27 @@ public enum Type {
         }
     }
 
-    public Map<Type, Double> defensiveMultipliers() {
-        Map<Type, Double> multipliers = new HashMap<>();
-        for (Type t : Type.values()) {
-            if (this.strengths().contains(t)) {
-                multipliers.put(t, 0.5);
-            } else if (this.weaknesses().contains(t)) {
-                multipliers.put(t, 2.0);
-            } else if (this.immunities().contains(t)) {
-                multipliers.put(t, 0.0);
-            } else {
-                multipliers.put(t, 1.0);
-            }
-        }
-        return multipliers;
-    }
-
-    public static Map<Type, Double> defensiveMultipliers(List<Type> types) {
-        Map<Type, Double> multipliers = new HashMap<>();
-        if (types.size() == 1) {
-            return types.get(0).defensiveMultipliers();
-        }
-        for (Type t : Type.values()) {
-            multipliers.put(t, types.get(0).defensiveMultipliers().get(t) * types.get(1).defensiveMultipliers().get(t));
-        }
-        return multipliers;
-    }
-
-    public Map<Type, Double> offensiveMultipliers() {
-        Map<Type, Double> multipliers = new HashMap<>();
-        for (Type t : Type.values()) {
-            if (this.strongAgainst().contains(t)) {
-                multipliers.put(t, 2.0);
-            } else if (this.weakAgainst().contains(t)) {
-                multipliers.put(t, 0.5);
-            } else if (this.noEffectAgainst().contains(t)) {
-                multipliers.put(t, 0.0);
-            } else {
-                multipliers.put(t, 1.0);
-            }
-        }
-        return multipliers;
-    }
-
-    public static Map<Type, Double> offensiveMultipliers(List<Type> types) {
-        Map<Type, Double> multipliers = new HashMap<>();
-        if (types.size() == 1) {
-            return types.get(0).offensiveMultipliers();
-        }
-        for (Type t : Type.values()) {
-            multipliers.put(t, types.get(0).offensiveMultipliers().get(t) * types.get(1).offensiveMultipliers().get(t));
-        }
-        return multipliers;
-    }
-
+    /**
+     * Return a list of all Types parsed from a space separated String
+     *
+     * REQUIRES: str is space separated
+     *        && no duplicate types found in str
+     *        && all space separated segments are names of Types
+     *
+     * @param str a space separated String that contains the name of Types
+     * @return a list of all Types parsed from a space separated String
+     */
     public static ArrayList<Type> stringToTypes(String str) throws IllegalArgumentException {
         String[] strs = str.toLowerCase().split(" ");
-        if (strs.length == 0 || strs.length > 2) {
-            throw new IllegalArgumentException("Zero or more than two types found!");
-        }
         ArrayList<Type> types = new ArrayList<>();
         for (String s : strs) {
             if (types.contains(Type.fromString(s))) {
                 throw new IllegalArgumentException("Duplicate type found!");
             } else {
-                try {
-                    types.add(Type.fromString(s));
-                } catch (IllegalArgumentException ex) {
-                    ex.getMessage();
-                }
+                types.add(Type.fromString(s));
             }
+
         }
         return types;
-    }
-
-    public static Type stringToType(String str) throws IllegalArgumentException {
-        String[] strs = str.toLowerCase().split(" ");
-        if (strs.length != 1) {
-            throw new IllegalArgumentException("Zero or more than one type found!");
-        } else {
-            return stringToTypes(str).get(0);
-        }
     }
 }

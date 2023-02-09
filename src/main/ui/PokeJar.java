@@ -1,9 +1,13 @@
 package ui;
 
 import model.*;
-
 import java.util.*;
 
+/**
+ * The PokéJar Application.
+ *
+ * @author Anthony Du
+ */
 public class PokeJar {
 
     private Pokemon tinkaton = new Pokemon(
@@ -113,6 +117,10 @@ public class PokeJar {
             System.out.print("What are the types of your Pokémon? ");
             try {
                 types = Type.stringToTypes(console.nextLine());
+                if (types.size() == 0 || types.size() > 2) {
+                    System.out.println("Zero or more than two types found!");
+                    continue;
+                }
                 break;
             } catch (IllegalArgumentException ex) {
                 System.out.println(ex.getMessage());
@@ -131,7 +139,7 @@ public class PokeJar {
             while (true) {
                 System.out.print("What is the type for Move " + i + "? ");
                 try {
-                    type = Type.stringToType(console.nextLine());
+                    type = Type.fromString(console.nextLine());
                     break;
                 } catch (IllegalArgumentException ex) {
                     System.out.println(ex.getMessage());
