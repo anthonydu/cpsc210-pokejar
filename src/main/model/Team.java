@@ -1,5 +1,7 @@
 package model;
 
+import util.PokemonList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  *
  * @author Anthony Du
  */
-public class Team extends Box {
+public class Team extends PokemonList {
     /**
      * The name of this Team
      */
@@ -35,6 +37,24 @@ public class Team extends Box {
     }
 
     /**
+     * Returns the name of this Team
+     *
+     * @return the name of this Team
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name of this Team
+     *
+     * @param name the name to set to
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * Returns a String that represents this Team
      *
      * @return a String that represents this Team
@@ -50,7 +70,7 @@ public class Team extends Box {
         for (Pokemon p : this.get()) {
             str += p.getName() + " ".repeat(16 - p.getName().length());
         }
-        return str;
+        return str.trim();
     }
 
     /**

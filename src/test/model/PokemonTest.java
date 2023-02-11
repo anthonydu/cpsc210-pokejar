@@ -2,7 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
@@ -34,15 +34,15 @@ public class PokemonTest {
     @Test
     public void testToString() {
         assertEquals(
-                "myPokemon DRAGON FIRE",
-                pokemon.toString().replaceAll("\\s+"," ")
+                "myPokemon       DRAGON          FIRE",
+                pokemon.toString()
         );
         pokemon.setName("myAmazingPokemon");
         pokemon.setTypes(List.of(Type.ROCK));
         pokemon.setMoves(List.of(move));
         assertEquals(
                 "myAmazingPokem… ROCK",
-                pokemon.toString().replaceAll("\\s+"," ")
+                pokemon.toString()
         );
     }
 }

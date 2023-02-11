@@ -111,7 +111,7 @@ public enum Type {
     public List<Type> normalAgainst() {
         List<Type> types = new ArrayList<>(List.of(Type.values()));
         for (Type t : Type.values()) {
-            if (t.immunities().contains(this)) {
+            if (t.immunities().contains(this) | t.weaknesses().contains(this) | t.strengths().contains(this)) {
                 types.remove(t);
             }
         }
@@ -169,7 +169,7 @@ public enum Type {
      * @return a Map of multipliers when this Type is attacked by each Type
      */
     public Map<Type, Double> defensiveMultipliers() {
-        Map<Type, Double> multipliers = new HashMap<>();
+        Map<Type, Double> multipliers = new LinkedHashMap<>();
         for (Type t : Type.values()) {
             if (this.strengths().contains(t)) {
                 multipliers.put(t, 0.5);
@@ -191,7 +191,7 @@ public enum Type {
      * @return a Map of combined multipliers when a set of arbitrary number of Types are attacked by each Type
      */
     public static Map<Type, Double> defensiveMultipliers(List<Type> types) {
-        Map<Type, Double> multipliers = new HashMap<>();
+        Map<Type, Double> multipliers = new LinkedHashMap<>();
         if (types.size() == 1) {
             return types.get(0).defensiveMultipliers();
         }
@@ -211,7 +211,7 @@ public enum Type {
      * @return a Map of multipliers when this Type attacks each Type
      */
     public Map<Type, Double> offensiveMultipliers() {
-        Map<Type, Double> multipliers = new HashMap<>();
+        Map<Type, Double> multipliers = new LinkedHashMap<>();
         for (Type t : Type.values()) {
             if (this.strongAgainst().contains(t)) {
                 multipliers.put(t, 2.0);
@@ -233,7 +233,7 @@ public enum Type {
      * @return a Map of combined multipliers when a set of arbitrary number of Types attacks each Type
      */
     public static Map<Type, Double> offensiveMultipliers(List<Type> types) {
-        Map<Type, Double> multipliers = new HashMap<>();
+        Map<Type, Double> multipliers = new LinkedHashMap<>();
         if (types.size() == 1) {
             return types.get(0).offensiveMultipliers();
         }
@@ -286,9 +286,9 @@ public enum Type {
      * @param str a space separated String that contains the name of Types
      * @return a list of all Types parsed from a space separated String
      */
-    public static ArrayList<Type> stringToTypes(String str) throws IllegalArgumentException {
+    public static List<Type> stringToTypes(String str) throws IllegalArgumentException {
         String[] strs = str.toLowerCase().split(" ");
-        ArrayList<Type> types = new ArrayList<>();
+        List<Type> types = new ArrayList<>();
         for (String s : strs) {
             if (types.contains(Type.fromString(s))) {
                 throw new IllegalArgumentException("Duplicate type found!");
@@ -298,5 +298,27 @@ public enum Type {
 
         }
         return types;
+    }
+
+    /**
+     * Generates a Map that's an analysis of a list of types
+     *
+     * @return a Map that's an analysis of a list of types
+     */
+    public static Map<Type, Double> analyzeOffense(List<Type> types) {
+        Map<Type, List<Double>> allMultipliers = new LinkedHashMap<>();
+        for (Type t : Type.values()) {
+            allMultipliers.put(t, new ArrayList<>());
+        }
+        for (Type offenseType : types) {
+            for (Type defenseType : Type.values()) {
+                allMultipliers.get(defenseType).add(offenseType.offensiveMultipliers().get(defenseType));
+            }
+        }
+        Map<Type, Double> maxMultipliers = new LinkedHashMap<>();
+        for (Type t : Type.values()) {
+            maxMultipliers.put(t, Collections.max(allMultipliers.get(t)));
+        }
+        return maxMultipliers;
     }
 }

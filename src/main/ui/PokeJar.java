@@ -105,14 +105,14 @@ public class PokeJar {
     }
 
     private static void showCommands() {
-        System.out.println("[l]List Box [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
+        System.out.println("[l]List Box     [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
         System.out.println("[t]List Teams   [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
     }
 
     private Pokemon newPokemon() {
         System.out.print("What is the name of your Pokémon? ");
         String name = console.nextLine();
-        ArrayList<Type> types;
+        List<Type> types;
         while (true) {
             System.out.print("What are the types of your Pokémon? ");
             try {
@@ -207,21 +207,17 @@ public class PokeJar {
      */
     public static String analyze(Pokemon pokemon) {
         String movesStr = "";
+        List<Type> moveTypes = new ArrayList<>();
         for (Move m : pokemon.getMoves()) {
             movesStr += m + "\n";
+            moveTypes.add(m.getType());
         }
         return pokemon + "\n"
                 + "Multipliers when attacked by moves of type:\n"
                 + Type.defensiveMultipliers(pokemon.getTypes()) + "\n"
                 + "Moves:\n"
                 + movesStr.trim() + "\n"
-                + "Your moveset is very effective against:\n"
-                + Move.analyze(pokemon.getMoves()).get("strongAgainst") + "\n"
-                + "Your moveset has normal effectiveness against:\n"
-                + Move.analyze(pokemon.getMoves()).get("normalAgainst") + "\n"
-                + "Your moveset is not very effective against:\n"
-                + Move.analyze(pokemon.getMoves()).get("weakAgainst") + "\n"
-                + "Your moveset has no effect against:\n"
-                + Move.analyze(pokemon.getMoves()).get("noEffectAgainst");
+                + "Multipliers when attacking with your moveset:\n"
+                + Type.analyzeOffense(moveTypes);
     }
 }

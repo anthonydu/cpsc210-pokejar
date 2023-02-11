@@ -104,47 +104,4 @@ public class Move {
                 + this.type.name() + " ".repeat(16 - this.type.name().length())
                 + (this.isStatus ? "Status" : "Attacking");
     }
-
-    /**
-     * Returns an offensive multipliers Map as an analysis of this Move
-     *
-     * @return an offensive multipliers Map as an analysis of this Move
-     */
-    public Map<Type, Double> analyze() {
-        return this.type.offensiveMultipliers();
-    }
-
-    /**
-     * Generates a Map that's an analysis of a moveset
-     *
-     * @return a Map that's an analysis of a moveset
-     */
-    public static HashMap<String, Set<Type>> analyze(List<Move> moves) {
-        Set<Type> normalAgainst = new HashSet<>();
-        Set<Type> strongAgainst = new HashSet<>();
-        Set<Type> weakAgainst = new HashSet<>();
-        Set<Type> noEffectAgainst = new HashSet<>();
-        for (Move m : moves) {
-            if (!m.getStatus()) {
-                normalAgainst.addAll(m.getType().normalAgainst());
-                strongAgainst.addAll(m.getType().strongAgainst());
-                weakAgainst.addAll(m.getType().weakAgainst());
-                noEffectAgainst.addAll(m.getType().noEffectAgainst());
-            }
-        }
-        // if one move is strong, the moveset is strong
-        normalAgainst.removeAll(strongAgainst);
-        weakAgainst.removeAll(strongAgainst);
-        noEffectAgainst.removeAll(strongAgainst);
-        // if one move is normal, the moveset is normal
-        weakAgainst.removeAll(normalAgainst);
-        noEffectAgainst.removeAll(normalAgainst);
-        // if one move is weak, the moveset is weak
-        noEffectAgainst.removeAll(weakAgainst);
-        return new HashMap<>(Map.of(
-                "normalAgainst", normalAgainst,
-                "strongAgainst", strongAgainst,
-                "weakAgainst", weakAgainst,
-                "noEffectAgainst", noEffectAgainst));
-    }
 }
