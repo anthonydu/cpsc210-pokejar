@@ -37,7 +37,7 @@ public class Box extends PokemonList {
     public String toString() {
         String result = "";
         for (int i = 0; i < this.pokemons.size(); i++) {
-            result += i + (i < 10 ? "  " : " ") + this.pokemons.get(i) + "\n";
+            result += i + " " + this.pokemons.get(i) + "\n";
         }
         return result.trim();
     }

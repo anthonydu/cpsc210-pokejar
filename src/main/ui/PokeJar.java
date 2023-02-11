@@ -89,7 +89,8 @@ public class PokeJar {
                     teams.remove(getTeam());
                     break;
                 case "at":
-                    System.out.println(getTeam().analyze());
+                    System.out.println("Not yet implemented");
+                    // TODO System.out.println(getTeam().analyze());
                     break;
                 case "q": System.exit(0);
                 default: showCommands();
@@ -116,7 +117,7 @@ public class PokeJar {
         while (true) {
             System.out.print("What are the types of your Pokémon? ");
             try {
-                types = Type.stringToTypes(console.nextLine());
+                types = Type.fromSpaceSeparatedString(console.nextLine());
                 if (types.size() == 0 || types.size() > 2) {
                     System.out.println("Zero or more than two types found!");
                     continue;
@@ -218,6 +219,6 @@ public class PokeJar {
                 + "Moves:\n"
                 + movesStr.trim() + "\n"
                 + "Multipliers when attacking with your moveset:\n"
-                + Type.analyzeOffense(moveTypes);
+                + Type.offensiveMultipliers(moveTypes);
     }
 }

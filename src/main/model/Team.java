@@ -73,13 +73,13 @@ public class Team extends PokemonList {
         }
         return str.trim();
     }
-
-    /**
-     * Returns a String that represents the analysis of this Team
-     *
-     * @return a String that represents the analysis of this Team
-     */
-    public String analyze() {
-        return "team analyzed";
-    }
+// TODO
+//    /**
+//     * Returns a String that represents the analysis of this Team
+//     *
+//     * @return a String that represents the analysis of this Team
+//     */
+//    public String analyze() {
+//        return "team analyzed";
+//    }
 }

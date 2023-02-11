@@ -45,7 +45,6 @@ public class MoveTest {
 
     @Test
     public void testAnalyze() {
-        // assertEquals(move.getType().offensiveMultipliers(), Type.analyze());
 
     }
 }
