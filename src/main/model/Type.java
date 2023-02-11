@@ -109,7 +109,7 @@ public enum Type {
      * @return a list of Types that receives 1x damage from this Type
      */
     public List<Type> normalAgainst() {
-        List<Type> types = new ArrayList<>(Arrays.asList(Type.values()));
+        List<Type> types = new ArrayList<>(List.of(Type.values()));
         for (Type t : Type.values()) {
             if (t.immunities().contains(this)) {
                 types.remove(t);
@@ -206,9 +206,9 @@ public enum Type {
     }
 
     /**
-     * Returns a Map of multipliers when this Type is attacking each Type
+     * Returns a Map of multipliers when this Type attacks each Type
      *
-     * @return a Map of multipliers when this Type is attacking each Type
+     * @return a Map of multipliers when this Type attacks each Type
      */
     public Map<Type, Double> offensiveMultipliers() {
         Map<Type, Double> multipliers = new HashMap<>();
@@ -227,9 +227,28 @@ public enum Type {
     }
 
     /**
-     * Parses a Type from a String
+     * Returns a Map of combined multipliers when a set of arbitrary number of Types attacks each Type
      *
-     * REQUIRES: str is the name of a Type
+     * @param types a list of Types of arbitrary size
+     * @return a Map of combined multipliers when a set of arbitrary number of Types attacks each Type
+     */
+    public static Map<Type, Double> offensiveMultipliers(List<Type> types) {
+        Map<Type, Double> multipliers = new HashMap<>();
+        if (types.size() == 1) {
+            return types.get(0).offensiveMultipliers();
+        }
+        for (Type t : Type.values()) {
+            Double multiplier = 1.0;
+            for (int i = 0; i < types.size(); i++) {
+                multiplier *= types.get(i).offensiveMultipliers().get(t);
+            }
+            multipliers.put(t, multiplier);
+        }
+        return multipliers;
+    }
+
+    /**
+     * Parses a Type from a String
      *
      * @param str a String that has the name of a Type
      * @return a Type parsed from a String
@@ -263,8 +282,6 @@ public enum Type {
      * Return a list of all Types parsed from a space separated String
      *
      * REQUIRES: str is space separated
-     *        && no duplicate types found in str
-     *        && all space separated segments are names of Types
      *
      * @param str a space separated String that contains the name of Types
      * @return a list of all Types parsed from a space separated String

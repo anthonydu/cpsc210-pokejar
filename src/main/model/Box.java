@@ -42,8 +42,6 @@ public class Box {
     /**
      * Gets the Pokémon at a specific index
      *
-     * REQUIRES: 0 <= index < pokemons.size()
-     *
      * @param index the index to get the Pokémon from
      * @return the Pokémon at the specific index
      * @throws IndexOutOfBoundsException if index is out of bounds
@@ -55,7 +53,6 @@ public class Box {
     /**
      * Adds a Pokémon to this Box
      *
-     * REQUIRES: this.get().contains(pokemon) == false
      * MODIFIES: this
      *
      * @param pokemon the Pokémon to add to this Box
@@ -71,7 +68,6 @@ public class Box {
     /**
      * Removes a Pokémon from this Box
      *
-     * REQUIRES: 0 <= index < pokemons.size()
      * MODIFIES: this
      *
      * @param pokemon the Pokémon to remove

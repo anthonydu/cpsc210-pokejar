@@ -1,7 +1,9 @@
 package model;
 
+import java.util.*;
+
 /**
- * Represents a Pokémon's Move with a name, a Type, and whether it's a status or attacking move
+ * Represents a Pokémon's Move with a name, a Type, and whether it's a status or attacking Move
  *
  * @author Anthony Du
  */
@@ -20,11 +22,11 @@ public class Move {
     private boolean isStatus;
 
     /**
-     * Constructs a move with name, types and whether it is status or attacking
+     * Constructs a Move with name, types and whether it is status or attacking
      *
      * @param name the name of this Move
      * @param type the type of this Move
-     * @param isStatus whether this move is status or attacking
+     * @param isStatus whether this Move is status or attacking
      */
     public Move(String name, Type type, boolean isStatus) {
         this.name = name;
@@ -51,11 +53,11 @@ public class Move {
     }
 
     /**
-     * Returns whether this move is status or attacking
+     * Returns whether this Move is status or attacking
      *
-     * @return whether this move is status or attacking
+     * @return whether this Move is status or attacking
      */
-    public boolean isStatus() {
+    public boolean getStatus() {
         return isStatus;
     }
 
@@ -77,9 +79,9 @@ public class Move {
     }
 
     /**
-     * Sets whether this move is status or attacking
+     * Sets whether this Move is status or attacking
      *
-     * @param isStatus true for status move and false for attacking move
+     * @param isStatus true for status Move and false for attacking Move
      */
     public void setStatus(boolean isStatus) {
         this.isStatus = isStatus;
@@ -101,5 +103,48 @@ public class Move {
         return str
                 + this.type.name() + " ".repeat(16 - this.type.name().length())
                 + (this.isStatus ? "Status" : "Attacking");
+    }
+
+    /**
+     * Returns an offensive multipliers Map as an analysis of this Move
+     *
+     * @return an offensive multipliers Map as an analysis of this Move
+     */
+    public Map<Type, Double> analyze() {
+        return this.type.offensiveMultipliers();
+    }
+
+    /**
+     * Generates a Map that's an analysis of a moveset
+     *
+     * @return a Map that's an analysis of a moveset
+     */
+    public static HashMap<String, Set<Type>> analyze(List<Move> moves) {
+        Set<Type> normalAgainst = new HashSet<>();
+        Set<Type> strongAgainst = new HashSet<>();
+        Set<Type> weakAgainst = new HashSet<>();
+        Set<Type> noEffectAgainst = new HashSet<>();
+        for (Move m : moves) {
+            if (!m.getStatus()) {
+                normalAgainst.addAll(m.getType().normalAgainst());
+                strongAgainst.addAll(m.getType().strongAgainst());
+                weakAgainst.addAll(m.getType().weakAgainst());
+                noEffectAgainst.addAll(m.getType().noEffectAgainst());
+            }
+        }
+        // if one move is strong, the moveset is strong
+        normalAgainst.removeAll(strongAgainst);
+        weakAgainst.removeAll(strongAgainst);
+        noEffectAgainst.removeAll(strongAgainst);
+        // if one move is normal, the moveset is normal
+        weakAgainst.removeAll(normalAgainst);
+        noEffectAgainst.removeAll(normalAgainst);
+        // if one move is weak, the moveset is weak
+        noEffectAgainst.removeAll(weakAgainst);
+        return new HashMap<>(Map.of(
+                "normalAgainst", normalAgainst,
+                "strongAgainst", strongAgainst,
+                "weakAgainst", weakAgainst,
+                "noEffectAgainst", noEffectAgainst));
     }
 }

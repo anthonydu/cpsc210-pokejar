@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Anthony Du
  */
-class TypeTest {
+public class TypeTest {
 
     /**
      * Tests that no Type have conflicting strength, weakness or immunity.
@@ -37,8 +37,5 @@ class TypeTest {
             }
         }
         return false;
-    }
-
-    public void testAgainst() {
     }
 }

@@ -12,39 +12,39 @@ public class PokeJar {
 
     private Pokemon tinkaton = new Pokemon(
             "Tinkaton",
-            Arrays.asList(Type.FAIRY, Type.STEEL),
-            Arrays.asList(
+            new ArrayList<>(List.of(Type.FAIRY, Type.STEEL)),
+            new ArrayList<>(List.of(
                     new Move("Gigaton Hammer", Type.STEEL, false),
                     new Move("Play Rough", Type.FAIRY, false),
                     new Move("Swords Dance", Type.NORMAL, true),
                     new Move("Encore", Type.NORMAL, true)
-            )
+            ))
     );
     private Pokemon rotom = new Pokemon(
             "Rotom",
-            Arrays.asList(Type.ELECTRIC, Type.WATER),
-            Arrays.asList(
+            new ArrayList<>(List.of(Type.ELECTRIC, Type.WATER)),
+            new ArrayList<>(List.of(
                     new Move("Hydro Pump", Type.WATER, false),
                     new Move("Thunderbolt", Type.ELECTRIC, false),
                     new Move("Hex", Type.GHOST, false),
                     new Move("Nasty Plot", Type.DARK, true)
 
-            )
+            ))
     );
     private Pokemon cetitan = new Pokemon(
             "Cetitan",
-            Arrays.asList(Type.ICE),
-            Arrays.asList(
+            new ArrayList<>(List.of(Type.ICE)),
+            new ArrayList<>(List.of(
                     new Move("Avalanche", Type.ICE, false),
                     new Move("Ice Shard", Type.ICE, false),
                     new Move("Earthquake", Type.GROUND, false),
                     new Move("Heavy Slam", Type.STEEL, false)
 
-            )
+            ))
     );
 
     private Scanner console = new Scanner(System.in);
-    private Box box = new Box(new ArrayList<>(Arrays.asList(tinkaton, rotom, cetitan)));
+    private Box box = new Box(new ArrayList<>(List.of(tinkaton, rotom, cetitan)));
     private List<Team> teams = new ArrayList<>() {
         @Override
         public String toString() {
@@ -67,7 +67,7 @@ public class PokeJar {
         while (true) {
             System.out.print("PokéJar > ");
             switch (console.nextLine()) {
-                case "p":
+                case "l":
                     System.out.println(box);
                     break;
                 case "np":
@@ -77,7 +77,7 @@ public class PokeJar {
                     box.remove(getPokemon());
                     break;
                 case "ap":
-                    System.out.println(getPokemon().analyze());
+                    System.out.println(analyze(getPokemon()));
                     break;
                 case "t":
                     System.out.println(teams);
@@ -105,8 +105,8 @@ public class PokeJar {
     }
 
     private static void showCommands() {
-        System.out.println("[p]List Box   [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
-        System.out.println("[t]List Teams [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
+        System.out.println("[l]List Box [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
+        System.out.println("[t]List Teams   [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
     }
 
     private Pokemon newPokemon() {
@@ -198,5 +198,30 @@ public class PokeJar {
             }
         }
         return team;
+    }
+
+    /**
+     * Returns a String that represents the analysis of this Pokémon
+     *
+     * @return a String that represents the analysis of this Pokémon
+     */
+    public static String analyze(Pokemon pokemon) {
+        String movesStr = "";
+        for (Move m : pokemon.getMoves()) {
+            movesStr += m + "\n";
+        }
+        return pokemon + "\n"
+                + "Multipliers when attacked by moves of type:\n"
+                + Type.defensiveMultipliers(pokemon.getTypes()) + "\n"
+                + "Moves:\n"
+                + movesStr.trim() + "\n"
+                + "Your moveset is very effective against:\n"
+                + Move.analyze(pokemon.getMoves()).get("strongAgainst") + "\n"
+                + "Your moveset has normal effectiveness against:\n"
+                + Move.analyze(pokemon.getMoves()).get("normalAgainst") + "\n"
+                + "Your moveset is not very effective against:\n"
+                + Move.analyze(pokemon.getMoves()).get("weakAgainst") + "\n"
+                + "Your moveset has no effect against:\n"
+                + Move.analyze(pokemon.getMoves()).get("noEffectAgainst");
     }
 }
