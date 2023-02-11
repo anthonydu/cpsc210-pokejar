@@ -99,10 +99,10 @@ public class Pokemon {
         if (this.name.length() >= 16) {
             str += this.name.substring(0, 14) + "… ";
         } else {
-            str += this.name + " ".repeat(16 - this.name.length());
+            str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
         }
         for (Type type : this.types) {
-            str += type.name() + " ".repeat(16 - type.name().length());
+            str += type.name() + String.join("", Collections.nCopies(16 - type.name().length(), " "));
         }
         return str.trim();
     }

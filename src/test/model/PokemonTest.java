@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Tests model.Pokemon class
@@ -20,15 +20,15 @@ public class PokemonTest {
     public void setup() {
         pokemon = new Pokemon(
                 "myPokemon",
-                List.of(Type.DRAGON, Type.FIRE),
-                List.of(move));
+                Arrays.asList(Type.DRAGON, Type.FIRE),
+                Arrays.asList(move));
     }
 
     @Test
     public void testConstructor() {
         assertEquals("myPokemon", pokemon.getName());
-        assertEquals(List.of(Type.DRAGON, Type.FIRE), pokemon.getTypes());
-        assertEquals(List.of(move), pokemon.getMoves());
+        assertEquals(Arrays.asList(Type.DRAGON, Type.FIRE), pokemon.getTypes());
+        assertEquals(Arrays.asList(move), pokemon.getMoves());
     }
 
     @Test
@@ -38,8 +38,8 @@ public class PokemonTest {
                 pokemon.toString()
         );
         pokemon.setName("myAmazingPokemon");
-        pokemon.setTypes(List.of(Type.ROCK));
-        pokemon.setMoves(List.of(move));
+        pokemon.setTypes(Arrays.asList(Type.ROCK));
+        pokemon.setMoves(Arrays.asList(move));
         assertEquals(
                 "myAmazingPokem… ROCK",
                 pokemon.toString()

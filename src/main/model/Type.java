@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Contains all Pokémon Types,
  * methods that give their strengths, weaknesses, and immunities,
- * and static methods for working with Strings.
+ * and static methods for analysis and working with Strings.
  *
  * @author Anthony Du
  */
@@ -17,29 +17,29 @@ public enum Type {
      * Returns a list of Types that this Type receives 0.5x damage from
      *
      * @return a list of Types that this Type receives 0.5x damage from
-     * @throws IllegalCallerException if this Type is not handled by this method
+     * @throws IllegalStateException if this Type is not handled by this method
      */
-    public List<Type> strengths() throws IllegalCallerException {
+    public List<Type> strengths() throws IllegalStateException {
         switch (this) {
-            case NORMAL:    return List.of();
-            case FIRE:      return List.of(FIRE, GRASS, ICE, BUG, STEEL, FAIRY);
-            case WATER:     return List.of(FIRE, WATER, ICE, STEEL);
-            case GRASS:     return List.of(WATER, GRASS, ELECTRIC, GROUND);
-            case ELECTRIC:  return List.of(ELECTRIC, FLYING, STEEL);
-            case ICE:       return List.of(ICE);
-            case FIGHTING:  return List.of(BUG, ROCK, DARK);
-            case POISON:    return List.of(GRASS, FIGHTING, POISON, BUG, FAIRY);
-            case GROUND:    return List.of(POISON, ROCK);
-            case FLYING:    return List.of(GRASS, FIGHTING, BUG);
-            case PSYCHIC:   return List.of(FIGHTING, PSYCHIC);
-            case BUG:       return List.of(GRASS, FIGHTING, GROUND);
-            case ROCK:      return List.of(NORMAL, FIRE, POISON, FLYING);
-            case GHOST:     return List.of(POISON, BUG);
-            case DRAGON:    return List.of(FIRE, WATER, GRASS, ELECTRIC);
-            case DARK:      return List.of(GHOST, DARK);
-            case STEEL:     return List.of(NORMAL, GRASS, ICE, FLYING, PSYCHIC, BUG, ROCK, DRAGON, STEEL, FAIRY);
-            case FAIRY:     return List.of(FIGHTING, BUG, DARK);
-            default:        throw new IllegalCallerException();
+            case NORMAL:    return Arrays.asList();
+            case FIRE:      return Arrays.asList(FIRE, GRASS, ICE, BUG, STEEL, FAIRY);
+            case WATER:     return Arrays.asList(FIRE, WATER, ICE, STEEL);
+            case GRASS:     return Arrays.asList(WATER, GRASS, ELECTRIC, GROUND);
+            case ELECTRIC:  return Arrays.asList(ELECTRIC, FLYING, STEEL);
+            case ICE:       return Arrays.asList(ICE);
+            case FIGHTING:  return Arrays.asList(BUG, ROCK, DARK);
+            case POISON:    return Arrays.asList(GRASS, FIGHTING, POISON, BUG, FAIRY);
+            case GROUND:    return Arrays.asList(POISON, ROCK);
+            case FLYING:    return Arrays.asList(GRASS, FIGHTING, BUG);
+            case PSYCHIC:   return Arrays.asList(FIGHTING, PSYCHIC);
+            case BUG:       return Arrays.asList(GRASS, FIGHTING, GROUND);
+            case ROCK:      return Arrays.asList(NORMAL, FIRE, POISON, FLYING);
+            case GHOST:     return Arrays.asList(POISON, BUG);
+            case DRAGON:    return Arrays.asList(FIRE, WATER, GRASS, ELECTRIC);
+            case DARK:      return Arrays.asList(GHOST, DARK);
+            case STEEL:     return Arrays.asList(NORMAL, GRASS, ICE, FLYING, PSYCHIC, BUG, ROCK, DRAGON, STEEL, FAIRY);
+            case FAIRY:     return Arrays.asList(FIGHTING, BUG, DARK);
+            default:        throw new IllegalStateException();
         }
     }
 
@@ -47,29 +47,29 @@ public enum Type {
      * Returns a list of Types that this Type receives 2x damage from
      *
      * @return a list of Types that this Type receives 2x damage from
-     * @throws IllegalCallerException if this Type is not handled by this method
+     * @throws IllegalStateException if this Type is not handled by this method
      */
-    public List<Type> weaknesses() throws IllegalCallerException {
+    public List<Type> weaknesses() throws IllegalStateException {
         switch (this) {
-            case NORMAL:    return List.of(FIGHTING);
-            case FIRE:      return List.of(WATER, GROUND, ROCK);
-            case WATER:     return List.of(GRASS, ELECTRIC);
-            case GRASS:     return List.of(FIRE, ICE, POISON, FLYING, BUG);
-            case ELECTRIC:  return List.of(GROUND);
-            case ICE:       return List.of(FIRE, FIGHTING, ROCK, STEEL);
-            case FIGHTING:  return List.of(FLYING, PSYCHIC, FAIRY);
-            case POISON:    return List.of(GROUND, PSYCHIC);
-            case GROUND:    return List.of(WATER, GRASS, ICE);
-            case FLYING:    return List.of(ELECTRIC, ICE, ROCK);
-            case PSYCHIC:   return List.of(BUG, GHOST, DARK);
-            case BUG:       return List.of(FIRE, FLYING, ROCK);
-            case ROCK:      return List.of(WATER, GRASS, FIGHTING, GROUND);
-            case GHOST:     return List.of(GHOST, DARK);
-            case DRAGON:    return List.of(ICE, DRAGON, FAIRY);
-            case DARK:      return List.of(FIGHTING, BUG, FAIRY);
-            case STEEL:     return List.of(FIRE, FIGHTING, GROUND);
-            case FAIRY:     return List.of(POISON, STEEL);
-            default:        throw new IllegalCallerException();
+            case NORMAL:    return Arrays.asList(FIGHTING);
+            case FIRE:      return Arrays.asList(WATER, GROUND, ROCK);
+            case WATER:     return Arrays.asList(GRASS, ELECTRIC);
+            case GRASS:     return Arrays.asList(FIRE, ICE, POISON, FLYING, BUG);
+            case ELECTRIC:  return Arrays.asList(GROUND);
+            case ICE:       return Arrays.asList(FIRE, FIGHTING, ROCK, STEEL);
+            case FIGHTING:  return Arrays.asList(FLYING, PSYCHIC, FAIRY);
+            case POISON:    return Arrays.asList(GROUND, PSYCHIC);
+            case GROUND:    return Arrays.asList(WATER, GRASS, ICE);
+            case FLYING:    return Arrays.asList(ELECTRIC, ICE, ROCK);
+            case PSYCHIC:   return Arrays.asList(BUG, GHOST, DARK);
+            case BUG:       return Arrays.asList(FIRE, FLYING, ROCK);
+            case ROCK:      return Arrays.asList(WATER, GRASS, FIGHTING, GROUND);
+            case GHOST:     return Arrays.asList(GHOST, DARK);
+            case DRAGON:    return Arrays.asList(ICE, DRAGON, FAIRY);
+            case DARK:      return Arrays.asList(FIGHTING, BUG, FAIRY);
+            case STEEL:     return Arrays.asList(FIRE, FIGHTING, GROUND);
+            case FAIRY:     return Arrays.asList(POISON, STEEL);
+            default:        throw new IllegalStateException();
         }
     }
 
@@ -77,29 +77,29 @@ public enum Type {
      * Returns a list of Types that this Type receives 0x damage from
      *
      * @return a list of Types that this Type receives 0x damage from
-     * @throws IllegalCallerException if this Type is not handled by this method
+     * @throws IllegalStateException if this Type is not handled by this method
      */
-    public List<Type> immunities() throws IllegalCallerException {
+    public List<Type> immunities() throws IllegalStateException {
         switch (this) {
-            case NORMAL:    return List.of(GHOST);
-            case FIRE:      return List.of();
-            case WATER:     return List.of();
-            case GRASS:     return List.of();
-            case ELECTRIC:  return List.of();
-            case ICE:       return List.of();
-            case FIGHTING:  return List.of();
-            case POISON:    return List.of();
-            case GROUND:    return List.of(ELECTRIC);
-            case FLYING:    return List.of(GROUND);
-            case PSYCHIC:   return List.of();
-            case BUG:       return List.of();
-            case ROCK:      return List.of();
-            case GHOST:     return List.of(NORMAL, FIGHTING);
-            case DRAGON:    return List.of();
-            case DARK:      return List.of(PSYCHIC);
-            case STEEL:     return List.of(POISON);
-            case FAIRY:     return List.of(DRAGON);
-            default:        throw new IllegalCallerException();
+            case NORMAL:    return Arrays.asList(GHOST);
+            case FIRE:      return Arrays.asList();
+            case WATER:     return Arrays.asList();
+            case GRASS:     return Arrays.asList();
+            case ELECTRIC:  return Arrays.asList();
+            case ICE:       return Arrays.asList();
+            case FIGHTING:  return Arrays.asList();
+            case POISON:    return Arrays.asList();
+            case GROUND:    return Arrays.asList(ELECTRIC);
+            case FLYING:    return Arrays.asList(GROUND);
+            case PSYCHIC:   return Arrays.asList();
+            case BUG:       return Arrays.asList();
+            case ROCK:      return Arrays.asList();
+            case GHOST:     return Arrays.asList(NORMAL, FIGHTING);
+            case DRAGON:    return Arrays.asList();
+            case DARK:      return Arrays.asList(PSYCHIC);
+            case STEEL:     return Arrays.asList(POISON);
+            case FAIRY:     return Arrays.asList(DRAGON);
+            default:        throw new IllegalStateException();
         }
     }
 
@@ -109,7 +109,7 @@ public enum Type {
      * @return a list of Types that receives 1x damage from this Type
      */
     public List<Type> normalAgainst() {
-        List<Type> types = new ArrayList<>(List.of(Type.values()));
+        List<Type> types = new ArrayList<>(Arrays.asList(Type.values()));
         for (Type t : Type.values()) {
             if (t.immunities().contains(this) | t.weaknesses().contains(this) | t.strengths().contains(this)) {
                 types.remove(t);

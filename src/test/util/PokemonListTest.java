@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import util.PokemonList;
+import java.util.Arrays;
 
 /**
  * Tests model.Box class.
@@ -20,8 +18,8 @@ import util.PokemonList;
 public class PokemonListTest {
     protected Pokemon tinkaton = new Pokemon(
             "Tinkaton",
-            new ArrayList<>(List.of(Type.FAIRY, Type.STEEL)),
-            new ArrayList<>(List.of(
+            new ArrayList<>(Arrays.asList(Type.FAIRY, Type.STEEL)),
+            new ArrayList<>(Arrays.asList(
                     new Move("Gigaton Hammer", Type.STEEL, false),
                     new Move("Play Rough", Type.FAIRY, false),
                     new Move("Swords Dance", Type.NORMAL, true),
@@ -30,8 +28,8 @@ public class PokemonListTest {
     );
     protected Pokemon rotom = new Pokemon(
             "Rotom",
-            new ArrayList<>(List.of(Type.ELECTRIC, Type.WATER)),
-            new ArrayList<>(List.of(
+            new ArrayList<>(Arrays.asList(Type.ELECTRIC, Type.WATER)),
+            new ArrayList<>(Arrays.asList(
                     new Move("Hydro Pump", Type.WATER, false),
                     new Move("Thunderbolt", Type.ELECTRIC, false),
                     new Move("Hex", Type.GHOST, false),
@@ -41,8 +39,8 @@ public class PokemonListTest {
     );
     protected Pokemon cetitan = new Pokemon(
             "Cetitan",
-            new ArrayList<>(List.of(Type.ICE)),
-            new ArrayList<>(List.of(
+            new ArrayList<>(Arrays.asList(Type.ICE)),
+            new ArrayList<>(Arrays.asList(
                     new Move("Avalanche", Type.ICE, false),
                     new Move("Ice Shard", Type.ICE, false),
                     new Move("Earthquake", Type.GROUND, false),
@@ -63,7 +61,7 @@ public class PokemonListTest {
 
     @Test
     public void testConstructor() {
-        assertEquals(List.of(tinkaton, rotom, cetitan), pokemonList.get());
+        assertEquals(Arrays.asList(tinkaton, rotom, cetitan), pokemonList.get());
     }
 
     @Test
@@ -83,8 +81,8 @@ public class PokemonListTest {
     @Test
     public void testRemove() {
         pokemonList.remove(cetitan);
-        assertEquals(List.of(tinkaton, rotom), pokemonList.get());
+        assertEquals(Arrays.asList(tinkaton, rotom), pokemonList.get());
         pokemonList.remove(tinkaton);
-        assertEquals(List.of(rotom), pokemonList.get());
+        assertEquals(Arrays.asList(rotom), pokemonList.get());
     }
 }

@@ -3,6 +3,7 @@ package model;
 import util.PokemonList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,10 +66,10 @@ public class Team extends PokemonList {
         if (this.name.length() >= 16) {
             str += this.name.substring(0, 14) + "… ";
         } else {
-            str += this.name + " ".repeat(16 - this.name.length());
+            str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
         }
         for (Pokemon p : this.get()) {
-            str += p.getName() + " ".repeat(16 - p.getName().length());
+            str += p.getName() + String.join("", Collections.nCopies(16 - p.getName().length(), " "));
         }
         return str.trim();
     }

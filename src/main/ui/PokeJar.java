@@ -12,8 +12,8 @@ public class PokeJar {
 
     private Pokemon tinkaton = new Pokemon(
             "Tinkaton",
-            new ArrayList<>(List.of(Type.FAIRY, Type.STEEL)),
-            new ArrayList<>(List.of(
+            new ArrayList<>(Arrays.asList(Type.FAIRY, Type.STEEL)),
+            new ArrayList<>(Arrays.asList(
                     new Move("Gigaton Hammer", Type.STEEL, false),
                     new Move("Play Rough", Type.FAIRY, false),
                     new Move("Swords Dance", Type.NORMAL, true),
@@ -22,8 +22,8 @@ public class PokeJar {
     );
     private Pokemon rotom = new Pokemon(
             "Rotom",
-            new ArrayList<>(List.of(Type.ELECTRIC, Type.WATER)),
-            new ArrayList<>(List.of(
+            new ArrayList<>(Arrays.asList(Type.ELECTRIC, Type.WATER)),
+            new ArrayList<>(Arrays.asList(
                     new Move("Hydro Pump", Type.WATER, false),
                     new Move("Thunderbolt", Type.ELECTRIC, false),
                     new Move("Hex", Type.GHOST, false),
@@ -33,8 +33,8 @@ public class PokeJar {
     );
     private Pokemon cetitan = new Pokemon(
             "Cetitan",
-            new ArrayList<>(List.of(Type.ICE)),
-            new ArrayList<>(List.of(
+            new ArrayList<>(Arrays.asList(Type.ICE)),
+            new ArrayList<>(Arrays.asList(
                     new Move("Avalanche", Type.ICE, false),
                     new Move("Ice Shard", Type.ICE, false),
                     new Move("Earthquake", Type.GROUND, false),
@@ -44,8 +44,8 @@ public class PokeJar {
     );
 
     private Scanner console = new Scanner(System.in);
-    private Box box = new Box(new ArrayList<>(List.of(tinkaton, rotom, cetitan)));
-    private List<Team> teams = new ArrayList<>() {
+    private Box box = new Box(new ArrayList<>(Arrays.asList(tinkaton, rotom, cetitan)));
+    private List<Team> teams = new ArrayList<Team>() {
         @Override
         public String toString() {
             String result = "";
@@ -205,7 +205,7 @@ public class PokeJar {
      *
      * @return a String that represents the analysis of this Pokémon
      */
-    public static String analyze(Pokemon pokemon) {
+    private static String analyze(Pokemon pokemon) {
         String movesStr = "";
         List<Type> moveTypes = new ArrayList<>();
         for (Move m : pokemon.getMoves()) {

@@ -98,10 +98,10 @@ public class Move {
         if (this.name.length() >= 16) {
             str += this.name.substring(0, 14) + "… ";
         } else {
-            str += this.name + " ".repeat(16 - this.name.length());
+            str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
         }
         return str
-                + this.type.name() + " ".repeat(16 - this.type.name().length())
+                + this.type.name() + String.join("", Collections.nCopies(16 - this.type.name().length(), " "))
                 + (this.isStatus ? "Status" : "Attacking");
     }
 }

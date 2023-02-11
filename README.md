@@ -27,3 +27,9 @@ The targeted user group of this app are Pokémon trainers.
 - [x] As a user, I want to be able to form teams with my Pokémon.
 - [ ] As a user, I want to be able to view the stats of my team.
 
+## Java 11 &rarr; Java 8 for Autograder
+
+- IllegalCallerException &rarr; IllegalStateException (model.Type)
+- List.of &rarr; Arrays.asList
+- " ".repeat(n) &rarr; String.join("", Collections.nCopies(n, " "))
+- new ArrayList&lt;&gt;() {} &rarr; new ArrayList&lt;Team&gt;() {} (ui.PokeJar)
