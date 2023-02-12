@@ -3,30 +3,30 @@ package model;
 import java.util.*;
 
 /**
- * Represents a Pokémon with a name, a list of Types and a list of Moves
+ * Represents a Pokemon with a name, a list of Types and a list of Moves
  *
  * @author Anthony Du
  */
 public class Pokemon {
     /**
-     * The name of this Pokémon
+     * The name of this Pokemon
      */
     private String name;
     /**
-     * The Types of this Pokémon
+     * The Types of this Pokemon
      */
     private List<Type> types;
     /**
-     * The moveset of this Pokémon
+     * The moveset of this Pokemon
      */
     private List<Move> moves;
 
     /**
-     * Constructs a Pokémon with name, Types, and moves
+     * Constructs a Pokemon with name, Types, and moves
      *
-     * @param name the name of this Pokémon
-     * @param types the Types of this Pokémon
-     * @param moves the moveset of this Pokémon
+     * @param name the name of this Pokemon
+     * @param types the Types of this Pokemon
+     * @param moves the moveset of this Pokemon
      */
     public Pokemon(String name, List<Type> types, List<Move> moves) {
         this.name = name;
@@ -35,34 +35,34 @@ public class Pokemon {
     }
 
     /**
-     * Returns the name of this Pokémon
+     * Returns the name of this Pokemon
      *
-     * @return the name of this Pokémon
+     * @return the name of this Pokemon
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * Returns the Types of this Pokémon
+     * Returns the Types of this Pokemon
      *
-     * @return the Types of this Pokémon
+     * @return the Types of this Pokemon
      */
     public List<Type> getTypes() {
         return this.types;
     }
 
     /**
-     * Returns the moveset of this Pokémon
+     * Returns the moveset of this Pokemon
      *
-     * @return the moveset of this Pokémon
+     * @return the moveset of this Pokemon
      */
     public List<Move> getMoves() {
         return this.moves;
     }
 
     /**
-     * Sets the name of this Pokémon
+     * Sets the name of this Pokemon
      *
      * @param name the name to set to
      */
@@ -71,7 +71,7 @@ public class Pokemon {
     }
 
     /**
-     * Sets the Types of this Pokémon
+     * Sets the Types of this Pokemon
      *
      * @param types the Types to set to
      */
@@ -80,7 +80,7 @@ public class Pokemon {
     }
 
     /**
-     * Sets the moveset of this Pokémon
+     * Sets the moveset of this Pokemon
      *
      * @param moves the moveset to set to
      */
@@ -89,9 +89,9 @@ public class Pokemon {
     }
 
     /**
-     * Returns a String that represents this Pokémon
+     * Returns a String that represents this Pokemon
      *
-     * @return a String that represents this Pokémon
+     * @return a String that represents this Pokemon
      */
     @Override
     public String toString() {

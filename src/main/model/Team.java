@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a Team with a name and holds a list of Pokémon
+ * Represents a Team with a name and holds a list of Pokemon
  *
  * @author Anthony Du
  */
@@ -18,7 +18,7 @@ public class Team extends PokemonList {
     private String name;
 
     /**
-     * Constructs a Team with an empty list of Pokémon
+     * Constructs a Team with an empty list of Pokemon
      *
      * @param name the name of this Team
      */
@@ -27,10 +27,10 @@ public class Team extends PokemonList {
     }
 
     /**
-     * Constructs a Team with an existing list of Pokémon
+     * Constructs a Team with an existing list of Pokemon
      *
      * @param name the name of this Team
-     * @param pokemons a list of Pokémon to initialize the Team
+     * @param pokemons a list of Pokemon to initialize the Team
      */
     public Team(String name, List<Pokemon> pokemons) {
         super(pokemons);

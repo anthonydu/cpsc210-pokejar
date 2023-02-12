@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 /**
- * Contains all Pokémon Types,
+ * Contains all Pokemon Types,
  * methods that give their strengths, weaknesses, and immunities,
  * and static methods for analysis and working with Strings.
  *
@@ -13,6 +13,9 @@ public enum Type {
     NORMAL, FIRE, WATER, GRASS, ELECTRIC, ICE, FIGHTING, POISON, GROUND,
     FLYING, PSYCHIC, BUG, ROCK, GHOST, DRAGON, DARK, STEEL, FAIRY;
 
+    /**
+     * A map of every Type and their strengths
+     */
     private static Map<Type, List<Type>> strengths = new LinkedHashMap<Type, List<Type>>() {
         {
             put(NORMAL, Arrays.asList());
@@ -36,6 +39,9 @@ public enum Type {
         }
     };
 
+    /**
+     * A map of every Type and their weaknesses
+     */
     private static Map<Type, List<Type>> weaknesses = new LinkedHashMap<Type, List<Type>>() {
         {
             put(NORMAL, Arrays.asList(FIGHTING));
@@ -59,6 +65,9 @@ public enum Type {
         }
     };
 
+    /**
+     * A map of every Type and their immunities
+     */
     private static Map<Type, List<Type>> immunities = new LinkedHashMap<Type, List<Type>>() {
         {
             put(NORMAL, Arrays.asList(GHOST));
@@ -104,9 +113,8 @@ public enum Type {
      * Returns a list of Types that this Type receives 0x damage from
      *
      * @return a list of Types that this Type receives 0x damage from
-     * @throws IllegalStateException if this Type is not handled by this method
      */
-    public List<Type> immunities() throws IllegalStateException {
+    public List<Type> immunities() {
         return immunities.get(this);
     }
 

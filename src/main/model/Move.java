@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 /**
- * Represents a Pokémon's Move with a name, a Type, and whether it's a status or attacking Move
+ * Represents a Pokemon's Move with a name, a Type, and whether it's a status or attacking Move
  *
  * @author Anthony Du
  */
@@ -72,6 +72,7 @@ public class Move {
 
     /**
      * Sets the Type of this Move
+     *
      * @param type the Type to set to
      */
     public void setType(Type type) {

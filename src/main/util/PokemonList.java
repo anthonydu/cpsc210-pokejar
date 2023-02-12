@@ -7,40 +7,40 @@ import java.util.List;
 
 public class PokemonList {
     /**
-     * List of Pokémon in this Box
+     * List of Pokemon in this Box
      */
     protected List<Pokemon> pokemons;
 
     /**
-     * Constructs a PokemonList with an empty list of Pokémon
+     * Constructs a PokemonList with an empty list of Pokemon
      */
     public PokemonList() {
         this(new ArrayList<>());
     }
 
     /**
-     * Constructs a PokemonList with an existing list of Pokémon
+     * Constructs a PokemonList with an existing list of Pokemon
      *
-     * @param pokemons a list of Pokémon to initialize the Team
+     * @param pokemons a list of Pokemon to initialize the Team
      */
     public PokemonList(List<Pokemon> pokemons) {
         this.pokemons = pokemons;
     }
 
     /**
-     * Returns a list of Pokémon that are in this Box
+     * Returns a list of Pokemon that are in this Box
      *
-     * @return a list of Pokémon that are in this Box
+     * @return a list of Pokemon that are in this Box
      */
     public List<Pokemon> get() {
         return this.pokemons;
     }
 
     /**
-     * Gets the Pokémon at a specific index
+     * Gets the Pokemon at a specific index
      *
-     * @param index the index to get the Pokémon from
-     * @return the Pokémon at the specific index
+     * @param index the index to get the Pokemon from
+     * @return the Pokemon at the specific index
      * @throws IndexOutOfBoundsException if index is out of bounds
      */
     public Pokemon get(int index) throws IndexOutOfBoundsException {
@@ -48,12 +48,12 @@ public class PokemonList {
     }
 
     /**
-     * Adds a Pokémon to this Box
+     * Adds a Pokemon to this Box
      *
      * MODIFIES: this
      *
-     * @param pokemon the Pokémon to add to this Box
-     * @throws IllegalArgumentException if this Box already contains the Pokémon that is passed in
+     * @param pokemon the Pokemon to add to this Box
+     * @throws IllegalArgumentException if this Box already contains the Pokemon that is passed in
      */
     public void add(Pokemon pokemon) throws IllegalArgumentException {
         if (this.get().contains(pokemon)) {
@@ -63,11 +63,11 @@ public class PokemonList {
     }
 
     /**
-     * Removes a Pokémon from this Box
+     * Removes a Pokemon from this Box
      *
      * MODIFIES: this
      *
-     * @param pokemon the Pokémon to remove
+     * @param pokemon the Pokemon to remove
      */
     public void remove(Pokemon pokemon) {
         this.pokemons.remove(pokemon);

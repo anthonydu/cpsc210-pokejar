@@ -4,12 +4,15 @@ import model.*;
 import java.util.*;
 
 /**
- * The PokéJar Application.
+ * The PokeJar Application.
  *
  * @author Anthony Du
  */
 public class PokeJar {
 
+    /**
+     * A Pokemon used as template item for box
+     */
     private Pokemon tinkaton = new Pokemon(
             "Tinkaton",
             new ArrayList<>(Arrays.asList(Type.FAIRY, Type.STEEL)),
@@ -20,6 +23,10 @@ public class PokeJar {
                     new Move("Encore", Type.NORMAL, true)
             ))
     );
+
+    /**
+     * A Pokemon used as template item for box
+     */
     private Pokemon rotom = new Pokemon(
             "Rotom",
             new ArrayList<>(Arrays.asList(Type.ELECTRIC, Type.WATER)),
@@ -31,6 +38,10 @@ public class PokeJar {
 
             ))
     );
+
+    /**
+     * A Pokemon used as template item for box
+     */
     private Pokemon cetitan = new Pokemon(
             "Cetitan",
             new ArrayList<>(Arrays.asList(Type.ICE)),
@@ -43,8 +54,19 @@ public class PokeJar {
             ))
     );
 
+    /**
+     * Scanner that scans the console for input
+     */
     private Scanner console = new Scanner(System.in);
+
+    /**
+     * A box that holds Pokemon, initialized with template items
+     */
     private Box box = new Box(new ArrayList<>(Arrays.asList(tinkaton, rotom, cetitan)));
+
+    /**
+     * A list of teams with a custom toString method
+     */
     private List<Team> teams = new ArrayList<Team>() {
         @Override
         public String toString() {
@@ -56,10 +78,16 @@ public class PokeJar {
         }
     };
 
+    /**
+     * Constructs a PokeJar and starts its terminal user interface
+     */
     public PokeJar() {
         this.startTUI();
     }
 
+    /**
+     * PokeJar's terminal user interface
+     */
     @SuppressWarnings("methodlength")
     public void startTUI() {
         welcomeMessage();
@@ -98,6 +126,9 @@ public class PokeJar {
         }
     }
 
+    /**
+     * Prints welcome message
+     */
     private static void welcomeMessage() {
         System.out.println();
         System.out.println("Welcome to PokéJar!");
@@ -105,11 +136,19 @@ public class PokeJar {
         System.out.println();
     }
 
+    /**
+     * Shows all available commands
+     */
     private static void showCommands() {
         System.out.println("[l]List Box   [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon [h]Help");
         System.out.println("[t]List Teams [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
     }
 
+    /**
+     * Asks the user to create a new Pokemon and returns it
+     *
+     * @return the new Pokemon that the user has created
+     */
     private Pokemon newPokemon() {
         System.out.print("What is the name of your Pokémon? ");
         String name = console.nextLine();
@@ -131,6 +170,11 @@ public class PokeJar {
         return new Pokemon(name, types, moves);
     }
 
+    /**
+     * Asks the user to create a new moveset and returns it
+     *
+     * @return the moveset that the user has created
+     */
     private ArrayList<Move> newMoveset() {
         ArrayList<Move> moves = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
@@ -157,14 +201,32 @@ public class PokeJar {
         return moves;
     }
 
+    /**
+     * Asks the user for an index and returns the Pokemon at that index of the box
+     *
+     * @return the Pokemon at user specified index
+     */
     private Pokemon getPokemon() {
         return this.get("Pokémon", box.get());
     }
 
+    /**
+     * Asks the user for an index and returns the Team at that index of the list of teams
+     *
+     * @return the Pokemon at user specified index
+     */
     private Team getTeam() {
         return this.get("Team", teams);
     }
 
+    /**
+     * Asks the user for an index and returns the thing at that index of a list of things
+     *
+     * @param thingName the name of the thing that the user is trying to get
+     * @param listOfThings the list of things to get from
+     * @return the thing at user specified index
+     * @param <T> the type that listOfThings holds
+     */
     private <T> T get(String thingName, List<T> listOfThings) {
         if (listOfThings.isEmpty()) {
             System.out.println("You have no " + thingName + " to remove.");
@@ -181,6 +243,11 @@ public class PokeJar {
         }
     }
 
+    /**
+     * Asks the user to create a new Team and returns it
+     *
+     * @return the Team that the user has created
+     */
     private Team newTeam() {
         System.out.print("What is the name for this team? ");
         Team team = new Team(console.nextLine());
@@ -206,9 +273,10 @@ public class PokeJar {
     }
 
     /**
-     * Returns a String that represents the analysis of this Pokémon
+     * Returns a String that represents the analysis of a Pokemon
      *
-     * @return a String that represents the analysis of this Pokémon
+     * @param pokemon the Pokemon to analyze
+     * @return a String that represents the analysis of a Pokemon
      */
     private static String analyze(Pokemon pokemon) {
         String movesStr = "";

@@ -6,23 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a Box that holds an arbitrary number of Pokémon
+ * Represents a Box that holds an arbitrary number of Pokemon
  *
  * @author Anthony Du
  */
 public class Box extends PokemonList {
 
     /**
-     * Constructs a Box with an empty list of Pokémon
+     * Constructs a Box with an empty list of Pokemon
      */
     public Box() {
         this(new ArrayList<>());
     }
 
     /**
-     * Constructs a Box with an existing list of Pokémon
+     * Constructs a Box with an existing list of Pokemon
      *
-     * @param pokemons a list of Pokémon to initialize the Team
+     * @param pokemons a list of Pokemon to initialize the Team
      */
     public Box(List<Pokemon> pokemons) {
         super(pokemons);
