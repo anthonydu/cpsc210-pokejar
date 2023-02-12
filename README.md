@@ -22,9 +22,11 @@ The targeted user group of this app are Pokémon trainers.
 
 - [x] As a user, I want to be able to add my Pokémon to my roster.
 - [x] As a user, I want to be able to remove Pokémon from my roster.
-- [ ] As a user, I want to be able to change the stat of each Pokémon.
+- [ ] As a user, I want to be able to edit the attributes of each Pokémon.
 - [x] As a user, I want to be able to view the stats of each Pokémon.
 - [x] As a user, I want to be able to form teams with my Pokémon.
+- [x] As a user, I want to be able to remove teams from a list of teams.
+- [ ] As a user, I want to be able to switch Pokémon in and out from my teams.
 - [ ] As a user, I want to be able to view the stats of my team.
 
 ## Java 11 &rarr; Java 8 for Autograder
