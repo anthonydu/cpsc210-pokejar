@@ -70,7 +70,6 @@ public class PokemonList {
      * @param pokemon the Pokémon to remove
      */
     public void remove(Pokemon pokemon) {
-        // index is used because Pokémon's attributes aren't unique
         this.pokemons.remove(pokemon);
     }
 }

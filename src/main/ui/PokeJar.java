@@ -106,8 +106,8 @@ public class PokeJar {
     }
 
     private static void showCommands() {
-        System.out.println("[l]List Box     [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon");
-        System.out.println("[t]List Teams   [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
+        System.out.println("[l]List Box   [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon [h]Help");
+        System.out.println("[t]List Teams [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
     }
 
     private Pokemon newPokemon() {
@@ -118,7 +118,7 @@ public class PokeJar {
             System.out.print("What are the types of your Pokémon? ");
             try {
                 types = Type.fromSpaceSeparatedString(console.nextLine());
-                if (types.size() == 0 || types.size() > 2) {
+                if (types.isEmpty() || types.size() > 2) {
                     System.out.println("Zero or more than two types found!");
                     continue;
                 }
@@ -166,6 +166,10 @@ public class PokeJar {
     }
 
     private <T> T get(String thingName, List<T> listOfThings) {
+        if (listOfThings.isEmpty()) {
+            System.out.println("You have no " + thingName + " to remove.");
+            return null;
+        }
         while (true) {
             System.out.print("What is the index of this " + thingName + "? ");
             try {
