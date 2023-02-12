@@ -13,64 +13,85 @@ public enum Type {
     NORMAL, FIRE, WATER, GRASS, ELECTRIC, ICE, FIGHTING, POISON, GROUND,
     FLYING, PSYCHIC, BUG, ROCK, GHOST, DRAGON, DARK, STEEL, FAIRY;
 
+    private static Map<Type, List<Type>> strengths = new LinkedHashMap<Type, List<Type>>() {{
+        put(NORMAL, Arrays.asList());
+        put(FIRE, Arrays.asList(FIRE, GRASS, ICE, BUG, STEEL, FAIRY));
+        put(WATER, Arrays.asList(FIRE, WATER, ICE, STEEL));
+        put(GRASS, Arrays.asList(WATER, GRASS, ELECTRIC, GROUND));
+        put(ELECTRIC, Arrays.asList(ELECTRIC, FLYING, STEEL));
+        put(ICE, Arrays.asList(ICE));
+        put(FIGHTING, Arrays.asList(BUG, ROCK, DARK));
+        put(POISON, Arrays.asList(GRASS, FIGHTING, POISON, BUG, FAIRY));
+        put(GROUND, Arrays.asList(POISON, ROCK));
+        put(FLYING, Arrays.asList(GRASS, FIGHTING, BUG));
+        put(PSYCHIC, Arrays.asList(FIGHTING, PSYCHIC));
+        put(BUG, Arrays.asList(GRASS, FIGHTING, GROUND));
+        put(ROCK, Arrays.asList(NORMAL, FIRE, POISON, FLYING));
+        put(GHOST, Arrays.asList(POISON, BUG));
+        put(DRAGON, Arrays.asList(FIRE, WATER, GRASS, ELECTRIC));
+        put(DARK, Arrays.asList(GHOST, DARK));
+        put(STEEL, Arrays.asList(NORMAL, GRASS, ICE, FLYING, PSYCHIC, BUG, ROCK, DRAGON, STEEL, FAIRY));
+        put(FAIRY, Arrays.asList(FIGHTING, BUG, DARK));
+    }};
+
+    private static Map<Type, List<Type>> weaknesses = new LinkedHashMap<Type, List<Type>>() {{
+        put(NORMAL, Arrays.asList(FIGHTING));
+        put(FIRE, Arrays.asList(WATER, GROUND, ROCK));
+        put(WATER, Arrays.asList(GRASS, ELECTRIC));
+        put(GRASS, Arrays.asList(FIRE, ICE, POISON, FLYING, BUG));
+        put(ELECTRIC, Arrays.asList(GROUND));
+        put(ICE, Arrays.asList(FIRE, FIGHTING, ROCK, STEEL));
+        put(FIGHTING, Arrays.asList(FLYING, PSYCHIC, FAIRY));
+        put(POISON, Arrays.asList(GROUND, PSYCHIC));
+        put(GROUND, Arrays.asList(WATER, GRASS, ICE));
+        put(FLYING, Arrays.asList(ELECTRIC, ICE, ROCK));
+        put(PSYCHIC, Arrays.asList(BUG, GHOST, DARK));
+        put(BUG, Arrays.asList(FIRE, FLYING, ROCK));
+        put(ROCK, Arrays.asList(WATER, GRASS, FIGHTING, GROUND));
+        put(GHOST, Arrays.asList(GHOST, DARK));
+        put(DRAGON, Arrays.asList(ICE, DRAGON, FAIRY));
+        put(DARK, Arrays.asList(FIGHTING, BUG, FAIRY));
+        put(STEEL, Arrays.asList(FIRE, FIGHTING, GROUND));
+        put(FAIRY, Arrays.asList(POISON, STEEL));
+    }};
+
+    private static Map<Type, List<Type>> immunities = new LinkedHashMap<Type, List<Type>>() {{
+        put(NORMAL, Arrays.asList(GHOST));
+        put(FIRE, Arrays.asList());
+        put(WATER, Arrays.asList());
+        put(GRASS, Arrays.asList());
+        put(ELECTRIC, Arrays.asList());
+        put(ICE, Arrays.asList());
+        put(FIGHTING, Arrays.asList());
+        put(POISON, Arrays.asList());
+        put(GROUND, Arrays.asList(ELECTRIC));
+        put(FLYING, Arrays.asList(GROUND));
+        put(PSYCHIC, Arrays.asList());
+        put(BUG, Arrays.asList());
+        put(ROCK, Arrays.asList());
+        put(GHOST, Arrays.asList(NORMAL, FIGHTING));
+        put(DRAGON, Arrays.asList());
+        put(DARK, Arrays.asList(PSYCHIC));
+        put(STEEL, Arrays.asList(POISON));
+        put(FAIRY, Arrays.asList(DRAGON));
+    }};
+
     /**
      * Returns a list of Types that this Type receives 0.5x damage from
      *
      * @return a list of Types that this Type receives 0.5x damage from
-     * @throws IllegalStateException if this Type is not handled by this method
      */
-    public List<Type> strengths() throws IllegalStateException {
-        switch (this) {
-            case NORMAL:    return Arrays.asList();
-            case FIRE:      return Arrays.asList(FIRE, GRASS, ICE, BUG, STEEL, FAIRY);
-            case WATER:     return Arrays.asList(FIRE, WATER, ICE, STEEL);
-            case GRASS:     return Arrays.asList(WATER, GRASS, ELECTRIC, GROUND);
-            case ELECTRIC:  return Arrays.asList(ELECTRIC, FLYING, STEEL);
-            case ICE:       return Arrays.asList(ICE);
-            case FIGHTING:  return Arrays.asList(BUG, ROCK, DARK);
-            case POISON:    return Arrays.asList(GRASS, FIGHTING, POISON, BUG, FAIRY);
-            case GROUND:    return Arrays.asList(POISON, ROCK);
-            case FLYING:    return Arrays.asList(GRASS, FIGHTING, BUG);
-            case PSYCHIC:   return Arrays.asList(FIGHTING, PSYCHIC);
-            case BUG:       return Arrays.asList(GRASS, FIGHTING, GROUND);
-            case ROCK:      return Arrays.asList(NORMAL, FIRE, POISON, FLYING);
-            case GHOST:     return Arrays.asList(POISON, BUG);
-            case DRAGON:    return Arrays.asList(FIRE, WATER, GRASS, ELECTRIC);
-            case DARK:      return Arrays.asList(GHOST, DARK);
-            case STEEL:     return Arrays.asList(NORMAL, GRASS, ICE, FLYING, PSYCHIC, BUG, ROCK, DRAGON, STEEL, FAIRY);
-            case FAIRY:     return Arrays.asList(FIGHTING, BUG, DARK);
-            default:        throw new IllegalStateException();
-        }
+    public List<Type> strengths() {
+        return strengths.get(this);
     }
 
     /**
      * Returns a list of Types that this Type receives 2x damage from
      *
      * @return a list of Types that this Type receives 2x damage from
-     * @throws IllegalStateException if this Type is not handled by this method
      */
     public List<Type> weaknesses() throws IllegalStateException {
-        switch (this) {
-            case NORMAL:    return Arrays.asList(FIGHTING);
-            case FIRE:      return Arrays.asList(WATER, GROUND, ROCK);
-            case WATER:     return Arrays.asList(GRASS, ELECTRIC);
-            case GRASS:     return Arrays.asList(FIRE, ICE, POISON, FLYING, BUG);
-            case ELECTRIC:  return Arrays.asList(GROUND);
-            case ICE:       return Arrays.asList(FIRE, FIGHTING, ROCK, STEEL);
-            case FIGHTING:  return Arrays.asList(FLYING, PSYCHIC, FAIRY);
-            case POISON:    return Arrays.asList(GROUND, PSYCHIC);
-            case GROUND:    return Arrays.asList(WATER, GRASS, ICE);
-            case FLYING:    return Arrays.asList(ELECTRIC, ICE, ROCK);
-            case PSYCHIC:   return Arrays.asList(BUG, GHOST, DARK);
-            case BUG:       return Arrays.asList(FIRE, FLYING, ROCK);
-            case ROCK:      return Arrays.asList(WATER, GRASS, FIGHTING, GROUND);
-            case GHOST:     return Arrays.asList(GHOST, DARK);
-            case DRAGON:    return Arrays.asList(ICE, DRAGON, FAIRY);
-            case DARK:      return Arrays.asList(FIGHTING, BUG, FAIRY);
-            case STEEL:     return Arrays.asList(FIRE, FIGHTING, GROUND);
-            case FAIRY:     return Arrays.asList(POISON, STEEL);
-            default:        throw new IllegalStateException();
-        }
+        return weaknesses.get(this);
     }
 
     /**
@@ -80,27 +101,7 @@ public enum Type {
      * @throws IllegalStateException if this Type is not handled by this method
      */
     public List<Type> immunities() throws IllegalStateException {
-        switch (this) {
-            case NORMAL:    return Arrays.asList(GHOST);
-            case FIRE:      return Arrays.asList();
-            case WATER:     return Arrays.asList();
-            case GRASS:     return Arrays.asList();
-            case ELECTRIC:  return Arrays.asList();
-            case ICE:       return Arrays.asList();
-            case FIGHTING:  return Arrays.asList();
-            case POISON:    return Arrays.asList();
-            case GROUND:    return Arrays.asList(ELECTRIC);
-            case FLYING:    return Arrays.asList(GROUND);
-            case PSYCHIC:   return Arrays.asList();
-            case BUG:       return Arrays.asList();
-            case ROCK:      return Arrays.asList();
-            case GHOST:     return Arrays.asList(NORMAL, FIGHTING);
-            case DRAGON:    return Arrays.asList();
-            case DARK:      return Arrays.asList(PSYCHIC);
-            case STEEL:     return Arrays.asList(POISON);
-            case FAIRY:     return Arrays.asList(DRAGON);
-            default:        throw new IllegalStateException();
-        }
+        return immunities.get(this);
     }
 
     /**
