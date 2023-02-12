@@ -222,10 +222,10 @@ public class PokeJar {
     /**
      * Asks the user for an index and returns the thing at that index of a list of things
      *
+     * @param <T> the type that listOfThings holds
      * @param thingName the name of the thing that the user is trying to get
      * @param listOfThings the list of things to get from
      * @return the thing at user specified index
-     * @param <T> the type that listOfThings holds
      */
     private <T> T get(String thingName, List<T> listOfThings) {
         if (listOfThings.isEmpty()) {
