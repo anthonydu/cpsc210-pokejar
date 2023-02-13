@@ -105,7 +105,7 @@ public enum Type {
      *
      * @return a list of Types that this Type receives 2x damage from
      */
-    public List<Type> weaknesses() throws IllegalStateException {
+    public List<Type> weaknesses() {
         return weaknesses.get(this);
     }
 
