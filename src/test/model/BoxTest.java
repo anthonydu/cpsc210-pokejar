@@ -2,10 +2,16 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import util.PokemonListTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests model.Box class
+ *
+ * @author Anthony Du
+ */
 public class BoxTest extends PokemonListTest {
 
     @BeforeEach

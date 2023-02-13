@@ -1,14 +1,15 @@
 package util;
 
-import model.Move;
-import model.Pokemon;
-import model.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import model.Move;
+import model.Pokemon;
+import model.Type;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests model.Box class.

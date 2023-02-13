@@ -3,9 +3,9 @@ package model;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import static model.Type.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static model.Type.*;
 
 /**
  * Tests model.Type enum class
@@ -14,9 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TypeTest {
 
-    /**
-     * Tests that no Type have conflicting strength, weakness or immunity.
-     */
     @Test
     public void testConflicts() {
         for (Type t : values()) {
@@ -81,12 +78,6 @@ public class TypeTest {
         );
     }
 
-    /**
-     * Checks if a Type has conflicting strengths, weaknesses, or immunities
-     *
-     * @param type the Type to be checked
-     * @return true if conflict is found and false otherwise
-     */
     private boolean hasConflict(Type type) {
         for (Type s : type.strengths()) {
             for (Type w : type.weaknesses()) {

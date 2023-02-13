@@ -64,6 +64,8 @@ public class Move {
     /**
      * Sets the name of this Move
      *
+     * MODIFIES: this
+     *
      * @param name the name to set to
      */
     public void setName(String name) {
@@ -73,6 +75,8 @@ public class Move {
     /**
      * Sets the Type of this Move
      *
+     * MODIFIES: this
+     *
      * @param type the Type to set to
      */
     public void setType(Type type) {
@@ -81,6 +85,8 @@ public class Move {
 
     /**
      * Sets whether this Move is status or attacking
+     *
+     * MODIFIES: this
      *
      * @param isStatus true for status Move and false for attacking Move
      */

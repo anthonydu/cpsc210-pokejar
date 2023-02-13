@@ -64,6 +64,8 @@ public class Pokemon {
     /**
      * Sets the name of this Pokemon
      *
+     * MODIFIES: this
+     *
      * @param name the name to set to
      */
     public void setName(String name) {
@@ -73,6 +75,8 @@ public class Pokemon {
     /**
      * Sets the Types of this Pokemon
      *
+     * MODIFIES: this
+     *
      * @param types the Types to set to
      */
     public void setTypes(List<Type> types) {
@@ -81,6 +85,8 @@ public class Pokemon {
 
     /**
      * Sets the moveset of this Pokemon
+     *
+     * MODIFIES: this
      *
      * @param moves the moveset to set to
      */

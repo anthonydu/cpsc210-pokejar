@@ -87,6 +87,8 @@ public class PokeJar {
 
     /**
      * PokeJar's terminal user interface
+     *
+     * MODIFIES: this
      */
     @SuppressWarnings("methodlength")
     public void startTUI() {

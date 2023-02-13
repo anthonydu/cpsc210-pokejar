@@ -2,11 +2,8 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests model.Move class
@@ -41,10 +38,5 @@ public class MoveTest {
                 "myAmazingNewMo… WATER Attacking",
                 move.toString().replaceAll("\\s+"," ")
         );
-    }
-
-    @Test
-    public void testAnalyze() {
-
     }
 }
