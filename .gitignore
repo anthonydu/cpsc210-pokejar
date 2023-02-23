@@ -1,3 +1,4 @@
 *.class
 workspace.xml
 docs/
+.DS_STORE
