@@ -297,11 +297,10 @@ public enum Type {
      *
      * REQUIRES: str is space separated
      *
-     * @param str a space separated String that contains the name of Types
+     * @param strs a list of strings that contains Type names
      * @return a list of all Types parsed from a space separated String
      */
-    public static List<Type> fromSpaceSeparatedString(String str) throws IllegalArgumentException {
-        String[] strs = str.split(" ");
+    public static List<Type> fromListOfStrings(List<String> strs) throws IllegalArgumentException {
         List<Type> types = new ArrayList<>();
         for (String s : strs) {
             if (types.contains(Type.fromString(s))) {

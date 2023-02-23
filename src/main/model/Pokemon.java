@@ -112,4 +112,12 @@ public class Pokemon {
         }
         return str.trim();
     }
+
+    public List<Type> moveTypes() {
+        List<Type> moveTypes = new ArrayList<>();
+        for (Move m : this.getMoves()) {
+            moveTypes.add(m.getType());
+        }
+        return moveTypes;
+    }
 }

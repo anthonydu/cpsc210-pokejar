@@ -1,10 +1,9 @@
 package model;
 
+import org.json.JSONObject;
 import util.PokemonList;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a Team with a name and holds a list of Pokemon
@@ -73,13 +72,45 @@ public class Team extends PokemonList {
         }
         return str.trim();
     }
-// TODO
-//    /**
-//     * Returns a String that represents the analysis of this Team
-//     *
-//     * @return a String that represents the analysis of this Team
-//     */
-//    public String analyze() {
-//        return "team analyzed";
-//    }
+
+    @Override
+    public JSONObject toJson() {
+        return super.toJson().put("name", this.name);
+    }
+
+    public Map<Pokemon, Map<Type, Double>> allDefensiveMultipliers() {
+        Map<Pokemon, Map<Type, Double>> allMultipliers = new LinkedHashMap<>();
+        for (Pokemon p : pokemons) {
+            allMultipliers.put(p, Type.defensiveMultipliers(p.getTypes()));
+        }
+        return allMultipliers;
+    }
+
+    public Map<Type, Integer> totalResist() {
+        return this.total("resist");
+    }
+
+    public Map<Type, Integer> totalWeak() {
+        return this.total("weak");
+    }
+
+    private Map<Type, Integer> total(String mode) {
+        if (mode != "weak" && mode != "resist") {
+            throw new IllegalArgumentException("Invalid mode, must be \"weak\" or \"resist\"!");
+        }
+        Map<Type, Integer> total = new LinkedHashMap<>();
+        for (Type t : Type.values()) {
+            total.put(t, 0);
+        }
+        for (Pokemon p : this.allDefensiveMultipliers().keySet()) {
+            for (Type t : Type.values()) {
+                if (mode == "weak" && this.allDefensiveMultipliers().get(p).get(t) > 1.0) {
+                    total.put(t, total.get(t) + 1);
+                } else if (mode == "resist" && this.allDefensiveMultipliers().get(p).get(t) < 1.0) {
+                    total.put(t, total.get(t) + 1);
+                }
+            }
+        }
+        return total;
+    }
 }

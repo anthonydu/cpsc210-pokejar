@@ -1,6 +1,8 @@
 package util;
 
 import model.Pokemon;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,5 +73,12 @@ public class PokemonList {
      */
     public void remove(Pokemon pokemon) {
         this.pokemons.remove(pokemon);
+    }
+
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray(this.pokemons);
+        jsonObject.put("pokemons", jsonArray);
+        return jsonObject;
     }
 }

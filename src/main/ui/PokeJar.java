@@ -1,6 +1,13 @@
 package ui;
 
 import model.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.JsonFile;
+import persistence.JsonTools;
+import util.TeamList;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -9,51 +16,6 @@ import java.util.*;
  * @author Anthony Du
  */
 public class PokeJar {
-
-    /**
-     * A Pokemon used as template item for box
-     */
-    private Pokemon tinkaton = new Pokemon(
-            "Tinkaton",
-            new ArrayList<>(Arrays.asList(Type.FAIRY, Type.STEEL)),
-            new ArrayList<>(Arrays.asList(
-                    new Move("Gigaton Hammer", Type.STEEL, false),
-                    new Move("Play Rough", Type.FAIRY, false),
-                    new Move("Swords Dance", Type.NORMAL, true),
-                    new Move("Encore", Type.NORMAL, true)
-            ))
-    );
-
-    /**
-     * A Pokemon used as template item for box
-     */
-    private Pokemon rotom = new Pokemon(
-            "Rotom",
-            new ArrayList<>(Arrays.asList(Type.ELECTRIC, Type.WATER)),
-            new ArrayList<>(Arrays.asList(
-                    new Move("Hydro Pump", Type.WATER, false),
-                    new Move("Thunderbolt", Type.ELECTRIC, false),
-                    new Move("Hex", Type.GHOST, false),
-                    new Move("Nasty Plot", Type.DARK, true)
-
-            ))
-    );
-
-    /**
-     * A Pokemon used as template item for box
-     */
-    private Pokemon cetitan = new Pokemon(
-            "Cetitan",
-            new ArrayList<>(Arrays.asList(Type.ICE)),
-            new ArrayList<>(Arrays.asList(
-                    new Move("Avalanche", Type.ICE, false),
-                    new Move("Ice Shard", Type.ICE, false),
-                    new Move("Earthquake", Type.GROUND, false),
-                    new Move("Heavy Slam", Type.STEEL, false)
-
-            ))
-    );
-
     /**
      * Scanner that scans the console for input
      */
@@ -62,27 +24,19 @@ public class PokeJar {
     /**
      * A box that holds Pokemon, initialized with template items
      */
-    private Box box = new Box(new ArrayList<>(Arrays.asList(tinkaton, rotom, cetitan)));
+    private Box box = new Box();
 
     /**
      * A list of teams with a custom toString method
      */
-    private List<Team> teams = new ArrayList<Team>() {
-        @Override
-        public String toString() {
-            String result = "";
-            for (int i = 0; i < this.size(); i++) {
-                result += i + (i < 10 ? "  " : " ") + this.get(i) + "\n";
-            }
-            return result.trim();
-        }
-    };
+    private TeamList teams = new TeamList();
 
     /**
      * Constructs a PokeJar and starts its terminal user interface
      */
     public PokeJar() {
-        this.startTUI();
+        load(parseJson("autosave"));
+        startTUI();
     }
 
     /**
@@ -97,7 +51,7 @@ public class PokeJar {
         while (true) {
             System.out.print("PokéJar > ");
             switch (console.nextLine()) {
-                case "l":
+                case "p":
                     System.out.println(box);
                     break;
                 case "np":
@@ -107,7 +61,11 @@ public class PokeJar {
                     box.remove(getPokemon());
                     break;
                 case "ap":
-                    System.out.println(analyze(getPokemon()));
+                    try {
+                        System.out.println(analyzePokemon(getPokemon()));
+                    } catch (IllegalStateException ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     break;
                 case "t":
                     System.out.println(teams);
@@ -119,10 +77,21 @@ public class PokeJar {
                     teams.remove(getTeam());
                     break;
                 case "at":
-                    System.out.println("Not yet implemented");
-                    // TODO System.out.println(getTeam().analyze());
+                    try {
+                        System.out.println(analyzeTeam(getTeam()));
+                    } catch (IllegalStateException ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     break;
-                case "q": System.exit(0);
+                case "l":
+                    load();
+                    break;
+                case "s":
+                    save();
+                    break;
+                case "q":
+                    autoSave();
+                    System.exit(0);
                 default: showCommands();
             }
         }
@@ -142,8 +111,15 @@ public class PokeJar {
      * Shows all available commands
      */
     private static void showCommands() {
-        System.out.println("[l]List Box   [np]New Pokémon [rp]Remove Pokémon [ap]Analyze Pokémon [h]Help");
-        System.out.println("[t]List Teams [nt]New Team    [rt]Remove Team    [at]Analyse Team    [q]Quit");
+        System.out.println(""
+                + "\u001B[7ml \u001B[0m Load File      \u001B[7ms \u001B[0m Save File      "
+                + "\u001B[7mh \u001B[0m Help           \u001B[7mq \u001B[0m Quit");
+        System.out.println(""
+                + "\u001B[7mp \u001B[0m List Box       \u001B[7mnp\u001B[0m New Pokémon    "
+                + "\u001B[7mrp\u001B[0m Remove Pokémon \u001B[7map\u001B[0m Analyze Pokémon");
+        System.out.println(""
+                + "\u001B[7mt \u001B[0m List Teams     \u001B[7mnt\u001B[0m New Team       "
+                + "\u001B[7mrt\u001B[0m Remove Team    \u001B[7mat\u001B[0m Analyse Team");
     }
 
     /**
@@ -158,7 +134,7 @@ public class PokeJar {
         while (true) {
             System.out.print("What are the types of your Pokémon? ");
             try {
-                types = Type.fromSpaceSeparatedString(console.nextLine());
+                types = Type.fromListOfStrings(Arrays.asList(console.nextLine().split(" ")));
                 if (types.isEmpty() || types.size() > 2) {
                     System.out.println("Zero or more than two types found!");
                     continue;
@@ -229,10 +205,9 @@ public class PokeJar {
      * @param listOfThings the list of things to get from
      * @return the thing at user specified index
      */
-    private <T> T get(String thingName, List<T> listOfThings) {
+    private <T> T get(String thingName, List<T> listOfThings) throws IllegalStateException {
         if (listOfThings.isEmpty()) {
-            System.out.println("You have no " + thingName + " to remove.");
-            return null;
+            throw new IllegalStateException("You have no " + thingName + ".");
         }
         while (true) {
             System.out.print("What is the index of this " + thingName + "? ");
@@ -280,12 +255,10 @@ public class PokeJar {
      * @param pokemon the Pokemon to analyze
      * @return a String that represents the analysis of a Pokemon
      */
-    private static String analyze(Pokemon pokemon) {
+    private static String analyzePokemon(Pokemon pokemon) {
         String movesStr = "";
-        List<Type> moveTypes = new ArrayList<>();
         for (Move m : pokemon.getMoves()) {
             movesStr += m + "\n";
-            moveTypes.add(m.getType());
         }
         return pokemon + "\n"
                 + "Multipliers when attacked by moves of type:\n"
@@ -293,6 +266,127 @@ public class PokeJar {
                 + "Moves:\n"
                 + movesStr.trim() + "\n"
                 + "Multipliers when attacking with your moveset:\n"
-                + Type.offensiveMultipliers(moveTypes);
+                + Type.offensiveMultipliers(pokemon.moveTypes());
     }
+
+    /**
+     * Returns a String that represents the analysis of a Team
+     *
+     * @param team the Team to analyze
+     * @return a String that represents the analysis of a Team
+     */
+    private static String analyzeTeam(Team team) {
+        return team + "\n"
+                + "Number of Pokemon weak to types:\n"
+                + team.totalWeak() + "\n"
+                + "Number of Pokemon that resists types:\n"
+                + team.totalResist();
+    }
+
+    private void autoSave() {
+        save("./data/autosave.json");
+    }
+
+    private void save() {
+        while (true) {
+            System.out.print("What is the file name that you want to save as? ");
+            String fileName = console.nextLine();
+            if (!isValidFileName(fileName)) {
+                continue;
+            }
+            try {
+                save("./data/" + fileName + ".json");
+                break;
+            } catch (IllegalArgumentException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
+    private void save(String filePath) throws IllegalArgumentException {
+        JsonFile jsonFile = new JsonFile(filePath);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("box", box.toJson());
+        jsonObject.put("teams", teams.toJson());
+        try {
+            jsonFile.write(jsonObject);
+        } catch (IOException ex) {
+            System.out.println("Cannot write to file:");
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void load() {
+        JSONObject jsonObject;
+        while (true) {
+            System.out.print("What is the name of the file that you wish to load [./data/_.json]? ");
+            String fileName = console.nextLine();
+            if (!isValidFileName(fileName)) {
+                continue;
+            } else if (parseJson(fileName) != null) {
+                jsonObject = parseJson(fileName);
+                break;
+            }
+        }
+        System.out.print("This action will overwrite all current data, type \"yes\" to proceed: ");
+        if (console.nextLine().equals("yes")) {
+            load(jsonObject);
+        } else {
+            System.out.println("File loading aborted!");
+        }
+    }
+
+    private JSONObject parseJson(String fileName) {
+        JsonFile jsonFile = new JsonFile("./data/" + fileName + ".json");
+        try {
+            return jsonFile.read();
+        } catch (IOException ex) {
+            System.out.println("Cannot read file:");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    private void load(JSONObject jsonObject) {
+        this.box = new Box(parsePokemonList(jsonObject.getJSONObject("box")));
+        this.teams = parseTeams(jsonObject.getJSONArray("teams"));
+    }
+
+    private TeamList parseTeams(JSONArray teamsArray) {
+        TeamList teams = new TeamList();
+        for (JSONObject team : JsonTools.objectsFromArray(teamsArray)) {
+            teams.add(new Team(
+                    team.getString("name"),
+                    parsePokemonList(team)
+            ));
+        }
+        return teams;
+    }
+
+    private List<Pokemon> parsePokemonList(JSONObject pokemonListObject) {
+        List<Pokemon> pokemons = new ArrayList<>();
+        for (JSONObject pokemon : JsonTools.objectsFromArray(pokemonListObject.getJSONArray("pokemons"))) {
+            List<Move> moves = new ArrayList<Move>() {{
+                for (JSONObject move : JsonTools.objectsFromArray(pokemon.getJSONArray("moves"))) {
+                    add(new Move(move.getString("name"), Type.fromString(move.getString("type")), move.getBoolean("status")));
+                }
+            }};
+            pokemons.add(new Pokemon(
+                    pokemon.getString("name"),
+                    Type.fromListOfStrings(JsonTools.stringsFromArray(pokemon.getJSONArray("types"))),
+                    moves
+            ));
+        }
+        return pokemons;
+    }
+
+    private static boolean isValidFileName(String fileName) {
+        if (fileName.contains(".")) {
+            System.out.println("File name cannot contain \".\"!");
+            return false;
+        }
+        return true;
+    }
+
+    // TODO isValidFile: check if all pokemon in teams exists in the box
 }
