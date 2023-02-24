@@ -1,7 +1,5 @@
 package model;
 
-import org.json.JSONObject;
-import util.PokemonList;
 import java.util.*;
 
 /**
@@ -9,8 +7,9 @@ import java.util.*;
  *
  * @author Anthony Du
  */
-public class Team extends PokemonList {
+public class Team {
     private String name;
+    private List<Pokemon> pokemons;
 
     /**
      * Constructs a Team with an empty list of Pokemon
@@ -28,8 +27,8 @@ public class Team extends PokemonList {
      * @param pokemons a list of Pokemon to initialize the Team
      */
     public Team(String name, List<Pokemon> pokemons) {
-        super(pokemons);
         this.name = name;
+        this.pokemons = pokemons;
     }
 
     /**
@@ -50,6 +49,14 @@ public class Team extends PokemonList {
         this.name = name;
     }
 
+    public List<Pokemon> getPokemons() {
+        return pokemons;
+    }
+
+    public void setPokemons(List<Pokemon> pokemons) {
+        this.pokemons = pokemons;
+    }
+
     /**
      * Returns a String that represents this Team
      *
@@ -63,20 +70,10 @@ public class Team extends PokemonList {
         } else {
             str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
         }
-        for (Pokemon p : this.get()) {
+        for (Pokemon p : this.pokemons) {
             str += p.getName() + String.join("", Collections.nCopies(16 - p.getName().length(), " "));
         }
         return str.trim();
-    }
-
-    /**
-     * Returns a JSONObject that represents this Team
-     *
-     * @return a JSONObject that represents this Team
-     */
-    @Override
-    public JSONObject toJson() {
-        return super.toJson().put("name", this.name);
     }
 
     /**
@@ -112,7 +109,7 @@ public class Team extends PokemonList {
      */
     public Map<Pokemon, Map<Type, Double>> allDefensiveMultipliers() {
         Map<Pokemon, Map<Type, Double>> allMultipliers = new LinkedHashMap<>();
-        for (Pokemon p : pokemons) {
+        for (Pokemon p : this.pokemons) {
             allMultipliers.put(p, Type.defensiveMultipliers(p.getTypes()));
         }
         return allMultipliers;

@@ -2,8 +2,7 @@ package ui;
 
 import model.*;
 import org.json.JSONException;
-import org.json.JSONObject;
-import persistence.JsonIO;
+import persistence.JsonFile;
 
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
@@ -172,7 +171,7 @@ public class PokeJar {
      * @return the Pokemon at user specified index
      */
     private Pokemon getPokemon() {
-        return this.get("Pokémon", jar.getBox().get());
+        return this.get("Pokémon", jar.getBox());
     }
 
     /**
@@ -218,13 +217,13 @@ public class PokeJar {
         for (int i = 1; i <= 6; i++) {
             while (true) {
                 try {
-                    team.add(getPokemon());
+                    team.getPokemons().add(getPokemon());
                     break;
                 } catch (IllegalArgumentException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
-            if (team.get().size() == jar.getBox().get().size()) {
+            if (team.getPokemons().size() == jar.getBox().size()) {
                 System.out.println("You have no more Pokémon in your box to add!");
                 break;
             }
@@ -278,17 +277,20 @@ public class PokeJar {
         while (true) {
             System.out.print("What is the file name that you want to save as? ");
             fileName = console.nextLine();
-            if (!fileName.contains(".")) {
+            if (fileName.contains(".")) {
+                System.out.println("File name cannot contain \".\"!");
+            } else if (fileName.equals("testSaveJarToFile")) {
+                System.out.println("File name cannot be \"testSaveJarToFile\"!");
+            } else {
                 break;
             }
-            System.out.println("File name cannot contain \".\"!");
         }
         save(fileName);
     }
 
     private void save(String fileName) {
         try {
-            new JsonIO("./data/" + fileName + ".json").saveJarToFile(jar);
+            new JsonFile("./data/" + fileName + ".json").saveJarToFile(jar);
         } catch (InvalidPathException | IOException ex) {
             System.out.println("Cannot write to file:");
             System.out.println(ex.getMessage());
@@ -318,7 +320,7 @@ public class PokeJar {
 
     private void load(String fileName) {
         try {
-            new JsonIO("./data/" + fileName + ".json").loadJarToApp(jar);
+            new JsonFile("./data/" + fileName + ".json").loadFileToJar(jar);
         } catch (IOException | JSONException ex) {
             System.out.println("Cannot load JSON:");
             System.out.println(ex.getMessage());

@@ -1,9 +1,10 @@
 package model;
 
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.PokemonListTest;
+import util.TestSubjects;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,16 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  *
  * @author Anthony Du
  */
-public class TeamTest extends PokemonListTest {
+public class TeamTest extends TestSubjects {
     private Team team;
 
     @BeforeEach
     public void setup() {
-        pokemonList = new Team("myTeam");
-        pokemonList.add(tinkaton);
-        pokemonList.add(rotom);
-        pokemonList.add(cetitan);
-        team = (Team) pokemonList;
+        team = new Team("myTeam");
+        team.getPokemons().add(tinkaton);
+        team.getPokemons().add(rotom);
+        team.getPokemons().add(cetitan);
     }
 
     @Test
@@ -37,17 +37,10 @@ public class TeamTest extends PokemonListTest {
                 team.toString()
         );
         team.setName("myAmazingLilTeam");
+        team.setPokemons(Arrays.asList(cetitan, tinkaton, rotom));
         assertEquals(
-                "myAmazingLilTe… Tinkaton        Rotom           Cetitan",
+                "myAmazingLilTe… Cetitan         Tinkaton        Rotom",
                 team.toString()
-        );
-    }
-
-    @Test @Override
-    public void testToJson() {
-        assertEquals(
-                new JSONObject("{\"name\":\"myTeam\"," + PokemonsJsonString + "}").toString(),
-                team.toJson().toString()
         );
     }
 

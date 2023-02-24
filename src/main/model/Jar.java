@@ -1,7 +1,5 @@
 package model;
 
-import util.TeamList;
-
 public class Jar {
     private Box box;
     private TeamList teams;

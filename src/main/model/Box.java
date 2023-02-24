@@ -1,7 +1,5 @@
 package model;
 
-import util.PokemonList;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +8,10 @@ import java.util.List;
  *
  * @author Anthony Du
  */
-public class Box extends PokemonList {
-    /**
-     * Constructs a Box with an empty list of Pokemon
-     */
+public class Box extends ArrayList<Pokemon> {
+
     public Box() {
-        this(new ArrayList<>());
+        super();
     }
 
     /**
@@ -24,7 +20,25 @@ public class Box extends PokemonList {
      * @param pokemons a list of Pokemon to initialize the Team
      */
     public Box(List<Pokemon> pokemons) {
-        super(pokemons);
+        this.addAll(pokemons);
+    }
+
+    /**
+     * Adds a Pokemon to this Box
+     *
+     * MODIFIES: this
+     *
+     * @param pokemon the Pokemon to add to this Box
+     * @return true if Pokemon is added successfully
+     * @throws IllegalArgumentException if this Box already contains the Pokemon that is passed in
+     */
+    @Override
+    public boolean add(Pokemon pokemon) throws IllegalArgumentException {
+        if (this.contains(pokemon)) {
+            throw new IllegalArgumentException("Pokémon already in box!");
+        }
+        super.add(pokemon);
+        return true;
     }
 
     /**
@@ -35,8 +49,8 @@ public class Box extends PokemonList {
     @Override
     public String toString() {
         String result = "";
-        for (int i = 0; i < this.pokemons.size(); i++) {
-            result += i + " " + this.pokemons.get(i) + "\n";
+        for (int i = 0; i < this.size(); i++) {
+            result += i + " " + this.get(i) + "\n";
         }
         return result.trim();
     }
