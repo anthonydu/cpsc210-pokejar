@@ -10,9 +10,6 @@ import java.util.*;
  * @author Anthony Du
  */
 public class Team extends PokemonList {
-    /**
-     * The name of this Team
-     */
     private String name;
 
     /**

@@ -8,17 +8,8 @@ import java.util.*;
  * @author Anthony Du
  */
 public class Move {
-    /**
-     * The name of this Move
-     */
     private String name;
-    /**
-     * The type of this Move
-     */
     private Type type;
-    /**
-     * Whether this Move is status or attacking
-     */
     private boolean isStatus;
 
     /**
@@ -57,7 +48,7 @@ public class Move {
      *
      * @return whether this Move is status or attacking
      */
-    public boolean getStatus() {
+    public boolean isStatus() {
         return isStatus;
     }
 

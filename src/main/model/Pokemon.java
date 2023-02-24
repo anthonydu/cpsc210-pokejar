@@ -8,17 +8,8 @@ import java.util.*;
  * @author Anthony Du
  */
 public class Pokemon {
-    /**
-     * The name of this Pokemon
-     */
     private String name;
-    /**
-     * The Types of this Pokemon
-     */
     private List<Type> types;
-    /**
-     * The moveset of this Pokemon
-     */
     private List<Move> moves;
 
     /**
@@ -121,7 +112,9 @@ public class Pokemon {
     public List<Type> moveTypes() {
         List<Type> moveTypes = new ArrayList<>();
         for (Move m : this.getMoves()) {
-            moveTypes.add(m.getType());
+            if (!m.isStatus()) {
+                moveTypes.add(m.getType());
+            }
         }
         return moveTypes;
     }

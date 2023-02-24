@@ -16,7 +16,7 @@ public enum Type {
     /**
      * A map of every Type and their strengths
      */
-    private static Map<Type, List<Type>> strengths = new LinkedHashMap<Type, List<Type>>() {
+    private static final Map<Type, List<Type>> strengths = new LinkedHashMap<Type, List<Type>>() {
         {
             put(NORMAL, Arrays.asList());
             put(FIRE, Arrays.asList(FIRE, GRASS, ICE, BUG, STEEL, FAIRY));
@@ -42,7 +42,7 @@ public enum Type {
     /**
      * A map of every Type and their weaknesses
      */
-    private static Map<Type, List<Type>> weaknesses = new LinkedHashMap<Type, List<Type>>() {
+    private static final Map<Type, List<Type>> weaknesses = new LinkedHashMap<Type, List<Type>>() {
         {
             put(NORMAL, Arrays.asList(FIGHTING));
             put(FIRE, Arrays.asList(WATER, GROUND, ROCK));
@@ -68,7 +68,7 @@ public enum Type {
     /**
      * A map of every Type and their immunities
      */
-    private static Map<Type, List<Type>> immunities = new LinkedHashMap<Type, List<Type>>() {
+    private static final Map<Type, List<Type>> immunities = new LinkedHashMap<Type, List<Type>>() {
         {
             put(NORMAL, Arrays.asList(GHOST));
             put(FIRE, Arrays.asList());

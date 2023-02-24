@@ -11,7 +11,6 @@ import java.util.List;
  * @author Anthony Du
  */
 public class Box extends PokemonList {
-
     /**
      * Constructs a Box with an empty list of Pokemon
      */

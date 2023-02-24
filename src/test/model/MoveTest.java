@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static model.Type.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -15,14 +16,14 @@ public class MoveTest {
 
     @BeforeEach
     public void setup() {
-        move = new Move("myMove", Type.GHOST, true);
+        move = new Move("myMove", GHOST, true);
     }
 
     @Test
     public void testConstructor() {
         assertEquals("myMove", move.getName());
-        assertEquals(Type.GHOST, move.getType());
-        assertEquals(true, move.getStatus());
+        assertEquals(GHOST, move.getType());
+        assertEquals(true, move.isStatus());
     }
 
     @Test
@@ -32,7 +33,7 @@ public class MoveTest {
                 move.toString().replaceAll("\\s+"," ")
         );
         move.setName("myAmazingNewMove");
-        move.setType(Type.WATER);
+        move.setType(WATER);
         move.setStatus(false);
         assertEquals(
                 "myAmazingNewMo… WATER Attacking",

@@ -1,7 +1,6 @@
 package model;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,28 +52,28 @@ public class TypeTest {
     }
 
     @Test
-    public void testFromSpaceSeparatedString() {
+    public void testFromListOfStrings() {
         for (Type t : values()) {
             assertEquals(t, fromString(t.toString()));
         }
         assertThrows(IllegalArgumentException.class, () -> fromString("spicy pepper"));
-        assertThrows(IllegalArgumentException.class, () -> fromSpaceSeparatedString("dark grassy"));
+        assertThrows(IllegalArgumentException.class, () -> fromListOfStrings(Arrays.asList("dark", "grassy")));
 
         assertEquals(
                 Arrays.asList(GROUND),
-                fromSpaceSeparatedString("ground")
+                fromListOfStrings(Arrays.asList("ground"))
         );
         assertEquals(
                 Arrays.asList(PSYCHIC, POISON),
-                fromSpaceSeparatedString("pSyChIc PoISoN")
+                fromListOfStrings(Arrays.asList("pSyChIc", "PoISoN"))
         );
         assertEquals(
                 Arrays.asList(FIRE, GRASS, FAIRY),
-                fromSpaceSeparatedString("fire grass fairy")
+                fromListOfStrings(Arrays.asList("fire", "grass", "fairy"))
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> fromSpaceSeparatedString("steel normal steel")
+                () -> fromListOfStrings(Arrays.asList("steel", "normal", "steel"))
         );
     }
 

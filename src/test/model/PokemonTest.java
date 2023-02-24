@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static model.Type.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -13,7 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Anthony Du
  */
 public class PokemonTest {
-    private Move move = new Move("myMove", Type.FAIRY, false);
+    private final Move MOVE0 = new Move("myMove0", FAIRY, false);
+    private final Move MOVE1 = new Move("myMove1", FIRE, false);
+    private final Move MOVE2 = new Move("myMove2", GRASS, false);
+    private final Move MOVE3 = new Move("myMove3", STEEL, false);
 
     private Pokemon pokemon;
 
@@ -21,15 +25,15 @@ public class PokemonTest {
     public void setup() {
         pokemon = new Pokemon(
                 "myPokemon",
-                Arrays.asList(Type.DRAGON, Type.FIRE),
-                Arrays.asList(move));
+                Arrays.asList(DRAGON, FIRE),
+                Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3));
     }
 
     @Test
     public void testConstructor() {
         assertEquals("myPokemon", pokemon.getName());
-        assertEquals(Arrays.asList(Type.DRAGON, Type.FIRE), pokemon.getTypes());
-        assertEquals(Arrays.asList(move), pokemon.getMoves());
+        assertEquals(Arrays.asList(DRAGON, FIRE), pokemon.getTypes());
+        assertEquals(Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3), pokemon.getMoves());
     }
 
     @Test
@@ -39,11 +43,17 @@ public class PokemonTest {
                 pokemon.toString()
         );
         pokemon.setName("myAmazingPokemon");
-        pokemon.setTypes(Arrays.asList(Type.ROCK));
-        pokemon.setMoves(Arrays.asList(move));
+        pokemon.setTypes(Arrays.asList(ROCK));
         assertEquals(
                 "myAmazingPokem… ROCK",
                 pokemon.toString()
         );
+    }
+
+    @Test
+    public void testMoveTypes() {
+        assertEquals(Arrays.asList(FAIRY, FIRE, GRASS, STEEL), pokemon.moveTypes());
+        pokemon.setMoves(Arrays.asList(MOVE3, MOVE2, MOVE1, MOVE0));
+        assertEquals(Arrays.asList(STEEL, GRASS, FIRE, FAIRY), pokemon.moveTypes());
     }
 }

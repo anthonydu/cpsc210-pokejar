@@ -1,13 +1,10 @@
 package util;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import model.Move;
-import model.Pokemon;
-import model.Type;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,41 +13,98 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Anthony Du
  */
-public class PokemonListTest {
-    protected Pokemon tinkaton = new Pokemon(
-            "Tinkaton",
-            new ArrayList<>(Arrays.asList(Type.FAIRY, Type.STEEL)),
-            new ArrayList<>(Arrays.asList(
-                    new Move("Gigaton Hammer", Type.STEEL, false),
-                    new Move("Play Rough", Type.FAIRY, false),
-                    new Move("Swords Dance", Type.NORMAL, true),
-                    new Move("Encore", Type.NORMAL, true)
-            ))
-    );
-    protected Pokemon rotom = new Pokemon(
-            "Rotom",
-            new ArrayList<>(Arrays.asList(Type.ELECTRIC, Type.WATER)),
-            new ArrayList<>(Arrays.asList(
-                    new Move("Hydro Pump", Type.WATER, false),
-                    new Move("Thunderbolt", Type.ELECTRIC, false),
-                    new Move("Hex", Type.GHOST, false),
-                    new Move("Nasty Plot", Type.DARK, true)
-
-            ))
-    );
-    protected Pokemon cetitan = new Pokemon(
-            "Cetitan",
-            new ArrayList<>(Arrays.asList(Type.ICE)),
-            new ArrayList<>(Arrays.asList(
-                    new Move("Avalanche", Type.ICE, false),
-                    new Move("Ice Shard", Type.ICE, false),
-                    new Move("Earthquake", Type.GROUND, false),
-                    new Move("Heavy Slam", Type.STEEL, false)
-
-            ))
-    );
-
+public class PokemonListTest extends TestSubjects {
     protected PokemonList pokemonList;
+
+    protected static final String PokemonsJsonString = "" +
+            "  \"pokemons\": [\n" +
+            "    {\n" +
+            "      \"types\": [\n" +
+            "        \"FAIRY\",\n" +
+            "        \"STEEL\"\n" +
+            "      ],\n" +
+            "      \"moves\": [\n" +
+            "        {\n" +
+            "          \"name\": \"Gigaton Hammer\",\n" +
+            "          \"type\": \"STEEL\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Play Rough\",\n" +
+            "          \"type\": \"FAIRY\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Swords Dance\",\n" +
+            "          \"type\": \"NORMAL\",\n" +
+            "          \"status\": true\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Encore\",\n" +
+            "          \"type\": \"NORMAL\",\n" +
+            "          \"status\": true\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"name\": \"Tinkaton\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"types\": [\n" +
+            "        \"ELECTRIC\",\n" +
+            "        \"WATER\"\n" +
+            "      ],\n" +
+            "      \"moves\": [\n" +
+            "        {\n" +
+            "          \"name\": \"Hydro Pump\",\n" +
+            "          \"type\": \"WATER\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Thunderbolt\",\n" +
+            "          \"type\": \"ELECTRIC\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Hex\",\n" +
+            "          \"type\": \"GHOST\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Nasty Plot\",\n" +
+            "          \"type\": \"DARK\",\n" +
+            "          \"status\": true\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"name\": \"Rotom\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"types\": [\n" +
+            "        \"ICE\"\n" +
+            "      ],\n" +
+            "      \"moves\": [\n" +
+            "        {\n" +
+            "          \"name\": \"Avalanche\",\n" +
+            "          \"type\": \"ICE\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Ice Shard\",\n" +
+            "          \"type\": \"ICE\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Earthquake\",\n" +
+            "          \"type\": \"GROUND\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Heavy Slam\",\n" +
+            "          \"type\": \"STEEL\",\n" +
+            "          \"status\": false\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"name\": \"Cetitan\"\n" +
+            "    }\n" +
+            "  ]\n";
 
     @BeforeEach
     public void setup() {
@@ -85,5 +139,13 @@ public class PokemonListTest {
         assertEquals(Arrays.asList(tinkaton, rotom), pokemonList.get());
         pokemonList.remove(tinkaton);
         assertEquals(Arrays.asList(rotom), pokemonList.get());
+    }
+
+    @Test
+    public void testToJson() {
+        assertEquals(
+                new JSONObject("{" + PokemonsJsonString + "}").toString(),
+                pokemonList.toJson().toString()
+        );
     }
 }
