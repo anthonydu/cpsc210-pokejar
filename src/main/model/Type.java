@@ -293,12 +293,10 @@ public enum Type {
     }
 
     /**
-     * Return a list of all Types parsed from a space separated String
-     *
-     * REQUIRES: str is space separated
+     * Return a list of all Types parsed from a list of Strings
      *
      * @param strs a list of strings that contains Type names
-     * @return a list of all Types parsed from a space separated String
+     * @return a list of all Types parsed from a list of Strings
      */
     public static List<Type> fromListOfStrings(List<String> strs) throws IllegalArgumentException {
         List<Type> types = new ArrayList<>();

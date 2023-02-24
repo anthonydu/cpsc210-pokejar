@@ -2,7 +2,6 @@ package util;
 
 import model.Team;
 import org.json.JSONArray;
-
 import java.util.ArrayList;
 
 public class TeamList extends ArrayList<Team> {

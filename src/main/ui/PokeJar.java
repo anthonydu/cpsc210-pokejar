@@ -2,12 +2,13 @@ package ui;
 
 import model.*;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import persistence.JsonFile;
-import persistence.JsonTools;
+import persistence.JsonUtil;
 import util.TeamList;
-
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.util.*;
 
 /**
@@ -90,7 +91,7 @@ public class PokeJar {
                     save();
                     break;
                 case "q":
-                    autoSave();
+                    save("./data/autosave.json");
                     System.exit(0);
                 default: showCommands();
             }
@@ -278,15 +279,14 @@ public class PokeJar {
     private static String analyzeTeam(Team team) {
         return team + "\n"
                 + "Number of Pokemon weak to types:\n"
-                + team.totalWeak() + "\n"
+                + team.numberOfWeakOrResist("weak") + "\n"
                 + "Number of Pokemon that resists types:\n"
-                + team.totalResist();
+                + team.numberOfWeakOrResist("resist");
     }
 
-    private void autoSave() {
-        save("./data/autosave.json");
-    }
-
+    /**
+     * Asks the user for a fileName and saves the current state of PokeJar to ./data/[fileName].json
+     */
     private void save() {
         while (true) {
             System.out.print("What is the file name that you want to save as? ");
@@ -294,28 +294,32 @@ public class PokeJar {
             if (!isValidFileName(fileName)) {
                 continue;
             }
-            try {
-                save("./data/" + fileName + ".json");
-                break;
-            } catch (IllegalArgumentException ex) {
-                System.out.println(ex.getMessage());
-            }
+            save("./data/" + fileName + ".json");
+            break;
         }
     }
 
-    private void save(String filePath) throws IllegalArgumentException {
-        JsonFile jsonFile = new JsonFile(filePath);
+    /**
+     * Saves the current state of PokeJar to the provided filePath
+     *
+     * @param filePath the file path to save to
+     */
+    private void save(String filePath) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("box", box.toJson());
         jsonObject.put("teams", teams.toJson());
         try {
+            JsonFile jsonFile = new JsonFile(filePath);
             jsonFile.write(jsonObject);
-        } catch (IOException ex) {
+        } catch (InvalidPathException | IOException ex) {
             System.out.println("Cannot write to file:");
             System.out.println(ex.getMessage());
         }
     }
 
+    /**
+     * Asks the user for a fileName, loads JSON, and overwrites the current state of PokeJar
+     */
     private void load() {
         JSONObject jsonObject;
         while (true) {
@@ -336,25 +340,50 @@ public class PokeJar {
         }
     }
 
-    private JSONObject parseJson(String fileName) {
-        JsonFile jsonFile = new JsonFile("./data/" + fileName + ".json");
+    /**
+     * Loads the provided jsonObject and replaces the current state of PokeJar with it
+     *
+     * MODIFIES: this
+     *
+     * @param jsonObject the JSONObject to load from
+     */
+    private void load(JSONObject jsonObject) {
         try {
+            this.box = new Box(parsePokemonList(jsonObject.getJSONObject("box")));
+            this.teams = parseTeams(jsonObject.getJSONArray("teams"));
+        } catch (JSONException ex) {
+            System.out.println("JSON is not a valid PokéJar save file:");
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * Parses and returns the JSONObject stored in ./data/[fileName].json
+     *
+     * @param fileName name of the JSON file in ./data/ to load
+     * @return the JSONObject stored in ./data/[fileName].json
+     */
+    private JSONObject parseJson(String fileName) {
+        try {
+            JsonFile jsonFile = new JsonFile("./data/" + fileName + ".json");
             return jsonFile.read();
-        } catch (IOException ex) {
-            System.out.println("Cannot read file:");
+        } catch (InvalidPathException | IOException | JSONException ex) {
+            System.out.println("Cannot parse JSON from file:");
             System.out.println(ex.getMessage());
             return null;
         }
     }
 
-    private void load(JSONObject jsonObject) {
-        this.box = new Box(parsePokemonList(jsonObject.getJSONObject("box")));
-        this.teams = parseTeams(jsonObject.getJSONArray("teams"));
-    }
-
-    private TeamList parseTeams(JSONArray teamsArray) {
+    /**
+     * Constructs a TeamList from a JSONArray
+     *
+     * @param teamsArray an JSONArray representation of a Team
+     * @return a TeamList of Teams
+     * @throws JSONException if teamsArray does not store a valid Team
+     */
+    private TeamList parseTeams(JSONArray teamsArray) throws JSONException {
         TeamList teams = new TeamList();
-        for (JSONObject team : JsonTools.objectsFromArray(teamsArray)) {
+        for (JSONObject team : JsonUtil.objectsFromArray(teamsArray)) {
             teams.add(new Team(
                     team.getString("name"),
                     parsePokemonList(team)
@@ -363,23 +392,37 @@ public class PokeJar {
         return teams;
     }
 
-    private List<Pokemon> parsePokemonList(JSONObject pokemonListObject) {
+    /**
+     * Parses a list of Pokemon from pokemonListObject
+     *
+     * @param pokemonListObject a JSONObject representation of a PokemonList
+     * @return a list of Pokemon parsed from pokemonListObject
+     * @throws JSONException if pokemonListObject does not store a valid PokemonList
+     */
+    private List<Pokemon> parsePokemonList(JSONObject pokemonListObject) throws JSONException {
         List<Pokemon> pokemons = new ArrayList<>();
-        for (JSONObject pokemon : JsonTools.objectsFromArray(pokemonListObject.getJSONArray("pokemons"))) {
-            List<Move> moves = new ArrayList<Move>() {{
-                for (JSONObject move : JsonTools.objectsFromArray(pokemon.getJSONArray("moves"))) {
-                    add(new Move(move.getString("name"), Type.fromString(move.getString("type")), move.getBoolean("status")));
-                }
-            }};
+        for (JSONObject pokemon : JsonUtil.objectsFromArray(pokemonListObject.getJSONArray("pokemons"))) {
+            List<Move> moves = new ArrayList<>();
+            for (JSONObject move : JsonUtil.objectsFromArray(pokemon.getJSONArray("moves"))) {
+                moves.add(new Move(move.getString("name"),
+                        Type.fromString(move.getString("type")),
+                        move.getBoolean("status")));
+            }
             pokemons.add(new Pokemon(
                     pokemon.getString("name"),
-                    Type.fromListOfStrings(JsonTools.stringsFromArray(pokemon.getJSONArray("types"))),
+                    Type.fromListOfStrings(JsonUtil.stringsFromArray(pokemon.getJSONArray("types"))),
                     moves
             ));
         }
         return pokemons;
     }
 
+    /**
+     * Checks if a fileName is valid (does not contain ".")
+     *
+     * @param fileName a file name string
+     * @return true if fileName is valid, false otherwise
+     */
     private static boolean isValidFileName(String fileName) {
         if (fileName.contains(".")) {
             System.out.println("File name cannot contain \".\"!");

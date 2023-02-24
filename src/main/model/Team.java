@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONObject;
 import util.PokemonList;
-
 import java.util.*;
 
 /**
@@ -73,28 +72,23 @@ public class Team extends PokemonList {
         return str.trim();
     }
 
+    /**
+     * Returns a JSONObject that represents this Team
+     *
+     * @return a JSONObject that represents this Team
+     */
     @Override
     public JSONObject toJson() {
         return super.toJson().put("name", this.name);
     }
 
-    public Map<Pokemon, Map<Type, Double>> allDefensiveMultipliers() {
-        Map<Pokemon, Map<Type, Double>> allMultipliers = new LinkedHashMap<>();
-        for (Pokemon p : pokemons) {
-            allMultipliers.put(p, Type.defensiveMultipliers(p.getTypes()));
-        }
-        return allMultipliers;
-    }
-
-    public Map<Type, Integer> totalResist() {
-        return this.total("resist");
-    }
-
-    public Map<Type, Integer> totalWeak() {
-        return this.total("weak");
-    }
-
-    private Map<Type, Integer> total(String mode) {
+    /**
+     * Generates a map of the number of Pokemon in this Team that is weak to or resist each Type depending on mode
+     *
+     * @param mode either "weak" or "resist"
+     * @return a map of the number of Pokemon in this Team that is weak to or resist each Type depending on mode
+     */
+    public Map<Type, Integer> numberOfWeakOrResist(String mode) {
         if (mode != "weak" && mode != "resist") {
             throw new IllegalArgumentException("Invalid mode, must be \"weak\" or \"resist\"!");
         }
@@ -112,5 +106,18 @@ public class Team extends PokemonList {
             }
         }
         return total;
+    }
+
+    /**
+     * Returns a map of each Pokemon's defensive multipliers
+     *
+     * @return a map of each Pokemon's defensive multipliers
+     */
+    public Map<Pokemon, Map<Type, Double>> allDefensiveMultipliers() {
+        Map<Pokemon, Map<Type, Double>> allMultipliers = new LinkedHashMap<>();
+        for (Pokemon p : pokemons) {
+            allMultipliers.put(p, Type.defensiveMultipliers(p.getTypes()));
+        }
+        return allMultipliers;
     }
 }

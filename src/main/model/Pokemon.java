@@ -113,6 +113,11 @@ public class Pokemon {
         return str.trim();
     }
 
+    /**
+     * Returns a list of types in this Pokemon's moveset
+     *
+     * @return a list of types in this Pokemon's moveset
+     */
     public List<Type> moveTypes() {
         List<Type> moveTypes = new ArrayList<>();
         for (Move m : this.getMoves()) {
