@@ -6,7 +6,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonUtil {
+public final class JsonUtil {
+    private JsonUtil() {}
+
     /**
      * Returns a list of JSONObjects contained in the jsonArray
      *
