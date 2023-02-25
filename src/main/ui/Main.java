@@ -1,13 +1,13 @@
 package ui;
 
 /**
- * Runs PokeJar
+ * Runs PokeJar.
  *
  * @author Anthony Du
  */
 public class Main {
     /**
-     * Runs PokeJar
+     * Runs PokeJar.
      *
      * @param args console input
      */

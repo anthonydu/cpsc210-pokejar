@@ -7,6 +7,11 @@ import model.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A class containing premade Pokemon objects for testing use.
+ *
+ * @author Anthony Du
+ */
 public class TestSubjects {
     protected static final Pokemon tinkaton = new Pokemon(
             "Tinkaton",

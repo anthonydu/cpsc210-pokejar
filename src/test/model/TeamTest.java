@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * Tests model.Team class
+ * Tests model.Team class.
  *
  * @author Anthony Du
  */

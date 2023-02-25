@@ -6,11 +6,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A static class containing utility functions for handling JSON Objects.
+ *
+ * @author Anthony Du
+ */
 public final class JsonUtil {
     private JsonUtil() {}
 
     /**
-     * Returns a list of JSONObjects contained in the jsonArray
+     * Returns a list of JSONObjects contained in the jsonArray.
      *
      * @param jsonArray the JSONArray to get JSONObjects from
      * @return a list of JSONObjects contained in the jsonArray
@@ -25,7 +30,7 @@ public final class JsonUtil {
     }
 
     /**
-     * Returns a list of Strings contained in the jsonArray
+     * Returns a list of Strings contained in the jsonArray.
      *
      * @param jsonArray the JSONArray to get Strings from
      * @return a list of strings contained in the jsonArray

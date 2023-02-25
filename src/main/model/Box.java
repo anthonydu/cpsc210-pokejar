@@ -4,28 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a Box that holds an arbitrary number of Pokemon
+ * A Box that holds an arbitrary number of Pokemon.
  *
  * @author Anthony Du
  */
 public class Box extends ArrayList<Pokemon> {
 
+    /**
+     * Constructs an empty Box.
+     */
     public Box() {
         super();
     }
 
     /**
-     * Constructs a Box with an existing list of Pokemon
+     * Constructs a Box with an existing list of Pokemon.
      *
-     * @param pokemons a list of Pokemon to initialize the Team
+     * @param pokemons a list of Pokemon to initialize the Box
      */
     public Box(List<Pokemon> pokemons) {
         this.addAll(pokemons);
     }
 
     /**
-     * Adds a Pokemon to this Box
-     *
+     * Adds a Pokemon to this Box.
+     * <p>
      * MODIFIES: this
      *
      * @param pokemon the Pokemon to add to this Box
@@ -42,7 +45,7 @@ public class Box extends ArrayList<Pokemon> {
     }
 
     /**
-     * Returns a String that represents this Box
+     * Generates a String that represents this Box.
      *
      * @return a String that represents this Box
      */

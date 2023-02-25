@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 /**
- * Represents a Pokemon with a name, a list of Types and a list of Moves
+ * A Pokemon with a name, a list of Types and a list of Moves.
  *
  * @author Anthony Du
  */
@@ -13,7 +13,7 @@ public class Pokemon {
     private List<Move> moves;
 
     /**
-     * Constructs a Pokemon with name, Types, and moves
+     * Constructs a Pokemon with name, Types, and moves.
      *
      * @param name the name of this Pokemon
      * @param types the Types of this Pokemon
@@ -26,7 +26,7 @@ public class Pokemon {
     }
 
     /**
-     * Returns the name of this Pokemon
+     * Gets the name of this Pokemon.
      *
      * @return the name of this Pokemon
      */
@@ -35,7 +35,7 @@ public class Pokemon {
     }
 
     /**
-     * Returns the Types of this Pokemon
+     * Gets the Types of this Pokemon.
      *
      * @return the Types of this Pokemon
      */
@@ -44,7 +44,7 @@ public class Pokemon {
     }
 
     /**
-     * Returns the moveset of this Pokemon
+     * Gets the moveset of this Pokemon.
      *
      * @return the moveset of this Pokemon
      */
@@ -53,8 +53,8 @@ public class Pokemon {
     }
 
     /**
-     * Sets the name of this Pokemon
-     *
+     * Sets the name of this Pokemon.
+     * <p>
      * MODIFIES: this
      *
      * @param name the name to set to
@@ -64,8 +64,8 @@ public class Pokemon {
     }
 
     /**
-     * Sets the Types of this Pokemon
-     *
+     * Sets the Types of this Pokemon.
+     * <p>
      * MODIFIES: this
      *
      * @param types the Types to set to
@@ -75,8 +75,8 @@ public class Pokemon {
     }
 
     /**
-     * Sets the moveset of this Pokemon
-     *
+     * Sets the moveset of this Pokemon.
+     * <p>
      * MODIFIES: this
      *
      * @param moves the moveset to set to
@@ -86,7 +86,7 @@ public class Pokemon {
     }
 
     /**
-     * Returns a String that represents this Pokemon
+     * Generates a String that represents this Pokemon.
      *
      * @return a String that represents this Pokemon
      */
@@ -105,7 +105,7 @@ public class Pokemon {
     }
 
     /**
-     * Returns a list of types in this Pokemon's moveset
+     * Generates a list of types in this Pokemon's moveset.
      *
      * @return a list of types in this Pokemon's moveset
      */

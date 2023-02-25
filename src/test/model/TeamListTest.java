@@ -3,11 +3,15 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.TestSubjects;
-
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests model.TeamList class.
+ *
+ * @author Anthony Du
+ */
 public class TeamListTest extends TestSubjects {
     private TeamList teams;
 

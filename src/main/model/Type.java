@@ -3,9 +3,9 @@ package model;
 import java.util.*;
 
 /**
- * Contains all Pokemon Types,
+ * An enum of all Pokemon Types,
  * methods that give their strengths, weaknesses, and immunities,
- * and static methods for analysis and working with Strings.
+ * and static methods for analyzing Types and working with Strings.
  *
  * @author Anthony Du
  */
@@ -14,7 +14,7 @@ public enum Type {
     FLYING, PSYCHIC, BUG, ROCK, GHOST, DRAGON, DARK, STEEL, FAIRY;
 
     /**
-     * A map of every Type and their strengths
+     * A map of every Type and their strengths.
      */
     private static final Map<Type, List<Type>> strengths = new LinkedHashMap<Type, List<Type>>() {
         {
@@ -40,7 +40,7 @@ public enum Type {
     };
 
     /**
-     * A map of every Type and their weaknesses
+     * A map of every Type and their weaknesses.
      */
     private static final Map<Type, List<Type>> weaknesses = new LinkedHashMap<Type, List<Type>>() {
         {
@@ -66,7 +66,7 @@ public enum Type {
     };
 
     /**
-     * A map of every Type and their immunities
+     * A map of every Type and their immunities.
      */
     private static final Map<Type, List<Type>> immunities = new LinkedHashMap<Type, List<Type>>() {
         {
@@ -92,7 +92,7 @@ public enum Type {
     };
 
     /**
-     * Returns a list of Types that this Type receives 0.5x damage from
+     * Returns a list of Types that this Type receives 0.5x damage from.
      *
      * @return a list of Types that this Type receives 0.5x damage from
      */
@@ -101,7 +101,7 @@ public enum Type {
     }
 
     /**
-     * Returns a list of Types that this Type receives 2x damage from
+     * Returns a list of Types that this Type receives 2x damage from.
      *
      * @return a list of Types that this Type receives 2x damage from
      */
@@ -110,7 +110,7 @@ public enum Type {
     }
 
     /**
-     * Returns a list of Types that this Type receives 0x damage from
+     * Returns a list of Types that this Type receives 0x damage from.
      *
      * @return a list of Types that this Type receives 0x damage from
      */
@@ -119,7 +119,7 @@ public enum Type {
     }
 
     /**
-     * Returns a list of Types that receives 1x damage from this Type
+     * Returns a list of Types that receives 1x damage from this Type.
      *
      * @return a list of Types that receives 1x damage from this Type
      */
@@ -134,7 +134,7 @@ public enum Type {
     }
 
     /**
-     * Returns a list of Types that receives 2x damage from this Type
+     * Returns a list of Types that receives 2x damage from this Type.
      *
      * @return a list of Types that receives 2x damage from this Type
      */
@@ -149,7 +149,7 @@ public enum Type {
     }
 
     /**
-     * Returns a list of Types that receives 0.5x damage from this Type
+     * Returns a list of Types that receives 0.5x damage from this Type.
      *
      * @return a list of Types that receives 0.5x damage from this Type
      */
@@ -164,7 +164,7 @@ public enum Type {
     }
 
     /**
-     * Returns a list of Types that receives 0x damage from this Type
+     * Returns a list of Types that receives 0x damage from this Type.
      *
      * @return a list of Types that receives 0x damage from this Type
      */
@@ -179,7 +179,7 @@ public enum Type {
     }
 
     /**
-     * Returns a Map of multipliers when this Type is attacked by each Type
+     * Returns a Map of multipliers when this Type is attacked by each Type.
      *
      * @return a Map of multipliers when this Type is attacked by each Type
      */
@@ -200,7 +200,7 @@ public enum Type {
     }
 
     /**
-     * Returns a Map of combined multipliers when a set of arbitrary number of Types are attacked by each Type
+     * Returns a Map of combined multipliers when a set of arbitrary number of Types are attacked by each Type.
      *
      * @param types a list of Types of arbitrary size
      * @return a Map of combined multipliers when a set of arbitrary number of Types are attacked by each Type
@@ -218,7 +218,7 @@ public enum Type {
     }
 
     /**
-     * Returns a Map of multipliers when this Type attacks each Type
+     * Returns a Map of multipliers when this Type attacks each Type.
      *
      * @return a Map of multipliers when this Type attacks each Type
      */
@@ -239,7 +239,7 @@ public enum Type {
     }
 
     /**
-     * Returns a Map of the max multiplier a list of types has on each type
+     * Returns a Map of the max multiplier a list of types has on each type.
      *
      * @param types a list of Types of arbitrary size
      * @return a Map of the max multiplier a list of types has on each type
@@ -262,7 +262,7 @@ public enum Type {
     }
 
     /**
-     * Parses a Type from a String
+     * Parses a Type from a String.
      *
      * @param str a String that has the name of a Type
      * @return a Type parsed from a String
@@ -293,7 +293,7 @@ public enum Type {
     }
 
     /**
-     * Return a list of all Types parsed from a list of Strings
+     * Return a list of all Types parsed from a list of Strings.
      *
      * @param strs a list of strings that contains Type names
      * @return a list of all Types parsed from a list of Strings

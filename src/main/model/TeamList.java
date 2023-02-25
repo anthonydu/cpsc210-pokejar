@@ -2,7 +2,17 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * A list of Teams.
+ *
+ * @author Anthony Du
+ */
 public class TeamList extends ArrayList<Team> {
+    /**
+     * Generates a String representing this TeamList.
+     *
+     * @return a String representing this TeamList
+     */
     @Override
     public String toString() {
         String result = "";

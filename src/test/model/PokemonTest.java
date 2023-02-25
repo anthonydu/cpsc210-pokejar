@@ -9,7 +9,7 @@ import static model.Type.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests model.Pokemon class
+ * Tests model.Pokemon class.
  *
  * @author Anthony Du
  */

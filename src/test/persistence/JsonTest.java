@@ -15,6 +15,11 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the persistence package.
+ *
+ * @author Anthony Du
+ */
 public class JsonTest extends TestSubjects {
     JsonFile testFile = new JsonFile("./data/testSaveJarToFile.json");
     Jar jar;
@@ -207,9 +212,11 @@ public class JsonTest extends TestSubjects {
     @BeforeEach
     public void setup() throws IOException {
         jar = new Jar();
+        // gives jar properties and saves it to test file
         jar.setBox(new Box(Arrays.asList(tinkaton, rotom, cetitan)));
         jar.getTeams().add(new Team("myTeam", Arrays.asList(tinkaton, rotom, cetitan)));
         testFile.saveJarToFile(jar);
+        // gives jar different properties and loads the saved test file
         jar.setBox(new Box(Arrays.asList(rotom, tinkaton, cetitan)));
         jar.getTeams().add(new Team("myTeam", Arrays.asList(cetitan, tinkaton, rotom)));
         testFile.loadFileToJar(jar);
@@ -221,7 +228,7 @@ public class JsonTest extends TestSubjects {
     }
 
     @Test
-    public void testLoadJarToApp() throws IOException {
+    public void testLoadJarToApp() {
         assertEquals(new JSONObject(expectedJsonString).toString(), new JSONObject(jar).toString());
     }
 

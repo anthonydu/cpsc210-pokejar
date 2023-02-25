@@ -7,7 +7,7 @@ import static model.Type.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests model.Move class
+ * Tests model.Move class.
  *
  * @author Anthony Du
  */

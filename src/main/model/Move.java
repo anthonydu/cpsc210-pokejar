@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 /**
- * Represents a Pokemon's Move with a name, a Type, and whether it's a status or attacking Move
+ * A Pokemon's Move with a name, a Type, and whether it's a status or attacking Move.
  *
  * @author Anthony Du
  */
@@ -13,7 +13,7 @@ public class Move {
     private boolean isStatus;
 
     /**
-     * Constructs a Move with name, types and whether it is status or attacking
+     * Constructs a Move with name, types and whether it is status or attacking.
      *
      * @param name the name of this Move
      * @param type the type of this Move
@@ -26,7 +26,7 @@ public class Move {
     }
 
     /**
-     * Returns the name of this Move
+     * Gets the name of this Move.
      *
      * @return the name of this Move
      */
@@ -35,7 +35,7 @@ public class Move {
     }
 
     /**
-     * Returns the type of this Move
+     * Gets the type of this Move.
      *
      * @return the type of this Move
      */
@@ -44,7 +44,7 @@ public class Move {
     }
 
     /**
-     * Returns whether this Move is status or attacking
+     * Gets whether this Move is status or attacking.
      *
      * @return whether this Move is status or attacking
      */
@@ -53,8 +53,8 @@ public class Move {
     }
 
     /**
-     * Sets the name of this Move
-     *
+     * Sets the name of this Move.
+     * <p>
      * MODIFIES: this
      *
      * @param name the name to set to
@@ -64,8 +64,8 @@ public class Move {
     }
 
     /**
-     * Sets the Type of this Move
-     *
+     * Sets the Type of this Move.
+     * <p>
      * MODIFIES: this
      *
      * @param type the Type to set to
@@ -75,8 +75,8 @@ public class Move {
     }
 
     /**
-     * Sets whether this Move is status or attacking
-     *
+     * Sets whether this Move is status or attacking.
+     * <p>
      * MODIFIES: this
      *
      * @param isStatus true for status Move and false for attacking Move
@@ -86,7 +86,7 @@ public class Move {
     }
 
     /**
-     * Returns a String that represents this Move
+     * Generates a String that represents this Move.
      *
      * @return a String that represents this Move
      */

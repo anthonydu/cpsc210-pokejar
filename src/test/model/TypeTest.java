@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static model.Type.*;
 
 /**
- * Tests model.Type enum class
+ * Tests model.Type enum class.
  *
  * @author Anthony Du
  */

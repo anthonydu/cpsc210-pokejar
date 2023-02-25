@@ -18,7 +18,7 @@ public class PokeJar {
     private Jar jar = new Jar();
 
     /**
-     * Constructs a PokeJar and starts its terminal user interface
+     * Constructs a new PokeJar app and starts its terminal user interface with autosave loaded.
      */
     public PokeJar() {
         load("autosave");
@@ -26,8 +26,8 @@ public class PokeJar {
     }
 
     /**
-     * PokeJar's terminal user interface
-     *
+     * Starts PokeJar's terminal user interface.
+     * <p>
      * MODIFIES: this
      */
     @SuppressWarnings("methodlength")
@@ -84,7 +84,7 @@ public class PokeJar {
     }
 
     /**
-     * Prints welcome message
+     * Prints welcome message.
      */
     private static void welcomeMessage() {
         System.out.println();
@@ -94,7 +94,7 @@ public class PokeJar {
     }
 
     /**
-     * Shows all available commands
+     * Shows all available commands.
      */
     private static void showCommands() {
         System.out.println(""
@@ -109,7 +109,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user to create a new Pokemon and returns it
+     * Asks the user to create a new Pokemon and returns it.
      *
      * @return the new Pokemon that the user has created
      */
@@ -135,7 +135,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user to create a new moveset and returns it
+     * Asks the user to create a new moveset and returns it.
      *
      * @return the moveset that the user has created
      */
@@ -166,7 +166,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user for an index and returns the Pokemon at that index of the box
+     * Asks the user for an index and returns the Pokemon at that index of the box.
      *
      * @return the Pokemon at user specified index
      */
@@ -175,7 +175,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user for an index and returns the Team at that index of the list of teams
+     * Asks the user for an index and returns the Team at that index of the list of teams.
      *
      * @return the Pokemon at user specified index
      */
@@ -184,7 +184,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user for an index and returns the thing at that index of a list of things
+     * Asks the user for an index and returns the thing at that index of a list of things.
      *
      * @param <T> the type that listOfThings holds
      * @param thingName the name of the thing that the user is trying to get
@@ -207,7 +207,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user to create a new Team and returns it
+     * Asks the user to create a new Team and returns it.
      *
      * @return the Team that the user has created
      */
@@ -236,7 +236,7 @@ public class PokeJar {
     }
 
     /**
-     * Returns a String that represents the analysis of a Pokemon
+     * Generates a String that represents the analysis of a Pokemon.
      *
      * @param pokemon the Pokemon to analyze
      * @return a String that represents the analysis of a Pokemon
@@ -256,7 +256,7 @@ public class PokeJar {
     }
 
     /**
-     * Returns a String that represents the analysis of a Team
+     * Generates a String that represents the analysis of a Team.
      *
      * @param team the Team to analyze
      * @return a String that represents the analysis of a Team
@@ -270,7 +270,7 @@ public class PokeJar {
     }
 
     /**
-     * Asks the user for a fileName and saves the current state of PokeJar to ./data/[fileName].json
+     * Asks the user for a fileName and saves the current state of PokeJar to file.
      */
     private void saveDialog() {
         String fileName;
@@ -288,6 +288,11 @@ public class PokeJar {
         save(fileName);
     }
 
+    /**
+     * Saves the current state of PokeJar to ./data/[fileName].json.
+     *
+     * @param fileName the name of the destination file
+     */
     private void save(String fileName) {
         try {
             new JsonFile("./data/" + fileName + ".json").saveJarToFile(jar);
@@ -299,7 +304,9 @@ public class PokeJar {
 
 
     /**
-     * Asks the user for a fileName, loads JSON, and overwrites the current state of PokeJar
+     * Asks the user for a fileName, loads JSON, and overwrites the current state of PokeJar.
+     * <p>
+     * MODIFIES: this
      */
     private void loadDialog() {
         String fileName;
@@ -318,6 +325,13 @@ public class PokeJar {
         load(fileName);
     }
 
+    /**
+     * Loads JSON at ./data/[fileName].json, and overwrites the current state of PokeJar.
+     * <p>
+     * MODIFIES: this
+     *
+     * @param fileName the source file name
+     */
     private void load(String fileName) {
         try {
             new JsonFile("./data/" + fileName + ".json").loadFileToJar(jar);

@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 /**
- * Represents a Team with a name and holds a list of Pokemon
+ * A Team with a name and a list of Pokemon.
  *
  * @author Anthony Du
  */
@@ -12,7 +12,7 @@ public class Team {
     private List<Pokemon> pokemons;
 
     /**
-     * Constructs a Team with an empty list of Pokemon
+     * Constructs a Team with a name and an empty list of Pokemon.
      *
      * @param name the name of this Team
      */
@@ -21,10 +21,10 @@ public class Team {
     }
 
     /**
-     * Constructs a Team with an existing list of Pokemon
+     * Constructs a Team with a name and an existing list of Pokemon.
      *
      * @param name the name of this Team
-     * @param pokemons a list of Pokemon to initialize the Team
+     * @param pokemons a list of Pokemon
      */
     public Team(String name, List<Pokemon> pokemons) {
         this.name = name;
@@ -32,7 +32,7 @@ public class Team {
     }
 
     /**
-     * Returns the name of this Team
+     * Gets the name of this Team.
      *
      * @return the name of this Team
      */
@@ -41,7 +41,9 @@ public class Team {
     }
 
     /**
-     * Sets the name of this Team
+     * Sets the name of this Team.
+     * <p>
+     * MODIFIES: this
      *
      * @param name the name to set to
      */
@@ -49,16 +51,28 @@ public class Team {
         this.name = name;
     }
 
+    /**
+     * Gets the list of Pokemon in this team.
+     *
+     * @return the list of Pokemon in this team
+     */
     public List<Pokemon> getPokemons() {
         return pokemons;
     }
 
+    /**
+     * Sets the list of Pokemon in this team.
+     * <p>
+     * MODIFIES: this
+     *
+     * @param pokemons the list of Pokemon to set to
+     */
     public void setPokemons(List<Pokemon> pokemons) {
         this.pokemons = pokemons;
     }
 
     /**
-     * Returns a String that represents this Team
+     * Generates a String that represents this Team.
      *
      * @return a String that represents this Team
      */
@@ -77,7 +91,7 @@ public class Team {
     }
 
     /**
-     * Generates a map of the number of Pokemon in this Team that is weak to or resist each Type depending on mode
+     * Generates a map of the number of Pokemon in this Team that is weak to or resist each Type depending on mode.
      *
      * @param mode either "weak" or "resist"
      * @return a map of the number of Pokemon in this Team that is weak to or resist each Type depending on mode
@@ -103,7 +117,7 @@ public class Team {
     }
 
     /**
-     * Returns a map of each Pokemon's defensive multipliers
+     * Generates a map of each Pokemon's defensive multipliers.
      *
      * @return a map of each Pokemon's defensive multipliers
      */
