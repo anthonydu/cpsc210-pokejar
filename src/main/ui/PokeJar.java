@@ -252,7 +252,7 @@ public class PokeJar {
                 + "Moves:\n"
                 + movesStr.trim() + "\n"
                 + "Multipliers when attacking with your moveset:\n"
-                + Type.offensiveMultipliers(pokemon.moveTypes());
+                + Type.offensiveMultipliers(pokemon.attackingMoveTypes());
     }
 
     /**

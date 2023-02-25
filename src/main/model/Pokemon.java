@@ -109,7 +109,7 @@ public class Pokemon {
      *
      * @return a list of types in this Pokemon's moveset
      */
-    public List<Type> moveTypes() {
+    public List<Type> attackingMoveTypes() {
         List<Type> moveTypes = new ArrayList<>();
         for (Move m : this.getMoves()) {
             if (!m.isStatus()) {

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class PokemonTest {
     private final Move MOVE0 = new Move("myMove0", FAIRY, false);
-    private final Move MOVE1 = new Move("myMove1", FIRE, false);
+    private final Move MOVE1 = new Move("myMove1", FIRE, true);
     private final Move MOVE2 = new Move("myMove2", GRASS, false);
     private final Move MOVE3 = new Move("myMove3", STEEL, false);
 
@@ -52,8 +52,8 @@ public class PokemonTest {
 
     @Test
     public void testMoveTypes() {
-        assertEquals(Arrays.asList(FAIRY, FIRE, GRASS, STEEL), pokemon.moveTypes());
+        assertEquals(Arrays.asList(FAIRY, GRASS, STEEL), pokemon.attackingMoveTypes());
         pokemon.setMoves(Arrays.asList(MOVE3, MOVE2, MOVE1, MOVE0));
-        assertEquals(Arrays.asList(STEEL, GRASS, FIRE, FAIRY), pokemon.moveTypes());
+        assertEquals(Arrays.asList(STEEL, GRASS, FAIRY), pokemon.attackingMoveTypes());
     }
 }
