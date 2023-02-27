@@ -4,7 +4,6 @@ import model.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import model.TeamList;
 
 import java.io.IOException;
 import java.nio.file.Files;

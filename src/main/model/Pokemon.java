@@ -1,6 +1,8 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A Pokemon with a name, a list of Types and a list of Moves.

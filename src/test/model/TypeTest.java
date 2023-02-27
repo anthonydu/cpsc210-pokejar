@@ -1,10 +1,11 @@
 package model;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static model.Type.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests model.Type enum class.

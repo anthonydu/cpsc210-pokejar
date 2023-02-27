@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests the persistence package.

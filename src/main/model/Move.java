@@ -1,6 +1,6 @@
 package model;
 
-import java.util.*;
+import java.util.Collections;
 
 /**
  * A Pokemon's Move with a name, a Type, and whether it's a status or attacking Move.

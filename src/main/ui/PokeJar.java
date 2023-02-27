@@ -6,7 +6,10 @@ import persistence.JsonFile;
 
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * The PokeJar Application.
@@ -31,7 +34,7 @@ public class PokeJar {
      * MODIFIES: this
      */
     @SuppressWarnings("methodlength")
-    public void startTUI() {
+    private void startTUI() {
         welcomeMessage();
 
         while (true) {
