@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Collections;
-
 /**
  * A Pokemon's Move with a name, a Type, and whether it's a status or attacking Move.
  *
@@ -54,8 +52,6 @@ public class Move {
 
     /**
      * Sets the name of this Move.
-     * <p>
-     * MODIFIES: this
      *
      * @param name the name to set to
      */
@@ -65,8 +61,6 @@ public class Move {
 
     /**
      * Sets the Type of this Move.
-     * <p>
-     * MODIFIES: this
      *
      * @param type the Type to set to
      */
@@ -76,8 +70,6 @@ public class Move {
 
     /**
      * Sets whether this Move is status or attacking.
-     * <p>
-     * MODIFIES: this
      *
      * @param isStatus true for status Move and false for attacking Move
      */
@@ -92,14 +84,9 @@ public class Move {
      */
     @Override
     public String toString() {
-        String str = "";
-        if (this.name.length() >= 16) {
-            str += this.name.substring(0, 14) + "… ";
-        } else {
-            str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
-        }
+        String str = StringUtil.fixCharCount(this.name, 15) + " ";
         return str
-                + this.type.name() + String.join("", Collections.nCopies(16 - this.type.name().length(), " "))
+                + StringUtil.fixCharCount(this.type.name(), 15) + " "
                 + (this.isStatus ? "Status" : "Attacking");
     }
 }

@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A Box that holds an arbitrary number of Pokemon.
@@ -21,9 +23,16 @@ public class Box extends ArrayList<Pokemon> {
      * Constructs a Box with an existing list of Pokemon.
      *
      * @param pokemons a list of Pokemon to initialize the Box
+     * @throws IllegalArgumentException if pokemons contains multiple Pokemon with the same name
      */
-    public Box(List<Pokemon> pokemons) {
+    public Box(List<Pokemon> pokemons) throws IllegalArgumentException {
         this.addAll(pokemons);
+        Set<String> namesSet = new HashSet<>();
+        for (Pokemon p : this) {
+            if (!namesSet.add(p.getName())) {
+                throw new IllegalArgumentException("Box cannot contain multiple Pokémon with the same name!");
+            }
+        }
     }
 
     /**
@@ -33,15 +42,31 @@ public class Box extends ArrayList<Pokemon> {
      *
      * @param pokemon the Pokemon to add to this Box
      * @return true if Pokemon is added successfully
-     * @throws IllegalArgumentException if this Box already contains the Pokemon that is passed in
      */
     @Override
-    public boolean add(Pokemon pokemon) throws IllegalArgumentException {
-        if (this.contains(pokemon)) {
-            throw new IllegalArgumentException("Pokémon already in box!");
+    public boolean add(Pokemon pokemon) {
+        for (Pokemon p : this) {
+            if (p.getName().equals(pokemon.getName())) {
+                return false;
+            }
         }
         super.add(pokemon);
         return true;
+    }
+
+    /**
+     * Returns the index of a Pokemon with the specified name.
+     *
+     * @param name the name of the Pokemon to find
+     * @return the index of a Pokemon with the specified name
+     */
+    public int indexOf(String name) {
+        for (Pokemon p : this) {
+            if (p.getName().equals(name)) {
+                return indexOf(p);
+            }
+        }
+        return -1;
     }
 
     /**

@@ -53,12 +53,12 @@ public class TypeTest {
     }
 
     @Test
-    public void testFromListOfStrings() {
+    public void testFromListOfStrings() throws Exception {
         for (Type t : values()) {
             assertEquals(t, fromString(t.toString()));
         }
-        assertThrows(IllegalArgumentException.class, () -> fromString("spicy pepper"));
-        assertThrows(IllegalArgumentException.class, () -> fromListOfStrings(Arrays.asList("dark", "grassy")));
+        assertThrows(PokemonTypeException.class, () -> fromString("spicy pepper"));
+        assertThrows(PokemonTypeException.class, () -> fromListOfStrings(Arrays.asList("dark", "grassy")));
 
         assertEquals(
                 Arrays.asList(GROUND),
@@ -73,7 +73,7 @@ public class TypeTest {
                 fromListOfStrings(Arrays.asList("fire", "grass", "fairy"))
         );
         assertThrows(
-                IllegalArgumentException.class,
+                PokemonTypeException.class,
                 () -> fromListOfStrings(Arrays.asList("steel", "normal", "steel"))
         );
     }

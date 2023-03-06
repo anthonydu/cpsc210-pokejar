@@ -1,6 +1,9 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A Team with a name and a list of Pokemon.
@@ -25,8 +28,12 @@ public class Team {
      *
      * @param name the name of this Team
      * @param pokemons a list of Pokemon
+     * @throws IllegalArgumentException if a team has more than 6 Pokemon
      */
     public Team(String name, List<Pokemon> pokemons) {
+        if (pokemons.size() > 6) {
+            throw new IllegalArgumentException("A team cannot have more than 6 Pokémon!");
+        }
         this.name = name;
         this.pokemons = pokemons;
     }
@@ -42,8 +49,6 @@ public class Team {
 
     /**
      * Sets the name of this Team.
-     * <p>
-     * MODIFIES: this
      *
      * @param name the name to set to
      */
@@ -61,31 +66,15 @@ public class Team {
     }
 
     /**
-     * Sets the list of Pokemon in this team.
-     * <p>
-     * MODIFIES: this
-     *
-     * @param pokemons the list of Pokemon to set to
-     */
-    public void setPokemons(List<Pokemon> pokemons) {
-        this.pokemons = pokemons;
-    }
-
-    /**
      * Generates a String that represents this Team.
      *
      * @return a String that represents this Team
      */
     @Override
     public String toString() {
-        String str = "";
-        if (this.name.length() >= 16) {
-            str += this.name.substring(0, 14) + "… ";
-        } else {
-            str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
-        }
+        String str = StringUtil.fixCharCount(this.name, 15) + " ";
         for (Pokemon p : this.pokemons) {
-            str += p.getName() + String.join("", Collections.nCopies(16 - p.getName().length(), " "));
+            str += StringUtil.fixCharCount(p.getName(), 15) + " ";
         }
         return str.trim();
     }
@@ -95,8 +84,9 @@ public class Team {
      *
      * @param mode either "weak" or "resist"
      * @return a map of the number of Pokemon in this Team that is weak to or resist each Type depending on mode
+     * @throws IllegalArgumentException if mode is neither "weak" or "resist"
      */
-    public Map<Type, Integer> numberOfWeakOrResist(String mode) {
+    public Map<Type, Integer> numberOfWeakOrResist(String mode) throws IllegalArgumentException {
         if (mode != "weak" && mode != "resist") {
             throw new IllegalArgumentException("Invalid mode, must be \"weak\" or \"resist\"!");
         }

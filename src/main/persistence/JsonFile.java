@@ -84,12 +84,49 @@ public class JsonFile {
      * MODIFIES: jar
      *
      * @param jar the Jar to load the content of the file to
-     * @throws JSONException if the JSON at filePath is not a valid Jar save
+     * @throws JSONException if the file at filePath is not a valid JSON file
      * @throws IOException if an I/O error occurs writing to or creating the file
+     * @throws InvalidJarException if the JSON at filePath is not a valid Jar save
      */
-    public void loadFileToJar(Jar jar) throws JSONException, IOException {
-        jar.setBox(parseBox(this.read().getJSONArray("box")));
-        jar.setTeams(parseTeams(this.read().getJSONArray("teams")));
+    public void loadFileToJar(Jar jar) throws JSONException, IOException, InvalidJarException {
+        Box box;
+        TeamList teams;
+        try {
+            box = parseBox(this.read().getJSONArray("box"));
+            teams = parseTeams(this.read().getJSONArray("teams"));
+        } catch (PokemonTypeException | IllegalArgumentException ex) {
+            throw new InvalidJarException(ex.getMessage());
+        }
+        if (!hasValidTeams(teams, box)) {
+            throw new InvalidJarException("All teams must contain Pokémon that are in the box!");
+        } else {
+            jar.setBox(box);
+            jar.setTeams(teams);
+        }
+    }
+
+    /**
+     * Checks if all teams only contain Pokemon that exist in the box.
+     * If the teams are valid, replaces every Pokemon that are in teams with its instance in the box.
+     *
+     * @param teams a TeamList to check
+     * @param box a Box to validate teams
+     * @return true if teams is valid, false otherwise
+     */
+    private static boolean hasValidTeams(TeamList teams, Box box) {
+        for (int i = 0; i < teams.size(); i++) {
+            Team t = teams.get(i);
+            for (int j = 0; j < t.getPokemons().size(); j++) {
+                Pokemon p = teams.get(i).getPokemons().get(j);
+                try {
+                    // replaces every Pokemon to its instance in the box
+                    t.getPokemons().set(j, box.get(box.indexOf(p.getName())));
+                } catch (IndexOutOfBoundsException ex) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -98,8 +135,9 @@ public class JsonFile {
      * @param teamsArray a JSONArray that contains information of a TeamList
      * @return a TeamList of Teams
      * @throws JSONException if teamsArray does not store a valid Team
+     * @throws PokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static TeamList parseTeams(JSONArray teamsArray) throws JSONException {
+    private static TeamList parseTeams(JSONArray teamsArray) throws JSONException, PokemonTypeException {
         TeamList teams = new TeamList();
         for (JSONObject team : JsonUtil.objectsFromArray(teamsArray)) {
             teams.add(new Team(
@@ -116,8 +154,9 @@ public class JsonFile {
      * @param boxArray a JSONArray that contains information of a Box
      * @return a Box parsed from a JSONArray
      * @throws JSONException if listArray cannot be converted to a Box
+     * @throws PokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static Box parseBox(JSONArray boxArray) throws JSONException {
+    private static Box parseBox(JSONArray boxArray) throws JSONException, PokemonTypeException {
         return new Box(parseListOfPokemons(boxArray));
     }
 
@@ -127,8 +166,9 @@ public class JsonFile {
      * @param jsonArray a JSONObject representation of a PokemonList
      * @return a list of Pokemon parsed from listArray
      * @throws JSONException if listArray cannot be converted to a PokemonList
+     * @throws PokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static List<Pokemon> parseListOfPokemons(JSONArray jsonArray) throws JSONException {
+    private static List<Pokemon> parseListOfPokemons(JSONArray jsonArray) throws JSONException, PokemonTypeException {
         List<Pokemon> pokemons = new ArrayList<>();
         for (JSONObject pokemon : JsonUtil.objectsFromArray(jsonArray)) {
             List<Move> moves = new ArrayList<>();

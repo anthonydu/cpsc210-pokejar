@@ -3,6 +3,7 @@ package persistence;
 import model.Box;
 import model.Jar;
 import model.Team;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests the persistence package.
@@ -209,8 +211,88 @@ public class JsonTest extends TestSubjects {
             "  ]\n" +
             "}";
 
+    String invalidJsonString = "" +
+            "{\n" +
+            "  \"teams\": [\n" +
+            "    {\n" +
+            "    \"pokemons\": [\n" +
+            "    {\n" +
+            "      \"types\": [\n" +
+            "        \"FAIRY\",\n" +
+            "        \"STEEL\"\n" +
+            "      ],\n" +
+            "      \"moves\": [\n" +
+            "        {\n" +
+            "          \"name\": \"Gigaton Hammer\",\n" +
+            "          \"type\": \"STEEL\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Play Rough\",\n" +
+            "          \"type\": \"FAIRY\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Swords Dance\",\n" +
+            "          \"type\": \"NORMAL\",\n" +
+            "          \"status\": true\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Encore\",\n" +
+            "          \"type\": \"NORMAL\",\n" +
+            "          \"status\": true\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"name\": \"Tinkaton\"\n" +
+            "    }\n" +
+            "  ],\n" +
+            "    \"name\": \"myTeam\"\n" +
+            "    }],\n" +
+            "  \"box\": []\n" +
+            "}";
+
+    String illegalJsonString = "" +
+            "{\n" +
+            "  \"teams\": [\n" +
+            "    {\n" +
+            "    \"pokemons\": [\n" +
+            "    {\n" +
+            "      \"types\": [\n" +
+            "        \"FAIRY\",\n" +
+            "        \"SOUND\"\n" +
+            "      ],\n" +
+            "      \"moves\": [\n" +
+            "        {\n" +
+            "          \"name\": \"Gigaton Hammer\",\n" +
+            "          \"type\": \"STEEL\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Play Rough\",\n" +
+            "          \"type\": \"FAIRY\",\n" +
+            "          \"status\": false\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Swords Dance\",\n" +
+            "          \"type\": \"NORMAL\",\n" +
+            "          \"status\": true\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"name\": \"Encore\",\n" +
+            "          \"type\": \"NORMAL\",\n" +
+            "          \"status\": true\n" +
+            "        }\n" +
+            "      ],\n" +
+            "      \"name\": \"Tinkaton\"\n" +
+            "    }\n" +
+            "  ],\n" +
+            "    \"name\": \"myTeam\"\n" +
+            "    }],\n" +
+            "  \"box\": []\n" +
+            "}";
+
     @BeforeEach
-    public void setup() throws IOException {
+    public void setup() throws Exception {
         jar = new Jar();
         // gives jar properties and saves it to test file
         jar.setBox(new Box(Arrays.asList(tinkaton, rotom, cetitan)));
@@ -228,8 +310,13 @@ public class JsonTest extends TestSubjects {
     }
 
     @Test
-    public void testLoadJarToApp() {
+    public void testLoadJarToApp() throws IOException {
         assertEquals(new JSONObject(expectedJsonString).toString(), new JSONObject(jar).toString());
+        assertThrows(IOException.class, () -> new JsonFile("./data/invalid/.json").loadFileToJar(jar));
+        assertThrows(JSONException.class, () -> new JsonFile("./data/invalid/syntax.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/team.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/type.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/duplicate.json").loadFileToJar(jar));
     }
 
     @AfterEach

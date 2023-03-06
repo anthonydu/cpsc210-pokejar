@@ -3,7 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.Type.*;
+import static model.Type.GHOST;
+import static model.Type.WATER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**

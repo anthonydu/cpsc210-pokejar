@@ -6,8 +6,7 @@ import util.TestSubjects;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests model.Box class.
@@ -27,6 +26,11 @@ public class BoxTest extends TestSubjects {
 
     @Test
     public void testConstructor() {
+        Pokemon tinkaton2 = new Pokemon(
+                tinkaton.getName(), Arrays.asList(Type.GRASS),
+                Arrays.asList(new Move("", Type.WATER, false))
+        );
+        assertThrows(IllegalArgumentException.class, () -> new Box(Arrays.asList(tinkaton, tinkaton2)));
         assertEquals(Arrays.asList(tinkaton, rotom, cetitan), box);
     }
 
@@ -41,15 +45,13 @@ public class BoxTest extends TestSubjects {
 
     @Test
     public void testAdd() {
-        assertThrows(IllegalArgumentException.class, () -> box.add(rotom));
+        assertFalse(box.add(tinkaton));
     }
 
     @Test
-    public void testRemove() {
-        box.remove(cetitan);
-        assertEquals(Arrays.asList(tinkaton, rotom), box);
-        box.remove(tinkaton);
-        assertEquals(Arrays.asList(rotom), box);
+    public void testIndexOf() {
+        assertEquals(1, box.indexOf("Rotom"));
+        assertEquals(-1, box.indexOf("rotom"));
     }
 
     @Test

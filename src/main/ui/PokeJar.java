@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 import org.json.JSONException;
+import persistence.InvalidJarException;
 import persistence.JsonFile;
 
 import java.io.IOException;
@@ -39,49 +40,47 @@ public class PokeJar {
 
         while (true) {
             System.out.print("PokéJar > ");
-            switch (console.nextLine()) {
-                case "p":
-                    System.out.println(jar.getBox());
-                    break;
-                case "np":
-                    jar.getBox().add(newPokemon());
-                    break;
-                case "rp":
-                    jar.getBox().remove(getPokemon());
-                    break;
-                case "ap":
-                    try {
+            try {
+                switch (console.nextLine()) {
+                    case "p":
+                        System.out.println(jar.getBox());
+                        break;
+                    case "np":
+                        if (!jar.getBox().add(newPokemon())) {
+                            System.out.println("Cannot add multiple Pokémon with the same name!");
+                        }
+                        break;
+                    case "rp":
+                        jar.getBox().remove(getPokemon());
+                        break;
+                    case "ap":
                         System.out.println(analyzePokemon(getPokemon()));
-                    } catch (IllegalStateException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                    break;
-                case "t":
-                    System.out.println(jar.getTeams());
-                    break;
-                case "nt":
-                    jar.getTeams().add(newTeam());
-                    break;
-                case "rt":
-                    jar.getTeams().remove(getTeam());
-                    break;
-                case "at":
-                    try {
+                        break;
+                    case "t":
+                        System.out.println(jar.getTeams());
+                        break;
+                    case "nt":
+                        jar.getTeams().add(newTeam());
+                        break;
+                    case "rt":
+                        jar.getTeams().remove(getTeam());
+                        break;
+                    case "at":
                         System.out.println(analyzeTeam(getTeam()));
-                    } catch (IllegalStateException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                    break;
-                case "l":
-                    loadDialog();
-                    break;
-                case "s":
-                    saveDialog();
-                    break;
-                case "q":
-                    save("autosave");
-                    System.exit(0);
-                default: showCommands();
+                        break;
+                    case "l":
+                        loadDialog();
+                        break;
+                    case "s":
+                        saveDialog();
+                        break;
+                    case "q":
+                        save("autosave");
+                        System.exit(0);
+                    default: showCommands();
+                }
+            } catch (IllegalStateException ex) {
+                System.out.println(ex.getMessage());
             }
         }
     }
@@ -129,7 +128,7 @@ public class PokeJar {
                     continue;
                 }
                 break;
-            } catch (IllegalArgumentException ex) {
+            } catch (PokemonTypeException ex) {
                 System.out.println(ex.getMessage());
             }
         }
@@ -153,7 +152,7 @@ public class PokeJar {
                 try {
                     type = Type.fromString(console.nextLine());
                     break;
-                } catch (IllegalArgumentException ex) {
+                } catch (PokemonTypeException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
@@ -172,8 +171,9 @@ public class PokeJar {
      * Asks the user for an index and returns the Pokemon at that index of the box.
      *
      * @return the Pokemon at user specified index
+     * @throws IllegalStateException if box is empty
      */
-    private Pokemon getPokemon() {
+    private Pokemon getPokemon() throws IllegalStateException {
         return this.get("Pokémon", jar.getBox());
     }
 
@@ -181,8 +181,9 @@ public class PokeJar {
      * Asks the user for an index and returns the Team at that index of the list of teams.
      *
      * @return the Pokemon at user specified index
+     * @throws IllegalStateException if teams is empty
      */
-    private Team getTeam() {
+    private Team getTeam() throws IllegalStateException {
         return this.get("Team", jar.getTeams());
     }
 
@@ -193,6 +194,7 @@ public class PokeJar {
      * @param thingName the name of the thing that the user is trying to get
      * @param listOfThings the list of things to get from
      * @return the thing at user specified index
+     * @throws IllegalStateException if the listOfThings is empty
      */
     private <T> T get(String thingName, List<T> listOfThings) throws IllegalStateException {
         if (listOfThings.isEmpty()) {
@@ -222,7 +224,7 @@ public class PokeJar {
                 try {
                     team.getPokemons().add(getPokemon());
                     break;
-                } catch (IllegalArgumentException ex) {
+                } catch (IllegalStateException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
@@ -299,9 +301,9 @@ public class PokeJar {
     private void save(String fileName) {
         try {
             new JsonFile("./data/" + fileName + ".json").saveJarToFile(jar);
+            System.out.println("Current app data successfully saved to ./data/" + fileName + ".json!");
         } catch (InvalidPathException | IOException ex) {
-            System.out.println("Cannot write to file:");
-            System.out.println(ex.getMessage());
+            System.out.println("Cannot write to file:" + ex.getMessage());
         }
     }
 
@@ -338,11 +340,9 @@ public class PokeJar {
     private void load(String fileName) {
         try {
             new JsonFile("./data/" + fileName + ".json").loadFileToJar(jar);
-        } catch (IOException | JSONException ex) {
-            System.out.println("Cannot load JSON:");
-            System.out.println(ex.getMessage());
+            System.out.println("./data/" + fileName + ".json has been loaded to PokéJar!");
+        } catch (IOException | JSONException | InvalidJarException ex) {
+            System.out.println("Cannot load JSON: " + ex.getMessage());
         }
     }
-
-    // TODO isValidFile: check if all pokemon in teams exists in the box
 }

@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import static model.Type.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests model.Pokemon class.
@@ -34,6 +35,7 @@ public class PokemonTest {
         assertEquals("myPokemon", pokemon.getName());
         assertEquals(Arrays.asList(DRAGON, FIRE), pokemon.getTypes());
         assertEquals(Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3), pokemon.getMoves());
+        assertThrows(IllegalArgumentException.class, () -> new Pokemon("", Arrays.asList(), Arrays.asList()));
     }
 
     @Test

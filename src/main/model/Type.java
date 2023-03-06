@@ -3,9 +3,9 @@ package model;
 import java.util.*;
 
 /**
- * An enum of all Pokemon Types,
- * methods that give their strengths, weaknesses, and immunities,
- * and static methods for analyzing Types and working with Strings.
+ * An enum of all Pokemon Types.
+ * Methods that give their strengths, weaknesses, and immunities.
+ * And static methods for analyzing Types and working with Strings.
  *
  * @author Anthony Du
  */
@@ -266,9 +266,9 @@ public enum Type {
      *
      * @param str a String that has the name of a Type
      * @return a Type parsed from a String
-     * @throws IllegalArgumentException if the String cannot be parsed to Type
+     * @throws PokemonTypeException if the String cannot be parsed to Type
      */
-    public static Type fromString(String str) throws IllegalArgumentException {
+    public static Type fromString(String str) throws PokemonTypeException {
         switch (str.toLowerCase()) {
             case "normal": return NORMAL;
             case "fire": return FIRE;
@@ -288,7 +288,7 @@ public enum Type {
             case "dark": return DARK;
             case "steel": return STEEL;
             case "fairy": return FAIRY;
-            default: throw new IllegalArgumentException("Invalid type!");
+            default: throw new PokemonTypeException("Invalid type found!");
         }
     }
 
@@ -297,12 +297,13 @@ public enum Type {
      *
      * @param strs a list of strings that contains Type names
      * @return a list of all Types parsed from a list of Strings
+     * @throws PokemonTypeException if any of the Strings cannot be parsed to a Type
      */
-    public static List<Type> fromListOfStrings(List<String> strs) throws IllegalArgumentException {
+    public static List<Type> fromListOfStrings(List<String> strs) throws PokemonTypeException {
         List<Type> types = new ArrayList<>();
         for (String s : strs) {
             if (types.contains(Type.fromString(s))) {
-                throw new IllegalArgumentException("Duplicate type found!");
+                throw new PokemonTypeException("Duplicate type found!");
             } else {
                 types.add(Type.fromString(s));
             }

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,8 +19,12 @@ public class Pokemon {
      * @param name the name of this Pokemon
      * @param types the Types of this Pokemon
      * @param moves the moveset of this Pokemon
+     * @throws IllegalArgumentException if types.size() &lt; 1 or &gt; 2 or moves.size() &lt; 1 or &gt; 4
      */
-    public Pokemon(String name, List<Type> types, List<Move> moves) {
+    public Pokemon(String name, List<Type> types, List<Move> moves) throws IllegalArgumentException {
+        if (types.size() < 1 || types.size() > 2 || moves.size() < 1 || moves.size() > 4) {
+            throw new IllegalArgumentException("Number of types or number of moves invalid!");
+        }
         this.name = name;
         this.types = types;
         this.moves = moves;
@@ -56,8 +59,6 @@ public class Pokemon {
 
     /**
      * Sets the name of this Pokemon.
-     * <p>
-     * MODIFIES: this
      *
      * @param name the name to set to
      */
@@ -67,8 +68,6 @@ public class Pokemon {
 
     /**
      * Sets the Types of this Pokemon.
-     * <p>
-     * MODIFIES: this
      *
      * @param types the Types to set to
      */
@@ -78,8 +77,6 @@ public class Pokemon {
 
     /**
      * Sets the moveset of this Pokemon.
-     * <p>
-     * MODIFIES: this
      *
      * @param moves the moveset to set to
      */
@@ -94,14 +91,9 @@ public class Pokemon {
      */
     @Override
     public String toString() {
-        String str = "";
-        if (this.name.length() >= 16) {
-            str += this.name.substring(0, 14) + "… ";
-        } else {
-            str += this.name + String.join("", Collections.nCopies(16 - this.name.length(), " "));
-        }
+        String str = StringUtil.fixCharCount(this.name, 15) + " ";
         for (Type type : this.types) {
-            str += type.name() + String.join("", Collections.nCopies(16 - type.name().length(), " "));
+            str += StringUtil.fixCharCount(type.name(), 15) + " ";
         }
         return str.trim();
     }

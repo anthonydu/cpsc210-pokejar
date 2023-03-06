@@ -37,8 +37,6 @@ public class Jar {
 
     /**
      * Sets this Jar's box.
-     * <p>
-     * MODIFIES: this
      *
      * @param box the box to set to
      */
@@ -48,8 +46,6 @@ public class Jar {
 
     /**
      * Sets this Jar's list of teams.
-     * <p>
-     * MODIFIES: this
      *
      * @param teams the list of teams to set to
      */

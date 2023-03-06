@@ -28,6 +28,9 @@ public class TeamTest extends TestSubjects {
     @Test
     public void testConstructor() {
         assertEquals("myTeam", team.getName());
+        assertThrows(IllegalArgumentException.class, () -> new Team("",
+                Arrays.asList(rotom, rotom, rotom, rotom, rotom, rotom, rotom)
+        ));
     }
 
     @Test
@@ -37,9 +40,12 @@ public class TeamTest extends TestSubjects {
                 team.toString()
         );
         team.setName("myAmazingLilTeam");
-        team.setPokemons(Arrays.asList(cetitan, tinkaton, rotom));
+        team.getPokemons().set(0, new Pokemon(
+                "1234567890123456", Arrays.asList(Type.FIRE),
+                Arrays.asList(new Move("", Type.FIRE, false)))
+        );
         assertEquals(
-                "myAmazingLilTe… Cetitan         Tinkaton        Rotom",
+                "myAmazingLilTe… 12345678901234… Rotom           Cetitan",
                 team.toString()
         );
     }
