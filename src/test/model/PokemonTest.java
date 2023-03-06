@@ -35,7 +35,14 @@ public class PokemonTest {
         assertEquals("myPokemon", pokemon.getName());
         assertEquals(Arrays.asList(DRAGON, FIRE), pokemon.getTypes());
         assertEquals(Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3), pokemon.getMoves());
-        assertThrows(IllegalArgumentException.class, () -> new Pokemon("", Arrays.asList(), Arrays.asList()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Pokemon("", Arrays.asList(), Arrays.asList(MOVE0)));
+        assertThrows(IllegalArgumentException.class, 
+                () -> new Pokemon("", Arrays.asList(GRASS, FIRE), Arrays.asList()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Pokemon("", Arrays.asList(GRASS, FIRE, GROUND), Arrays.asList(MOVE0)));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Pokemon("", Arrays.asList(GRASS), Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3, MOVE0)));
     }
 
     @Test
