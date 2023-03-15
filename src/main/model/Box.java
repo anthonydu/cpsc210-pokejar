@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A Box that holds an arbitrary number of Pokemon.
@@ -26,10 +24,8 @@ public class Box extends ArrayList<Pokemon> {
      * @throws IllegalArgumentException if pokemons contains multiple Pokemon with the same name
      */
     public Box(List<Pokemon> pokemons) throws IllegalArgumentException {
-        this.addAll(pokemons);
-        Set<String> namesSet = new HashSet<>();
-        for (Pokemon p : this) {
-            if (!namesSet.add(p.getName())) {
+        for (Pokemon pokemon : pokemons) {
+            if (!this.add(pokemon)) {
                 throw new IllegalArgumentException("Box cannot contain multiple Pokémon with the same name!");
             }
         }
