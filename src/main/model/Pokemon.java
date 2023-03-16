@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A Pokemon with a name, a list of Types and a list of Moves.
@@ -82,6 +83,23 @@ public class Pokemon {
      */
     public void setMoves(List<Move> moves) {
         this.moves = moves;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Pokemon pokemon = (Pokemon) o;
+        return name.equals(pokemon.name) && types.equals(pokemon.types) && moves.equals(pokemon.moves);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, types, moves);
     }
 
     /**

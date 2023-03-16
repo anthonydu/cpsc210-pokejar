@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BoxTest extends TestSubjects {
     private Box box;
+    Pokemon tinkaton2 = new Pokemon(tinkaton.getName(), tinkaton.getTypes(), tinkaton.getMoves());
 
     @BeforeEach
     public void setup() {
@@ -26,32 +27,21 @@ public class BoxTest extends TestSubjects {
 
     @Test
     public void testConstructor() {
-        Pokemon tinkaton2 = new Pokemon(
-                tinkaton.getName(), Arrays.asList(Type.GRASS),
-                Arrays.asList(new Move("", Type.WATER, false))
-        );
+
         assertThrows(IllegalArgumentException.class, () -> new Box(Arrays.asList(tinkaton, tinkaton2)));
         assertEquals(Arrays.asList(tinkaton, rotom, cetitan), box);
     }
 
     @Test
     public void testGet() {
-        assertEquals(tinkaton, box.get(0));
-        assertEquals(rotom, box.get(1));
-        assertEquals(cetitan, box.get(2));
-        assertThrows(IndexOutOfBoundsException.class, () -> box.get(-1));
-        assertThrows(IndexOutOfBoundsException.class, () -> box.get(3));
+        assertEquals(rotom, box.get(rotom));
+        box.remove(tinkaton2);
+        assertEquals(null, box.get(tinkaton));
     }
 
     @Test
     public void testAdd() {
-        assertFalse(box.add(tinkaton));
-    }
-
-    @Test
-    public void testIndexOf() {
-        assertEquals(1, box.indexOf("Rotom"));
-        assertEquals(-1, box.indexOf("rotom"));
+        assertFalse(box.add(tinkaton2));
     }
 
     @Test

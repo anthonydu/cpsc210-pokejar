@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * A Pokemon's Move with a name, a Type, and whether it's a status or attacking Move.
  *
@@ -75,6 +77,23 @@ public class Move {
      */
     public void setStatus(boolean isStatus) {
         this.isStatus = isStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Move move = (Move) o;
+        return isStatus == move.isStatus && name.equals(move.name) && type == move.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, isStatus);
     }
 
     /**

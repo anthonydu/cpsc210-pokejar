@@ -114,16 +114,14 @@ public class JsonFile {
      * @return true if teams is valid, false otherwise
      */
     private static boolean hasValidTeams(TeamList teams, Box box) {
-        for (int i = 0; i < teams.size(); i++) {
-            Team t = teams.get(i);
-            for (int j = 0; j < t.getPokemons().size(); j++) {
-                Pokemon p = teams.get(i).getPokemons().get(j);
-                try {
-                    // replaces every Pokemon to its instance in the box
-                    t.getPokemons().set(j, box.get(box.indexOf(p.getName())));
-                } catch (IndexOutOfBoundsException ex) {
+        for (Team t : teams) {
+            for (int i = 0; i < t.getPokemons().size(); i++) {
+                Pokemon p = t.getPokemons().get(i);
+                // replaces every Pokemon to its instance in the box
+                if (box.get(p) == null) {
                     return false;
                 }
+                t.getPokemons().set(i, box.get(p));
             }
         }
         return true;

@@ -26,7 +26,7 @@ public class Box extends ArrayList<Pokemon> {
     public Box(List<Pokemon> pokemons) throws IllegalArgumentException {
         for (Pokemon pokemon : pokemons) {
             if (!this.add(pokemon)) {
-                throw new IllegalArgumentException("Box cannot contain multiple Pokémon with the same name!");
+                throw new IllegalArgumentException("Box cannot contain multiple of the exact same Pokémon!");
             }
         }
     }
@@ -42,7 +42,7 @@ public class Box extends ArrayList<Pokemon> {
     @Override
     public boolean add(Pokemon pokemon) {
         for (Pokemon p : this) {
-            if (p.getName().equals(pokemon.getName())) {
+            if (p.equals(pokemon)) {
                 return false;
             }
         }
@@ -51,18 +51,18 @@ public class Box extends ArrayList<Pokemon> {
     }
 
     /**
-     * Returns the index of a Pokemon with the specified name.
+     * Returns the Pokemon that equals to the Pokemon that is passed in.
      *
-     * @param name the name of the Pokemon to find
-     * @return the index of a Pokemon with the specified name
+     * @param pokemon the Pokemon to get
+     * @return the Pokemon that equals to the Pokemon that is passed in
      */
-    public int indexOf(String name) {
+    public Pokemon get(Pokemon pokemon) {
         for (Pokemon p : this) {
-            if (p.getName().equals(name)) {
-                return indexOf(p);
+            if (p.equals(pokemon)) {
+                return p;
             }
         }
-        return -1;
+        return null;
     }
 
     /**
