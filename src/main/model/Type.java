@@ -262,6 +262,20 @@ public enum Type {
     }
 
     /**
+     * Parses a Type from a String that can always be converted to a Type safely.
+     *
+     * @param str a String that can always be converted to a Type safely
+     * @return the Type parsed from the String
+     */
+    public static Type fromSafeString(String str) {
+        try {
+            return Type.fromString(str);
+        } catch (PokemonTypeException ex) {
+            throw new IllegalArgumentException(ex);
+        }
+    }
+
+    /**
      * Parses a Type from a String.
      *
      * @param str a String that has the name of a Type

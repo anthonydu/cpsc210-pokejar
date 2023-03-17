@@ -79,12 +79,24 @@ public class Move {
         this.isStatus = isStatus;
     }
 
+    /**
+     * Compares the specified object with this Move for equality.
+     * Two Moves are equal if all their attributes are equal.
+     *
+     * @param o the object to be compared for equality with this Move
+     * @return true if the specified object is equal to this Move and false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         Move move = (Move) o;
         return isStatus == move.isStatus && name.equals(move.name) && type == move.type;
     }
 
+    /**
+     * Returns the hash code value for this Move.
+     *
+     * @return the hash code value for this Move
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, type, isStatus);

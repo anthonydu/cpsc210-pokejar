@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static model.Type.*;
+import static model.Type.fromSafeString;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -13,6 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Anthony Du
  */
 public class TypeTest {
+
+    @Test
+    public void testFromSafeString() {
+        for (Type t : values()) {
+            assertEquals(t, fromSafeString(t.toString()));
+        }
+        assertThrows(IllegalArgumentException.class, () -> fromSafeString("String not safe"));
+    }
 
     @Test
     public void testConflicts() {

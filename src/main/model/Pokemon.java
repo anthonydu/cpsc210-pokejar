@@ -87,12 +87,24 @@ public class Pokemon {
         this.moves = moves;
     }
 
+    /**
+     * Compares the specified object with this Pokemon for equality.
+     * Two Pokemon are equal if all their attributes are equal.
+     *
+     * @param o the object to be compared for equality with this Pokemon
+     * @return true if the specified object is equal to this Pokemon and false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         Pokemon pokemon = (Pokemon) o;
         return name.equals(pokemon.name) && types.equals(pokemon.types) && moves.equals(pokemon.moves);
     }
 
+    /**
+     * Returns the hash code value for this Pokemon.
+     *
+     * @return the hash code value for this Pokemon
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, types, moves);

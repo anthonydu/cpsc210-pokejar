@@ -6,6 +6,11 @@ package persistence;
  * @auther Anthony Du
  */
 public class InvalidJarException extends Exception {
+    /**
+     * Constructs an InvalidJarException with message
+     *
+     * @param message the message for this Exception
+     */
     public InvalidJarException(String message) {
         super(message);
     }

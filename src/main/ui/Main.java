@@ -7,7 +7,7 @@ package ui;
  */
 public class Main {
     /**
-     * Runs PokeJar.
+     * Runs PokeJarGUI.
      *
      * @param args console input
      */
