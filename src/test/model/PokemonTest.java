@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static model.Type.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests model.Pokemon class.
@@ -54,6 +54,16 @@ public class PokemonTest {
                 "myAmazingPokem… ROCK",
                 pokemon.toString()
         );
+    }
+
+    @Test
+    public void testEquals() {
+        assertTrue(new Move("", Type.NORMAL, false).equals(new Move("", Type.NORMAL, false)));
+        assertFalse(new Move("1", Type.NORMAL, false).equals(new Move("", Type.NORMAL, false)));
+        assertFalse(new Move("1", Type.FIRE, false).equals(new Move("", Type.NORMAL, false)));
+        assertFalse(new Move("1", Type.NORMAL, true).equals(new Move("", Type.NORMAL, false)));
+        assertFalse(new Move("", Type.FIRE, true).equals(new Move("", Type.NORMAL, false)));
+        assertFalse(new Move("1", Type.FIRE, true).equals(new Move("", Type.NORMAL, false)));
     }
 
     @Test
