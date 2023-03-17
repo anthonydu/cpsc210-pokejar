@@ -1,6 +1,5 @@
 package ui;
 
-import com.apple.laf.AquaTabbedPaneUI;
 import model.Box;
 import model.*;
 import org.json.JSONException;
@@ -161,7 +160,6 @@ public class PokeJarGUI extends JFrame {
      * MODIFIES: this
      */
     private void menuBar() {
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
         menuBar = new JMenuBar();
         fileMenu = new JMenu("File");
         saveButton = new JMenuItem("Save As...");
@@ -192,7 +190,6 @@ public class PokeJarGUI extends JFrame {
      */
     private void leftPane() {
         leftPane = new JTabbedPane();
-        leftPane.setUI(new AquaTabbedPaneUI());
         // Box Panel
         boxPanel = new JPanel();
         boxModel = new DefaultListModel<>();
@@ -288,7 +285,6 @@ public class PokeJarGUI extends JFrame {
      */
     private void rightPane() {
         rightPane = new JTabbedPane();
-        rightPane.setUI(new AquaTabbedPaneUI());
         rightPane.addChangeListener(e -> setInfoLabel());
         // Info Panel
         infoPanel = new JPanel();
