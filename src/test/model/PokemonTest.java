@@ -58,12 +58,43 @@ public class PokemonTest {
 
     @Test
     public void testEquals() {
-        assertTrue(new Move("", Type.NORMAL, false).equals(new Move("", Type.NORMAL, false)));
-        assertFalse(new Move("1", Type.NORMAL, false).equals(new Move("", Type.NORMAL, false)));
-        assertFalse(new Move("1", Type.FIRE, false).equals(new Move("", Type.NORMAL, false)));
-        assertFalse(new Move("1", Type.NORMAL, true).equals(new Move("", Type.NORMAL, false)));
-        assertFalse(new Move("", Type.FIRE, true).equals(new Move("", Type.NORMAL, false)));
-        assertFalse(new Move("1", Type.FIRE, true).equals(new Move("", Type.NORMAL, false)));
+        // 111
+        assertTrue(new Pokemon().equals(new Pokemon()));
+        // 110
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
+                        .equals(new Pokemon("", new ArrayList<>(), new ArrayList<>()))
+        );
+        // 101
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>())
+                        .equals(new Pokemon("", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
+        );
+        // 100
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
+                        .equals(new Pokemon("", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
+        );
+        // 011
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>())
+                        .equals(new Pokemon("1", new ArrayList<>(), new ArrayList<>()))
+        );
+        // 010
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
+                        .equals(new Pokemon("1", new ArrayList<>(), new ArrayList<>()))
+        );
+        // 001
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>())
+                        .equals(new Pokemon("1", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
+        );
+        // 000
+        assertFalse(
+                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
+                        .equals(new Pokemon("1", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
+        );
     }
 
     @Test

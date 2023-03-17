@@ -32,27 +32,22 @@ public class MoveTest {
 
     @Test
     public void testEquals() {
-        assertTrue(new Pokemon().equals(new Pokemon()));
-        assertFalse(
-                new Pokemon("", new ArrayList<>(), new ArrayList<>())
-                        .equals(new Pokemon("1", new ArrayList<>(), new ArrayList<>()))
-        );
-        assertFalse(
-                new Pokemon("", new ArrayList<>(), new ArrayList<>())
-                        .equals(new Pokemon("1", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
-        );
-        assertFalse(
-                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
-                        .equals(new Pokemon("1", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
-        );
-        assertFalse(
-                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
-                        .equals(new Pokemon("1", new ArrayList<>(), new ArrayList<>()))
-        );
-        assertFalse(
-                new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))
-                        .equals(new Pokemon("", new ArrayList<>(Arrays.asList(Type.NORMAL)), new ArrayList<>()))
-        );
+        // 111
+        assertTrue(new Move("", Type.NORMAL, false).equals(new Move("", Type.NORMAL, false)));
+        // 110
+        assertFalse(new Move("", Type.NORMAL, true).equals(new Move("", Type.NORMAL, false)));
+        // 101
+        assertFalse(new Move("", Type.FIRE, false).equals(new Move("", Type.NORMAL, false)));
+        // 100
+        assertFalse(new Move("", Type.FIRE, true).equals(new Move("", Type.NORMAL, false)));
+        // 011
+        assertFalse(new Move("1", Type.NORMAL, false).equals(new Move("", Type.NORMAL, false)));
+        // 010
+        assertFalse(new Move("1", Type.NORMAL, true).equals(new Move("", Type.NORMAL, false)));
+        // 001
+        assertFalse(new Move("1", Type.FIRE, false).equals(new Move("", Type.NORMAL, false)));
+        // 000
+        assertFalse(new Move("1", Type.FIRE, true).equals(new Move("", Type.NORMAL, false)));
     }
 
     @Test
