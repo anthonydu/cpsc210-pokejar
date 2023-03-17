@@ -14,18 +14,20 @@ public class Pokemon {
     private List<Type> types;
     private List<Move> moves;
 
+    public Pokemon() {
+        this.name = "";
+        this.types = new ArrayList<>();
+        this.moves = new ArrayList<>();
+    }
+
     /**
      * Constructs a Pokemon with name, Types, and moves.
      *
      * @param name the name of this Pokemon
      * @param types the Types of this Pokemon
      * @param moves the moveset of this Pokemon
-     * @throws IllegalArgumentException if types.size() &lt; 1 or &gt; 2 or moves.size() &lt; 1 or &gt; 4
      */
-    public Pokemon(String name, List<Type> types, List<Move> moves) throws IllegalArgumentException {
-        if (types.size() < 1 || types.size() > 2 || moves.size() < 1 || moves.size() > 4) {
-            throw new IllegalArgumentException("Number of types or number of moves invalid!");
-        }
+    public Pokemon(String name, List<Type> types, List<Move> moves) {
         this.name = name;
         this.types = types;
         this.moves = moves;
@@ -87,12 +89,6 @@ public class Pokemon {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
         Pokemon pokemon = (Pokemon) o;
         return name.equals(pokemon.name) && types.equals(pokemon.types) && moves.equals(pokemon.moves);
     }
@@ -111,7 +107,7 @@ public class Pokemon {
     public String toString() {
         String str = StringUtil.fixCharCount(this.name, 15) + " ";
         for (Type type : this.types) {
-            str += StringUtil.fixCharCount(type.name(), 15) + " ";
+            str += StringUtil.fixCharCount(type.name(), 11) + " ";
         }
         return str.trim();
     }

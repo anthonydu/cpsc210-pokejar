@@ -47,8 +47,8 @@ public class BoxTest extends TestSubjects {
     @Test
     public void testToString() {
         assertEquals(
-                "0 Tinkaton        FAIRY           STEEL\n" +
-                "1 Rotom           ELECTRIC        WATER\n" +
+                "0 Tinkaton        FAIRY       STEEL\n" +
+                "1 Rotom           ELECTRIC    WATER\n" +
                 "2 Cetitan         ICE",
                 box.toString()
         );

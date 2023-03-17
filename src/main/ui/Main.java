@@ -12,6 +12,6 @@ public class Main {
      * @param args console input
      */
     public static void main(String[] args) {
-        new PokeJar();
+        new PokeJarGUI();
     }
 }

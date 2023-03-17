@@ -11,7 +11,7 @@ public final class StringUtil {
     private StringUtil() {}
 
     public static String fixCharCount(String str, int charCount) {
-        if (str.length() >= charCount) {
+        if (str.length() > charCount) {
             return str.substring(0, charCount - 1) + "…";
         } else {
             return str + String.join("", Collections.nCopies(charCount - str.length(), " "));

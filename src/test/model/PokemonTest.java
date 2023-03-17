@@ -3,11 +3,11 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static model.Type.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests model.Pokemon class.
@@ -35,20 +35,17 @@ public class PokemonTest {
         assertEquals("myPokemon", pokemon.getName());
         assertEquals(Arrays.asList(DRAGON, FIRE), pokemon.getTypes());
         assertEquals(Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3), pokemon.getMoves());
-        assertThrows(IllegalArgumentException.class,
-                () -> new Pokemon("", Arrays.asList(), Arrays.asList(MOVE0)));
-        assertThrows(IllegalArgumentException.class, 
-                () -> new Pokemon("", Arrays.asList(GRASS, FIRE), Arrays.asList()));
-        assertThrows(IllegalArgumentException.class,
-                () -> new Pokemon("", Arrays.asList(GRASS, FIRE, GROUND), Arrays.asList(MOVE0)));
-        assertThrows(IllegalArgumentException.class,
-                () -> new Pokemon("", Arrays.asList(GRASS), Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3, MOVE0)));
+
+        pokemon = new Pokemon();
+        assertEquals("", pokemon.getName());
+        assertEquals(new ArrayList<>(), pokemon.getTypes());
+        assertEquals(new ArrayList<>(), pokemon.getMoves());
     }
 
     @Test
     public void testToString() {
         assertEquals(
-                "myPokemon       DRAGON          FIRE",
+                "myPokemon       DRAGON      FIRE",
                 pokemon.toString()
         );
         pokemon.setName("myAmazingPokemon");

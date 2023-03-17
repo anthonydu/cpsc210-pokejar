@@ -81,12 +81,6 @@ public class Move {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
         Move move = (Move) o;
         return isStatus == move.isStatus && name.equals(move.name) && type == move.type;
     }
@@ -105,7 +99,7 @@ public class Move {
     public String toString() {
         String str = StringUtil.fixCharCount(this.name, 15) + " ";
         return str
-                + StringUtil.fixCharCount(this.type.name(), 15) + " "
+                + StringUtil.fixCharCount(this.type.name(), 11) + " "
                 + (this.isStatus ? "Status" : "Attacking");
     }
 }

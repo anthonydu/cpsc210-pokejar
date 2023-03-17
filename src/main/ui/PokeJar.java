@@ -18,13 +18,15 @@ import java.util.Scanner;
  * @author Anthony Du
  */
 public class PokeJar {
-    private Scanner console = new Scanner(System.in);
-    private Jar jar = new Jar();
+    private Scanner console;
+    private Jar jar;
 
     /**
      * Constructs a new PokeJar app and starts its terminal user interface with autosave loaded.
      */
     public PokeJar() {
+        console = new Scanner(System.in);
+        jar = new Jar();
         load("autosave");
         startTUI();
     }

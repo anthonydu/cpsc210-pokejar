@@ -5,7 +5,7 @@ package model;
  *
  * @auther Anthony Du
  */
-public class PokemonTypeException extends Exception {
+public class PokemonTypeException extends RuntimeException {
     public PokemonTypeException(String message) {
         super(message);
     }
