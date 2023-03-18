@@ -43,9 +43,10 @@ The targeted user group of this app are Pokémon trainers.
 
 ### Step-by-step Instructions
 
-##### Opening
+##### Opening (Visual Component)
 
-- When you open the app, "./data/autosave.json" will be automatically loaded to retrieve your previous app state.
+- Every time you open the app, a cool custom-made splash screen appears for three seconds before the app is launched.
+- Then, "./data/autosave.json" will be automatically loaded to the app to retrieve the save state when you last closed the app.
 
 ##### Adding and Editing Pokémon (Action 1)
 
@@ -57,9 +58,9 @@ The targeted user group of this app are Pokémon trainers.
   - Number of types is limited to two and number of moves is limited to six, buttons and checkboxes will be disabled to prevent exceeding those limits.
 - After you are done with customizing your Pokémon, click "Done" to return to viewing "Basic Info". All info will be updated to reflect changes.
 
-##### Analyze Pokémon
+##### Analyze Pokémon (Action 1.5)
 
-- Click the "Insight" tab to view a generated insight about your Pokémon's offensive and defensive multipliers based on their types and moves. 
+- Click the "Insight" tab to view an insight on your selected Pokémon's offensive and defensive multipliers generated based on their types and moves. 
   - There are some footnote explaining this analysis below the multiplier table. 
 - Feel free to add new Pokémon or edit your existing Pokémon to see how their insights change.
 
@@ -69,12 +70,12 @@ The targeted user group of this app are Pokémon trainers.
 
 ##### Saving
 
-- Once you are satisfied with your box of Pokémon, click "File" > "Save As..." on the menu bar to bring up a prompt to save a JSON file that represents the current state of the app anywhere to want.
+- Once you are satisfied with your box of Pokémon, click "File" > "Save As..." on the menu bar to bring up a prompt to save the current state of the app to a JSON file anywhere you choose.
 
 ##### Loading
 
-- By clicking "File" > "Load File...", you can load any valid save file directly into the app's interface.
+- By clicking "File" > "Load File...", a prompt will show up to let you choose any valid save file on your computer to be loaded directly into the app's interface.
 
 ##### Closing
 
-- When you close the app, the state of the app will automatically be saved to "./data/autosave.json".
+- When you close the app, the state of the app will automatically be saved to "./data/autosave.json" to be restored the next time you open the app.

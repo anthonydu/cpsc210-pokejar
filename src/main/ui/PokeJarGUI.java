@@ -145,7 +145,7 @@ public class PokeJarGUI extends JFrame {
     /**
      * Runs PokeJarGUI.
      *
-     * @param args
+     * @param args console input
      */
     public static void main(String[] args) {
         new PokeJarGUI();
