@@ -1,9 +1,9 @@
 package model;
 
 /**
- * An exception thrown by the Type enum.
+ * An exception thrown when a string cannot be converted to a Type.
  *
- * @auther Anthony Du
+ * @author Anthony Du
  */
 public class InvalidPokemonTypeException extends Exception {
     /**

@@ -21,7 +21,6 @@ public class Box extends ArrayList<Pokemon> {
      * Constructs a Box with an existing list of Pokemon.
      *
      * @param pokemons a list of Pokemon to initialize the Box
-     * @throws IllegalArgumentException if pokemons contains multiple Pokemon with the same name
      */
     public Box(List<Pokemon> pokemons) {
         this.addAll(pokemons);

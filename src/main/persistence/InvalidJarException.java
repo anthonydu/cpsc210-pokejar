@@ -3,7 +3,7 @@ package persistence;
 /**
  * An exception that is thrown when a Jar's state is invalid.
  *
- * @auther Anthony Du
+ * @author Anthony Du
  */
 public class InvalidJarException extends Exception {
     /**

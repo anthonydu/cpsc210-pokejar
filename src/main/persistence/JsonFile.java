@@ -166,7 +166,8 @@ public class JsonFile {
      * @throws JSONException if listArray cannot be converted to a PokemonList
      * @throws InvalidPokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static List<Pokemon> parseListOfPokemons(JSONArray jsonArray) throws JSONException, InvalidPokemonTypeException {
+    private static List<Pokemon> parseListOfPokemons(JSONArray jsonArray)
+            throws JSONException, InvalidPokemonTypeException {
         List<Pokemon> pokemons = new ArrayList<>();
         for (JSONObject pokemon : JsonUtil.objectsFromArray(jsonArray)) {
             List<Move> moves = new ArrayList<>();

@@ -142,15 +142,13 @@ public class PokeJarGUI extends JFrame {
     };
 
 
-
-
     // UI
-
-
 
 
     /**
      * Constructs PokeJarGUI and sets it to visible.
+     * <p>
+     * MODIFIES: this
      */
     public PokeJarGUI() {
         this.setTitle("PokéJar");
@@ -160,16 +158,16 @@ public class PokeJarGUI extends JFrame {
         this.addWindowListener(windowAdapter);
 
         setMenuBar();
-        mainPanel();
-        leftPane();
-        rightPane();
-        editPanel();
+        addMainPanel();
+        addLeftPane(); // added to mainPanel
+        addRightPane(); // added to mainPanel
+        setupEditPanel(); // hidden initially
         loadAutosave();
         this.setVisible(true);
     }
 
     /**
-     * Sets up menuBar.
+     * Sets up and adds menuBar to window.
      * <p>
      * MODIFIES: this
      */
@@ -191,7 +189,7 @@ public class PokeJarGUI extends JFrame {
      * <p>
      * MODIFIES: this
      */
-    private void mainPanel() {
+    private void addMainPanel() {
         main = new JPanel(new GridLayout(1, 2));
         main.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         this.add(main);
@@ -202,7 +200,7 @@ public class PokeJarGUI extends JFrame {
      * <p>
      * MODIFIES: this
      */
-    private void leftPane() {
+    private void addLeftPane() {
         leftPane = new JTabbedPane();
         // Box Panel
         boxPanel = new JPanel();
@@ -235,7 +233,7 @@ public class PokeJarGUI extends JFrame {
      * <p>
      * MODIFIES: this
      */
-    private void rightPane() {
+    private void addRightPane() {
         rightPane = new JTabbedPane();
         rightPane.addChangeListener(e -> setInsightLabel());
         // Info Panel
@@ -265,7 +263,7 @@ public class PokeJarGUI extends JFrame {
      * <p>
      * MODIFIES: this
      */
-    private void editPanel() {
+    private void setupEditPanel() {
         editPanel = new JPanel();
         doneEditing = new JButton("Done");
         doneEditing.addActionListener(e -> switchInInfoPanel());
@@ -288,11 +286,12 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Sets up and adds addMove, removeMove, movesList to editPanel.
+     * Sets up and adds movesEditor to editPanel.
      * <p>
      * MODIFIES: this
      */
     private void addMovesEditor() {
+        JPanel movesEditor = new JPanel();
         addMove = new JButton("Add Move");
         addMove.addActionListener(e -> addMove());
         removeMove = new JButton("Remove Move");
@@ -308,17 +307,14 @@ public class PokeJarGUI extends JFrame {
         movesList.setFixedCellWidth(300);
         movesList.setFixedCellHeight(15);
         movesList.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        editPanel.add(addMove);
-        editPanel.add(removeMove);
-        editPanel.add(movesList);
+        movesEditor.add(addMove);
+        movesEditor.add(removeMove);
+        movesEditor.add(movesList);
+        editPanel.add(movesEditor);
     }
 
 
-
-
     // Helpers
-
-
 
 
     /**
@@ -331,7 +327,7 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Reloads movesModel using moves from the selected Pokemon.
+     * Reloads movesEditor using moves from the selected Pokemon.
      * <p>
      * MODIFIES: this
      */
@@ -366,24 +362,31 @@ public class PokeJarGUI extends JFrame {
         infoLabel.setText(info);
     }
 
+    /**
+     * Updates the text of insightLabel
+     * <p>
+     * MODIFIES: this
+     */
     private void setInsightLabel() {
         if (rightPane.getSelectedIndex() != 1) {
             return;
         }
         String insight = "<html><pre>Multiplier Insight:\n";
-        insight += model.StringUtil.fixCharCount("Type", 16) +
-                model.StringUtil.fixCharCount("Defensive", 12) + "Offensive";
-        Map<model.Type, Double> defensiveMap, offensiveMap;
+        insight += model.StringUtil.fixCharCount("Type", 16)
+                + model.StringUtil.fixCharCount("Defensive", 12) + "Offensive";
+        Map<model.Type, Double> defensiveMap;
+        Map<model.Type, Double> offensiveMap;
         defensiveMap = model.Type.defensiveMultipliers(getSelectedPokemon().getTypes());
         offensiveMap = model.Type.offensiveMultipliers(getSelectedPokemon().attackingMoveTypes());
         for (model.Type t : model.Type.values()) {
-            insight += "\n" + model.StringUtil.fixCharCount(t.toString(), 16) +
-                    model.StringUtil.fixCharCount(defensiveMap.get(t).toString(), 12) +
-                    offensiveMap.get(t);
+            insight += "\n" + model.StringUtil.fixCharCount(t.toString(), 16)
+                    + model.StringUtil.fixCharCount(defensiveMap.get(t).toString(), 12)
+                    + offensiveMap.get(t);
         }
         insight += "</pre><p style=\"font-size: smaller\">";
-        insight += "Defensive: multipliers when attacked by a move of a certain type.<br>" +
-                "Offensive: multipliers (of this Pokémon's most effective move) when attacking a Pokémon of a certain type.";
+        insight += "Defensive: multipliers when attacked by a move of a certain type.<br>"
+                + "Offensive: multipliers (of this Pokémon's most effective move) "
+                + "when attacking a Pokémon of a certain type.";
         insight += "</p></html>";
         insightLabel.setText(insight);
     }
@@ -415,12 +418,22 @@ public class PokeJarGUI extends JFrame {
         boxList.repaint();
     }
 
+    /**
+     * Prevents empty box by adding a new Pokemon to boxModel when boxModel is empty.
+     * <p>
+     * MODIFIES: this
+     */
     private void preventEmptyBox() {
         if (boxModel.isEmpty()) {
             boxModel.addElement(new model.Pokemon());
         }
     }
 
+    /**
+     * Prevents boxList from deselect by its setting selected index to 0 when boxList is deselected.
+     * <p>
+     * MODIFIES: this
+     */
     private void preventBoxDeselect() {
         if (boxList.getSelectedIndex() == -1) {
             boxList.setSelectedIndex(0);
@@ -428,15 +441,11 @@ public class PokeJarGUI extends JFrame {
     }
 
 
-
-
     // Event handlers
 
 
-
-
     /**
-     * Replaces infoPanel with editPanel.
+     * Replaces infoPanel with editPanel and updates editPanel with the currently selected Pokemon.
      * <p>
      * MODIFIES: this
      */
@@ -461,7 +470,7 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Replaces editPanel with infoPanel.
+     * Replaces editPanel with infoPanel while maintaining selected tab.
      * <p>
      * MODIFIES: this
      */
@@ -475,7 +484,7 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Removes a move from both movesModel and the selected Pokemon.
+     * Removes a move from the selected Pokemon and reloads movesEditor.
      * <p>
      * MODIFIES: this
      */
@@ -486,7 +495,7 @@ public class PokeJarGUI extends JFrame {
 
     /**
      * Shows a series of dialogs to construct a new move.
-     * And adds it to the selected Pokemon and movesModel.
+     * And adds it to the selected Pokemon and reloads movesEditor.
      * <p>
      * MODIFIES: this
      */
@@ -538,7 +547,7 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Sets the rightPane to reflect the newly selected Pokemon.
+     * Prevents deselect and sets the rightPane to reflect the newly selected Pokemon.
      * <p>
      * MODIFIES: this
      *
@@ -557,7 +566,7 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Adds a Pokemon to boxModel.
+     * Adds a Pokemon to boxModel and jar.getBox().
      * <p>
      * MODIFIES: this
      */
@@ -569,7 +578,7 @@ public class PokeJarGUI extends JFrame {
     }
 
     /**
-     * Removes a Pokemon by asking the user to confirm.
+     * Removes a Pokemon from boxModel and jar.getBox() by asking the user to confirm.
      * <p>
      * MODIFIES: this
      */
@@ -588,16 +597,11 @@ public class PokeJarGUI extends JFrame {
     }
 
 
-
-
     // IO handlers
 
 
-
-
     /**
-     * Reloads boxModel from jar.
-     * Creates a new Pokemon if box is empty.
+     * Reloads boxModel from jar while preventing empty box, deselect, and sets infoLabel.
      * <p>
      * MODIFIES: this
      */

@@ -5,7 +5,7 @@ import java.util.Collections;
 /**
  * A static class containing utility functions for handling Strings.
  *
- * @auther Anthony Du
+ * @author Anthony Du
  */
 public final class StringUtil {
     private StringUtil() {}
