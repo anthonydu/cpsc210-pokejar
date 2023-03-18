@@ -1,5 +1,6 @@
 package ui;
 
+import org.json.JSONObject;
 import persistence.InvalidJarException;
 import persistence.JsonFile;
 
@@ -177,7 +178,7 @@ public class PokeJarGUI extends JFrame {
         saveButton = new JMenuItem("Save As...");
         saveButton.addActionListener(e -> handleSave());
         loadButton = new JMenuItem("Load Save...");
-        loadButton.addActionListener(e -> loadFile());
+        loadButton.addActionListener(e -> handleLoad());
         fileMenu.add(saveButton);
         fileMenu.add(loadButton);
         menuBar.add(fileMenu);
@@ -644,17 +645,21 @@ public class PokeJarGUI extends JFrame {
      * <p>
      * MODIFIES: this
      */
-    private void loadFile() {
+    private void handleLoad() {
         JFileChooser fileChooser = new JFileChooser("./data/");
         fileChooser.setFileFilter(new FileNameExtensionFilter("JSON File (*.json)", "json"));
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            int option = showConfirmDialog(null,
+                    "Loading will overwrite any data currently stored in the app, press \"OK\" to confirm.",
+                    "Confirm Load", OK_CANCEL_OPTION, WARNING_MESSAGE
+            );
+            if (option == CANCEL_OPTION) {
+                return;
+            }
             try {
                 new JsonFile(fileChooser.getSelectedFile().getAbsolutePath()).loadFileToJar(jar);
                 reloadBox();
-                showMessageDialog(
-                        null, "File loaded successfully!",
-                        "File Loaded", INFORMATION_MESSAGE
-                );
+                showMessageDialog(null, "File loaded successfully!", "File Loaded", INFORMATION_MESSAGE);
             } catch (IOException | InvalidJarException ex) {
                 showMessageDialog(
                         null, "This file cannot be loaded by PokéJar! " + ex.getMessage(),
@@ -671,16 +676,25 @@ public class PokeJarGUI extends JFrame {
      */
     private void loadAutosave() {
         jar = new model.Jar();
+        JsonFile jsonFile = new JsonFile("./data/autosave.json");
+        Integer option = OK_OPTION;
         try {
-            new JsonFile("./data/autosave.json").loadFileToJar(jar);
+            jsonFile.loadFileToJar(jar);
             reloadBox();
         } catch (IOException | InvalidJarException ex) {
-            showMessageDialog(
-                    null,
-                    "PokéJar cannot be opened due to a corrupted autosave file! " + ex.getMessage(),
-                    "Autosave Corrupted",
-                    ERROR_MESSAGE);
+            option = showConfirmDialog(null,
+                    "PokéJar cannot be opened due to a corrupted autosave file! " + ex.getMessage()
+                            + " Press \"OK\" if you would like to continue by generating a new empty autosave file.",
+                    "Autosave Corrupted", OK_CANCEL_OPTION, ERROR_MESSAGE
+            );
+        }
+        if (option == CANCEL_OPTION) {
             System.exit(0);
+        }
+        try {
+            jsonFile.write(new JSONObject("{\"teams\":[],\"box\":[]}"));
+        } catch (IOException ex) {
+            showMessageDialog(null, "Generation failed! " + ex.getMessage(), "Autosave Corrupted", ERROR_MESSAGE);
         }
     }
 
