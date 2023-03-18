@@ -292,6 +292,7 @@ public class PokeJarGUI extends JFrame {
      */
     private void addMovesEditor() {
         JPanel movesEditor = new JPanel();
+        movesEditor.setPreferredSize(new Dimension(300, 200));
         addMove = new JButton("Add Move");
         addMove.addActionListener(e -> addMove());
         removeMove = new JButton("Remove Move");
@@ -374,21 +375,44 @@ public class PokeJarGUI extends JFrame {
         String insight = "<html><pre>Multiplier Insight:\n";
         insight += model.StringUtil.fixCharCount("Type", 16)
                 + model.StringUtil.fixCharCount("Defensive", 12) + "Offensive";
-        Map<model.Type, Double> defensiveMap;
-        Map<model.Type, Double> offensiveMap;
-        defensiveMap = model.Type.defensiveMultipliers(getSelectedPokemon().getTypes());
-        offensiveMap = model.Type.offensiveMultipliers(getSelectedPokemon().attackingMoveTypes());
-        for (model.Type t : model.Type.values()) {
-            insight += "\n" + model.StringUtil.fixCharCount(t.toString(), 16)
-                    + model.StringUtil.fixCharCount(defensiveMap.get(t).toString(), 12)
-                    + offensiveMap.get(t);
-        }
+        insight += generateMultiplierTable();
         insight += "</pre><p style=\"font-size: smaller\">";
         insight += "Defensive: multipliers when attacked by a move of a certain type.<br>"
                 + "Offensive: multipliers (of this Pokémon's most effective move) "
                 + "when attacking a Pokémon of a certain type.";
         insight += "</p></html>";
         insightLabel.setText(insight);
+    }
+
+    /**
+     * Generates and returns a colored multiplier table as a string, styled using html and css.
+     *
+     * @return a colored multiplier table as a string, styled using html and css
+     */
+    private String generateMultiplierTable() {
+        String result = "";
+        Map<model.Type, Double> defMap = model.Type.defensiveMultipliers(getSelectedPokemon().getTypes());
+        Map<model.Type, Double> offMap = model.Type.offensiveMultipliers(getSelectedPokemon().attackingMoveTypes());
+        for (model.Type t : model.Type.values()) {
+            result += "\n" + model.StringUtil.fixCharCount(t.toString(), 16);
+            String def = model.StringUtil.fixCharCount(defMap.get(t).toString(), 9);
+            if (defMap.get(t) < 1.0) {
+                result += "<span style=\"background-color: #C1E1C1\">" + def + "</span>" + "   ";
+            } else if (defMap.get(t) > 1.0) {
+                result += "<span style=\"background-color: #FAA0A0\">" + def + "</span>" + "   ";
+            } else {
+                result += def + "   ";
+            }
+            String off = model.StringUtil.fixCharCount(offMap.get(t).toString(), 9);
+            if (offMap.get(t) < 1.0) {
+                result += "<span style=\"background-color: #FAA0A0\">" + off + "</span>";
+            } else if (offMap.get(t) > 1.0) {
+                result += "<span style=\"background-color: #C1E1C1\">" + off + "</span>";
+            } else {
+                result += off;
+            }
+        }
+        return result;
     }
 
     /**
