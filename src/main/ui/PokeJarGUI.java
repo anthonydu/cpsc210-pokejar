@@ -72,7 +72,7 @@ public class PokeJarGUI extends JFrame {
     /**
      * WindowAdapter to handle windowClosing.
      */
-    private WindowAdapter windowAdapter = new WindowAdapter() {
+    private WindowAdapter windowClosing = new WindowAdapter() {
         /**
          * Asks the user to confirm before closing the app and autosaving.
          *
@@ -156,7 +156,7 @@ public class PokeJarGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(800, 600);
         this.setResizable(false);
-        this.addWindowListener(windowAdapter);
+        this.addWindowListener(windowClosing);
 
         setMenuBar();
         addMainPanel();
@@ -164,6 +164,7 @@ public class PokeJarGUI extends JFrame {
         addRightPane(); // added to mainPanel
         setupEditPanel(); // hidden initially
         loadAutosave();
+        splash();
         this.setVisible(true);
     }
 
@@ -313,6 +314,24 @@ public class PokeJarGUI extends JFrame {
         movesEditor.add(removeMove);
         movesEditor.add(movesList);
         editPanel.add(movesEditor);
+    }
+
+    /**
+     * Sets up and displays a splash screen for 3 seconds.
+     */
+    private void splash() {
+        JWindow splashScreen = new JWindow();
+        splashScreen.setSize(600, 376);
+        splashScreen.setLocationRelativeTo(null);
+        splashScreen.add(new JLabel(new ImageIcon("./data/splash.png")));
+        splashScreen.setVisible(true);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            splashScreen.setVisible(false);
+        }
     }
 
 
@@ -677,22 +696,22 @@ public class PokeJarGUI extends JFrame {
     private void loadAutosave() {
         jar = new model.Jar();
         JsonFile jsonFile = new JsonFile("./data/autosave.json");
-        Integer option = OK_OPTION;
         try {
             jsonFile.loadFileToJar(jar);
             reloadBox();
         } catch (IOException | JSONException | InvalidJarException ex) {
-            option = showConfirmDialog(null,
+            int option = showConfirmDialog(null,
                     "PokéJar cannot be opened due to a corrupted autosave file!\n" + ex.getMessage()
                             + "\nPress \"OK\" if you would like to start from an empty save.",
                     "Autosave Corrupted", OK_CANCEL_OPTION, ERROR_MESSAGE
             );
+            if (option == CANCEL_OPTION) {
+                System.exit(0);
+            } else {
+                jar = new model.Jar();
+                reloadBox();
+            }
         }
-        if (option == CANCEL_OPTION) {
-            System.exit(0);
-        }
-        jar = new model.Jar();
-        reloadBox();
     }
 
     /**
