@@ -22,6 +22,15 @@ public class PokeJar {
     private Jar jar;
 
     /**
+     * Runs PokeJar with TUI.
+     *
+     * @param args console inputs
+     */
+    public static void main(String[] args) {
+        new PokeJar();
+    }
+
+    /**
      * Constructs a new PokeJar app and starts its terminal user interface with autosave loaded.
      */
     public PokeJar() {
@@ -292,11 +301,11 @@ public class PokeJar {
                 break;
             }
         }
-        save(fileName);
+        save("saves/" + fileName);
     }
 
     /**
-     * Saves the current state of PokeJar to ./data/[fileName].json.
+     * Saves the current state of PokeJar to ./data/saves/[fileName].json.
      *
      * @param fileName the name of the destination file
      */
@@ -317,14 +326,8 @@ public class PokeJar {
      */
     private void loadDialog() {
         String fileName;
-        while (true) {
-            System.out.print("What is the name of the file that you wish to load [./data/_.json]? ");
-            fileName = console.nextLine();
-            if (!fileName.contains(".")) {
-                break;
-            }
-            System.out.println("File name cannot contain \".\"!");
-        }
+        System.out.print("What is the name of the file that you wish to load [./data/saves/_.json]? ");
+        fileName = console.nextLine();
         System.out.print("This action will overwrite all current data, type \"yes\" to proceed: ");
         if (!console.nextLine().equals("yes")) {
             System.out.println("File loading aborted!");
@@ -333,7 +336,7 @@ public class PokeJar {
     }
 
     /**
-     * Loads JSON at ./data/[fileName].json, and overwrites the current state of PokeJar.
+     * Loads JSON at ./data/saves/[fileName].json, and overwrites the current state of PokeJar.
      * <p>
      * MODIFIES: this
      *
@@ -341,8 +344,8 @@ public class PokeJar {
      */
     private void load(String fileName) {
         try {
-            new JsonFile("./data/" + fileName + ".json").loadFileToJar(jar);
-            System.out.println("./data/" + fileName + ".json has been loaded to PokéJar!");
+            new JsonFile("./data/saves/" + fileName + ".json").loadFileToJar(jar);
+            System.out.println("./data/saves/" + fileName + ".json has been loaded to PokéJar!");
         } catch (IOException | JSONException | InvalidJarException ex) {
             System.out.println("Cannot load JSON: " + ex.getMessage());
         }

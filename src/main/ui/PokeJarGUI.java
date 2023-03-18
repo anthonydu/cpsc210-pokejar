@@ -142,6 +142,15 @@ public class PokeJarGUI extends JFrame {
         }
     };
 
+    /**
+     * Runs PokeJarGUI.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        new PokeJarGUI();
+    }
+
 
     // UI
 
@@ -665,7 +674,7 @@ public class PokeJarGUI extends JFrame {
      * MODIFIES: this
      */
     private void handleLoad() {
-        JFileChooser fileChooser = new JFileChooser("./data/");
+        JFileChooser fileChooser = new JFileChooser("./data/saves/");
         fileChooser.setFileFilter(new FileNameExtensionFilter("JSON File (*.json)", "json"));
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             int option = showConfirmDialog(null,
@@ -732,7 +741,7 @@ public class PokeJarGUI extends JFrame {
      */
     private void handleSave() {
         prepareSave();
-        JFileChooser fileChooser = new JFileChooser("./data/");
+        JFileChooser fileChooser = new JFileChooser("./data/saves/");
         if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
             if (!filePath.endsWith(".json")) {

@@ -312,10 +312,10 @@ public class JsonTest extends TestSubjects {
     @Test
     public void testLoadJarToApp() throws IOException {
         assertEquals(new JSONObject(expectedJsonString).toString(), new JSONObject(jar).toString());
-        assertThrows(IOException.class, () -> new JsonFile("./data/invalid/.json").loadFileToJar(jar));
-        assertThrows(JSONException.class, () -> new JsonFile("./data/invalid/syntax.json").loadFileToJar(jar));
-        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/team.json").loadFileToJar(jar));
-        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/type.json").loadFileToJar(jar));
+        assertThrows(IOException.class, () -> new JsonFile("./data/saves/invalid/.json").loadFileToJar(jar));
+        assertThrows(JSONException.class, () -> new JsonFile("./data/saves/invalid/syntax.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/saves/invalid/team.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/saves/invalid/type.json").loadFileToJar(jar));
     }
 
     @AfterEach
