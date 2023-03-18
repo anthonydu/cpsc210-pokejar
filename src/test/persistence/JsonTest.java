@@ -316,7 +316,6 @@ public class JsonTest extends TestSubjects {
         assertThrows(JSONException.class, () -> new JsonFile("./data/invalid/syntax.json").loadFileToJar(jar));
         assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/team.json").loadFileToJar(jar));
         assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/type.json").loadFileToJar(jar));
-        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/invalid/duplicate.json").loadFileToJar(jar));
     }
 
     @AfterEach

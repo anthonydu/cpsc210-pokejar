@@ -256,7 +256,11 @@ public enum Type {
         }
         Map<Type, Double> maxMultipliers = new LinkedHashMap<>();
         for (Type t : Type.values()) {
-            maxMultipliers.put(t, Collections.max(allMultipliers.get(t)));
+            if (types.isEmpty()) {
+                maxMultipliers.put(t, 1.0);
+            } else {
+                maxMultipliers.put(t, Collections.max(allMultipliers.get(t)));
+            }
         }
         return maxMultipliers;
     }
@@ -270,7 +274,7 @@ public enum Type {
     public static Type fromSafeString(String str) {
         try {
             return Type.fromString(str);
-        } catch (PokemonTypeException ex) {
+        } catch (InvalidPokemonTypeException ex) {
             throw new IllegalArgumentException(ex);
         }
     }
@@ -280,9 +284,9 @@ public enum Type {
      *
      * @param str a String that has the name of a Type
      * @return a Type parsed from a String
-     * @throws PokemonTypeException if the String cannot be parsed to Type
+     * @throws InvalidPokemonTypeException if the String cannot be parsed to Type
      */
-    public static Type fromString(String str) throws PokemonTypeException {
+    public static Type fromString(String str) throws InvalidPokemonTypeException {
         switch (str.toLowerCase()) {
             case "normal": return NORMAL;
             case "fire": return FIRE;
@@ -302,7 +306,7 @@ public enum Type {
             case "dark": return DARK;
             case "steel": return STEEL;
             case "fairy": return FAIRY;
-            default: throw new PokemonTypeException("Invalid type found!");
+            default: throw new InvalidPokemonTypeException("Invalid type found!");
         }
     }
 
@@ -311,13 +315,13 @@ public enum Type {
      *
      * @param strs a list of strings that contains Type names
      * @return a list of all Types parsed from a list of Strings
-     * @throws PokemonTypeException if any of the Strings cannot be parsed to a Type
+     * @throws InvalidPokemonTypeException if any of the Strings cannot be parsed to a Type
      */
-    public static List<Type> fromListOfStrings(List<String> strs) throws PokemonTypeException {
+    public static List<Type> fromListOfStrings(List<String> strs) throws InvalidPokemonTypeException {
         List<Type> types = new ArrayList<>();
         for (String s : strs) {
             if (types.contains(Type.fromString(s))) {
-                throw new PokemonTypeException("Duplicate type found!");
+                throw new InvalidPokemonTypeException("Duplicate type found!");
             } else {
                 types.add(Type.fromString(s));
             }

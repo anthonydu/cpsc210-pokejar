@@ -130,7 +130,7 @@ public class PokeJar {
                     continue;
                 }
                 break;
-            } catch (PokemonTypeException ex) {
+            } catch (InvalidPokemonTypeException ex) {
                 System.out.println(ex.getMessage());
             }
         }
@@ -154,7 +154,7 @@ public class PokeJar {
                 try {
                     type = Type.fromString(console.nextLine());
                     break;
-                } catch (PokemonTypeException ex) {
+                } catch (InvalidPokemonTypeException ex) {
                     System.out.println(ex.getMessage());
                 }
             }

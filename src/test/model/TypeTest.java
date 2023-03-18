@@ -43,6 +43,7 @@ public class TypeTest {
 
     @Test
     public void testDefensiveMultipliers() {
+        assertEquals(1.0, offensiveMultipliers(Arrays.asList()).get(STEEL));
         assertEquals(2.0, defensiveMultipliers(Arrays.asList(PSYCHIC)).get(BUG));
         assertEquals(1.0, defensiveMultipliers(Arrays.asList(NORMAL, FAIRY)).get(FIGHTING));
         assertEquals(2.0, defensiveMultipliers(Arrays.asList(WATER, DARK)).get(GRASS));
@@ -54,6 +55,7 @@ public class TypeTest {
 
     @Test
     public void testOffensiveMultipliers() {
+        assertEquals(1.0, offensiveMultipliers(Arrays.asList()).get(STEEL));
         assertEquals(0.5, offensiveMultipliers(Arrays.asList(NORMAL)).get(STEEL));
         assertEquals(1.0, offensiveMultipliers(Arrays.asList(GRASS, BUG)).get(BUG));
         assertEquals(2.0, offensiveMultipliers(Arrays.asList(NORMAL, GHOST)).get(GHOST));
@@ -66,8 +68,8 @@ public class TypeTest {
         for (Type t : values()) {
             assertEquals(t, fromString(t.toString()));
         }
-        assertThrows(PokemonTypeException.class, () -> fromString("spicy pepper"));
-        assertThrows(PokemonTypeException.class, () -> fromListOfStrings(Arrays.asList("dark", "grassy")));
+        assertThrows(InvalidPokemonTypeException.class, () -> fromString("spicy pepper"));
+        assertThrows(InvalidPokemonTypeException.class, () -> fromListOfStrings(Arrays.asList("dark", "grassy")));
 
         assertEquals(
                 Arrays.asList(GROUND),
@@ -82,7 +84,7 @@ public class TypeTest {
                 fromListOfStrings(Arrays.asList("fire", "grass", "fairy"))
         );
         assertThrows(
-                PokemonTypeException.class,
+                InvalidPokemonTypeException.class,
                 () -> fromListOfStrings(Arrays.asList("steel", "normal", "steel"))
         );
     }

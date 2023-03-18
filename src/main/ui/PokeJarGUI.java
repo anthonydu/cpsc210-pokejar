@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static javax.swing.JOptionPane.*;
 
@@ -53,6 +54,9 @@ public class PokeJarGUI extends JFrame {
     private JPanel infoPanel;
     private JLabel infoLabel;
     private JButton editButton;
+    // Insight Pane
+    private JPanel insightPanel;
+    private JLabel insightLabel;
     // Edit Panel
     private JPanel editPanel;
     private JLabel nameLabel;
@@ -80,7 +84,7 @@ public class PokeJarGUI extends JFrame {
                     "Confirm Close", YES_NO_OPTION, WARNING_MESSAGE
             );
             if (canceled == 0 && autosave()) {
-                System.exit(2);
+                System.exit(0);
             }
         }
 
@@ -212,7 +216,7 @@ public class PokeJarGUI extends JFrame {
         boxList.setFixedCellWidth(300);
         boxList.setFixedCellHeight(15);
         boxScrollPane = new JScrollPane(boxList);
-        boxScrollPane.setPreferredSize(new Dimension(300, 370));
+        boxScrollPane.setPreferredSize(new Dimension(300, 350));
         boxScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         removePokemon.addActionListener(e -> removePokemon());
         boxPanel.add(addPokemon);
@@ -233,17 +237,25 @@ public class PokeJarGUI extends JFrame {
      */
     private void rightPane() {
         rightPane = new JTabbedPane();
+        rightPane.addChangeListener(e -> setInsightLabel());
         // Info Panel
         infoPanel = new JPanel();
         editButton = new JButton("Edit Pokémon");
-        infoPanel.add(editButton);
         editButton.addActionListener(e -> switchInEditPanel());
         infoLabel = new JLabel();
-        infoLabel.setPreferredSize(new Dimension(300, 370));
+        infoLabel.setPreferredSize(new Dimension(300, 350));
         infoLabel.setVerticalAlignment(SwingConstants.TOP);
+        infoPanel.add(editButton);
         infoPanel.add(infoLabel);
+        // Insight Panel
+        insightPanel = new JPanel();
+        insightLabel = new JLabel();
+        insightLabel.setPreferredSize(new Dimension(300, 385));
+        insightLabel.setVerticalAlignment(SwingConstants.TOP);
+        insightPanel.add(insightLabel);
         // Add Tabs
         rightPane.add("Basic Info", infoPanel);
+        rightPane.add("Insight", insightPanel);
         // Add Pane
         main.add(rightPane);
     }
@@ -354,6 +366,28 @@ public class PokeJarGUI extends JFrame {
         infoLabel.setText(info);
     }
 
+    private void setInsightLabel() {
+        if (rightPane.getSelectedIndex() != 1) {
+            return;
+        }
+        String insight = "<html><pre>Multiplier Insight:\n";
+        insight += model.StringUtil.fixCharCount("Type", 16) +
+                model.StringUtil.fixCharCount("Defensive", 12) + "Offensive";
+        Map<model.Type, Double> defensiveMap, offensiveMap;
+        defensiveMap = model.Type.defensiveMultipliers(getSelectedPokemon().getTypes());
+        offensiveMap = model.Type.offensiveMultipliers(getSelectedPokemon().attackingMoveTypes());
+        for (model.Type t : model.Type.values()) {
+            insight += "\n" + model.StringUtil.fixCharCount(t.toString(), 16) +
+                    model.StringUtil.fixCharCount(defensiveMap.get(t).toString(), 12) +
+                    offensiveMap.get(t);
+        }
+        insight += "</pre><p style=\"font-size: smaller\">";
+        insight += "Defensive: multipliers when attacked by a move of a certain type.<br>" +
+                "Offensive: multipliers (of this Pokémon's most effective move) when attacking a Pokémon of a certain type.";
+        insight += "</p></html>";
+        insightLabel.setText(insight);
+    }
+
     /**
      * Disables unselected checkboxes when two checkboxes are selected.
      * Sets the types of the selected Pokemon and repaints boxList.
@@ -423,6 +457,7 @@ public class PokeJarGUI extends JFrame {
         rightPane.remove(0);
         rightPane.add(editPanel, 0);
         rightPane.setTitleAt(0, "Edit Pokémon");
+        rightPane.setSelectedIndex(0);
     }
 
     /**
@@ -432,9 +467,11 @@ public class PokeJarGUI extends JFrame {
      */
     private void switchInInfoPanel() {
         setInfoLabel();
+        int maintainTabIndex = rightPane.getSelectedIndex();
         rightPane.remove(0);
         rightPane.add(infoPanel, 0);
         rightPane.setTitleAt(0, "Basic Info");
+        rightPane.setSelectedIndex(maintainTabIndex);
     }
 
     /**
@@ -515,6 +552,7 @@ public class PokeJarGUI extends JFrame {
         preventBoxDeselect();
         if (boxList.getSelectedIndex() != -1) {
             switchInInfoPanel();
+            setInsightLabel();
         }
     }
 
@@ -526,11 +564,12 @@ public class PokeJarGUI extends JFrame {
     private void addPokemon() {
         model.Pokemon newPokemon = new model.Pokemon();
         boxModel.addElement(newPokemon);
+        jar.getBox().add(newPokemon);
         boxList.setSelectedIndex(boxModel.size() - 1);
     }
 
     /**
-     * Removes a pokemon by asking the user to confirm.
+     * Removes a Pokemon by asking the user to confirm.
      * <p>
      * MODIFIES: this
      */
@@ -542,6 +581,7 @@ public class PokeJarGUI extends JFrame {
         if (result == NO_OPTION) {
             return;
         }
+        jar.getBox().remove(boxList.getSelectedIndex());
         boxModel.removeElementAt(boxList.getSelectedIndex());
         preventEmptyBox();
         preventBoxDeselect();
@@ -623,12 +663,6 @@ public class PokeJarGUI extends JFrame {
      * MODIFIES: this
      */
     private void prepareSave() {
-        model.Box newBox = new model.Box();
-        for (int i = 0; i < boxModel.size(); i++) {
-            newBox.add(boxModel.get(i));
-        }
-        // Sets box to boxModel
-        jar.setBox(newBox);
         // Clears teams because team management is not implemented and will cause jar to be invalid
         jar.setTeams(new model.TeamList());
     }

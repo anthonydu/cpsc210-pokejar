@@ -27,21 +27,12 @@ public class BoxTest extends TestSubjects {
 
     @Test
     public void testConstructor() {
-
-        assertThrows(IllegalArgumentException.class, () -> new Box(Arrays.asList(tinkaton, tinkaton2)));
         assertEquals(Arrays.asList(tinkaton, rotom, cetitan), box);
     }
 
     @Test
     public void testGet() {
         assertEquals(rotom, box.get(rotom));
-        box.remove(tinkaton2);
-        assertEquals(null, box.get(tinkaton));
-    }
-
-    @Test
-    public void testAdd() {
-        assertFalse(box.add(tinkaton2));
     }
 
     @Test

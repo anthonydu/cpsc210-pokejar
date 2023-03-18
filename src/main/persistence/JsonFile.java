@@ -94,7 +94,7 @@ public class JsonFile {
         try {
             box = parseBox(this.read().getJSONArray("box"));
             teams = parseTeams(this.read().getJSONArray("teams"));
-        } catch (PokemonTypeException | IllegalArgumentException ex) {
+        } catch (InvalidPokemonTypeException ex) {
             throw new InvalidJarException(ex.getMessage());
         }
         if (!hasValidTeams(teams, box)) {
@@ -133,9 +133,9 @@ public class JsonFile {
      * @param teamsArray a JSONArray that contains information of a TeamList
      * @return a TeamList of Teams
      * @throws JSONException if teamsArray does not store a valid Team
-     * @throws PokemonTypeException if a Pokemon has a type name that can't be parsed
+     * @throws InvalidPokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static TeamList parseTeams(JSONArray teamsArray) throws JSONException, PokemonTypeException {
+    private static TeamList parseTeams(JSONArray teamsArray) throws JSONException, InvalidPokemonTypeException {
         TeamList teams = new TeamList();
         for (JSONObject team : JsonUtil.objectsFromArray(teamsArray)) {
             teams.add(new Team(
@@ -152,9 +152,9 @@ public class JsonFile {
      * @param boxArray a JSONArray that contains information of a Box
      * @return a Box parsed from a JSONArray
      * @throws JSONException if listArray cannot be converted to a Box
-     * @throws PokemonTypeException if a Pokemon has a type name that can't be parsed
+     * @throws InvalidPokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static Box parseBox(JSONArray boxArray) throws JSONException, PokemonTypeException {
+    private static Box parseBox(JSONArray boxArray) throws JSONException, InvalidPokemonTypeException {
         return new Box(parseListOfPokemons(boxArray));
     }
 
@@ -164,9 +164,9 @@ public class JsonFile {
      * @param jsonArray a JSONObject representation of a PokemonList
      * @return a list of Pokemon parsed from listArray
      * @throws JSONException if listArray cannot be converted to a PokemonList
-     * @throws PokemonTypeException if a Pokemon has a type name that can't be parsed
+     * @throws InvalidPokemonTypeException if a Pokemon has a type name that can't be parsed
      */
-    private static List<Pokemon> parseListOfPokemons(JSONArray jsonArray) throws JSONException, PokemonTypeException {
+    private static List<Pokemon> parseListOfPokemons(JSONArray jsonArray) throws JSONException, InvalidPokemonTypeException {
         List<Pokemon> pokemons = new ArrayList<>();
         for (JSONObject pokemon : JsonUtil.objectsFromArray(jsonArray)) {
             List<Move> moves = new ArrayList<>();

@@ -5,13 +5,13 @@ package model;
  *
  * @auther Anthony Du
  */
-public class PokemonTypeException extends Exception {
+public class InvalidPokemonTypeException extends Exception {
     /**
-     * Constructs a PokemonTypeException with message
+     * Constructs a InvalidPokemonTypeException with message
      *
      * @param message the message for this Exception
      */
-    public PokemonTypeException(String message) {
+    public InvalidPokemonTypeException(String message) {
         super(message);
     }
 }
