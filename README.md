@@ -1,4 +1,5 @@
-# PokéJar
+## <img alt="Title Image" src="data/title.png" height="50" />
+
 CPSC 210 Personal Project
 
 ## Phase 0-2 : Project Idea and User Stories
