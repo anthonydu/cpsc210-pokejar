@@ -1,19 +1,17 @@
-## <img alt="Title Image" src="data/title.png" height="50" />
+## <picture><img alt="Title Image" src="data/title.png" height="50"></picture>
 
 CPSC 210 Personal Project
 
-## Phase 0-2 : Project Idea and User Stories
+## Phase 0-2: Project Idea and User Stories
 
 ### What?
 
-PokéJar is an application designed to analyze the stats of Pokémon teams.
+PokéJar is an application designed to store and analyze Pokémon and Pokémon teams.
 
 ### Why?
 
-This project is of interest to me because
-I've recently gotten my first Pokémon game &mdash; Pokémon Violet.
-As a new player, an analytics toolset would make
-it so much easier for me to master my Pokémon game.
+This project is of interest to me because I've recently gotten my first Pokémon game &mdash; Pokémon Violet.
+As a new player, an analytics toolset would make it so much easier for me to master my Pokémon game.
 
 ### Who?
 
@@ -44,39 +42,39 @@ The targeted user group of this app are Pokémon trainers.
 
 ### Step-by-step Instructions
 
-##### Opening (Visual Component)
+#### Opening (Visual Component)
 
 - Every time you open the app, a cool custom-made splash screen appears for three seconds before the app is launched.
-- Then, "./data/autosave.json" will be automatically loaded to the app to retrieve the save state when you last closed the app.
+- Then, data/autosave.json will be automatically loaded to the app to retrieve the save state when you last closed the app.
 
-##### Adding and Editing Pokémon (Action 1)
+#### Adding and Editing Pokémon (Action 1)
 
-- Click the "Add Pokémon" button to add a new Pokémon to your box. The new Pokémon will have no name, no type, and no moves.
-- In order to edit your brand new Pokémon. Click the "Edit Pokémon" button in the "Basic Info" panel.
-- The "Basic Info" panel will be replaced by the "Edit Pokémon" panel to allow you to edit your Pokémon.
+- Press the Add Pokémon button to add a new Pokémon to your box. The new Pokémon will have no name, no type, and no moves.
+- In order to edit your brand new Pokémon, press the Edit Pokémon button in the Basic Info tab.
+- The Basic Info tab will be replaced by the Edit Pokémon tab to allow you to edit your Pokémon's name, types, and moves.
 - As you type into the name field or choose the Pokémon's type, you can see live changes to your box on the left pane.
-- You can choose to give this Pokémon sick moves by clicking the "Add Move" button. Then you will be prompted with a series of popup windows to set up your move.
-  - Number of types is limited to two and number of moves is limited to six, buttons and checkboxes will be disabled to prevent exceeding those limits.
-- After you are done with customizing your Pokémon, click "Done" to return to viewing "Basic Info". All info will be updated to reflect changes.
+- You can choose to give this Pokémon sick moves by pressing the Add Move button. You will then be prompted with a series of popup windows to set up your move.
+  - The number of types is limited to two and the number of moves is limited to four, buttons and checkboxes will be disabled to prevent exceeding these limits.
+- After you are done with customizing your Pokémon, click Done to return to the Basic Info tab. All info will be updated to reflect changes.
 
-##### Analyze Pokémon (Action 1.5)
+#### Analyze Pokémon (Action 1.5)
 
-- Click the "Insight" tab to view an insight on your selected Pokémon's offensive and defensive multipliers generated based on their types and moves. 
+- Click the Insight tab to gain insight into the selected Pokémon's offensive and defensive multipliers generated based on their types and moves. 
   - There are some footnote explaining this analysis below the multiplier table. 
-- Feel free to add new Pokémon or edit your existing Pokémon to see how their insights change.
+- Feel free to add new Pokémon or edit your existing Pokémon to see how their insight change. Use this tool to build your ultimate Pokémon. 
 
-##### Removing Pokémon (Action 2)
+#### Removing Pokémon (Action 2)
 
-- You can remove a Pokémon by selecting it and then press the "Remove Pokémon" Button.
+- You can remove a Pokémon by selecting it and then pressing the Remove Pokémon.
 
-##### Saving
+#### Saving
 
-- Once you are satisfied with your box of Pokémon, click "File" > "Save As..." on the menu bar to bring up a prompt to save the current state of the app to a JSON file anywhere you choose.
+- Once you are satisfied with your box of Pokémon, click File > Save As on the menu bar to bring up a prompt to save the current state of the app to a JSON file anywhere you choose.
 
-##### Loading
+#### Loading
 
-- By clicking "File" > "Load File...", a prompt will show up to let you choose any valid save file on your computer to be loaded directly into the app's interface.
+- By clicking File > Load File, a prompt will show up to let you choose any valid save file on your computer to be loaded directly into the app's interface.
 
-##### Closing
+#### Closing
 
-- When you close the app, the state of the app will automatically be saved to "./data/autosave.json" to be restored the next time you open the app.
+- When you close the app, the state of the app will be automatically saved to data/autosave.json to be restored the next time you open the app.
