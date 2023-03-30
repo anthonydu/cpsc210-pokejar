@@ -97,7 +97,7 @@ public class PokeJarGUI extends JFrame {
         private boolean autosave() {
             prepareSave();
             try {
-                new JsonFile("./data/autosave.json").saveJarToFile(jar);
+                new JsonFile("data", "autosave.json").saveJarToFile(jar);
                 return true;
             } catch (IOException ex) {
                 int canceled = showConfirmDialog(
@@ -704,7 +704,7 @@ public class PokeJarGUI extends JFrame {
      */
     private void loadAutosave() {
         jar = new model.Jar();
-        JsonFile jsonFile = new JsonFile("./data/autosave.json");
+        JsonFile jsonFile = new JsonFile("data", "autosave.json");
         try {
             jsonFile.loadFileToJar(jar);
             reloadBox();

@@ -24,11 +24,11 @@ public class JsonFile {
     /**
      * Constructs a JsonFile object with a path
      *
-     * @param filePath a String that is a path to a file
-     * @throws InvalidPathException if the path string cannot be converted to a Path
+     * @param first a String that is a path to a file
+     * @param more the path string or initial part of the path string
      */
-    public JsonFile(String filePath) throws InvalidPathException {
-        this.filePath = Paths.get(filePath);
+    public JsonFile(String first, String... more) {
+        this.filePath = Paths.get(first, more);
     }
 
     /**

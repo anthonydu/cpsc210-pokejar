@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author Anthony Du
  */
 public class JsonTest extends TestSubjects {
-    JsonFile testFile = new JsonFile("./data/testSaveJarToFile.json");
+    JsonFile testFile = new JsonFile("data", "testSaveJarToFile.json");
     Jar jar;
 
     private static final String expectedJsonString = "" +
@@ -312,10 +312,10 @@ public class JsonTest extends TestSubjects {
     @Test
     public void testLoadJarToApp() throws IOException {
         assertEquals(new JSONObject(expectedJsonString).toString(), new JSONObject(jar).toString());
-        assertThrows(IOException.class, () -> new JsonFile("./data/saves/invalid/.json").loadFileToJar(jar));
-        assertThrows(JSONException.class, () -> new JsonFile("./data/saves/invalid/syntax.json").loadFileToJar(jar));
-        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/saves/invalid/team.json").loadFileToJar(jar));
-        assertThrows(InvalidJarException.class, () -> new JsonFile("./data/saves/invalid/type.json").loadFileToJar(jar));
+        assertThrows(IOException.class, () -> new JsonFile("data", "saves","invalid",".json").loadFileToJar(jar));
+        assertThrows(JSONException.class, () -> new JsonFile("data", "saves", "invalid", "syntax.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("data", "saves", "invalid", "team.json").loadFileToJar(jar));
+        assertThrows(InvalidJarException.class, () -> new JsonFile("data", "saves", "invalid", "type.json").loadFileToJar(jar));
     }
 
     @AfterEach

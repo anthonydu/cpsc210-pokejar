@@ -311,9 +311,9 @@ public class PokeJar {
      */
     private void save(String fileName) {
         try {
-            new JsonFile("./data/" + fileName + ".json").saveJarToFile(jar);
+            new JsonFile("data", fileName + ".json").saveJarToFile(jar);
             System.out.println("Current app data successfully saved to ./data/" + fileName + ".json!");
-        } catch (InvalidPathException | IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Cannot write to file:" + ex.getMessage());
         }
     }
@@ -344,7 +344,7 @@ public class PokeJar {
      */
     private void load(String fileName) {
         try {
-            new JsonFile("./data/saves/" + fileName + ".json").loadFileToJar(jar);
+            new JsonFile("data", "saves", fileName + ".json").loadFileToJar(jar);
             System.out.println("./data/saves/" + fileName + ".json has been loaded to PokéJar!");
         } catch (IOException | JSONException | InvalidJarException ex) {
             System.out.println("Cannot load JSON: " + ex.getMessage());
