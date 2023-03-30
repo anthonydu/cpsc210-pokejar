@@ -311,8 +311,8 @@ public class PokeJar {
      */
     private void save(String fileName) {
         try {
-            new JsonFile("data", fileName + ".json").saveJarToFile(jar);
-            System.out.println("Current app data successfully saved to ./data/" + fileName + ".json!");
+            new JsonFile("data", "saves", fileName + ".json").saveJarToFile(jar);
+            System.out.println("Current app data successfully saved to ./data/saves/" + fileName + ".json!");
         } catch (IOException ex) {
             System.out.println("Cannot write to file:" + ex.getMessage());
         }

@@ -24,8 +24,8 @@ public class JsonFile {
     /**
      * Constructs a JsonFile object with a path
      *
-     * @param first a String that is a path to a file
-     * @param more the path string or initial part of the path string
+     * @param first the path string or initial part of the path string
+     * @param more additional strings to be joined to form the path string
      */
     public JsonFile(String first, String... more) {
         this.filePath = Paths.get(first, more);
