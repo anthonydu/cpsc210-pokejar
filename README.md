@@ -1,4 +1,4 @@
-## <picture><img alt="Title Image" src="data/title.png" height="50"></picture>
+## <picture><img alt="PokéJar Logo" src="logo.png" height="50"></picture>
 
 CPSC 210 Personal Project
 
@@ -57,7 +57,7 @@ The targeted user group of this app are Pokémon trainers.
   - The number of types is limited to two and the number of moves is limited to four, buttons and checkboxes will be disabled to prevent exceeding these limits.
 - After you are done with customizing your Pokémon, click Done to return to the Basic Info tab. All info will be updated to reflect changes.
 
-#### Analyze Pokémon (Action 1.5)
+#### Analyze Pokémon
 
 - Click the Insight tab to gain insight into the selected Pokémon's offensive and defensive multipliers generated based on their types and moves. 
   - There are some footnote explaining this analysis below the multiplier table. 

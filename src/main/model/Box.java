@@ -26,6 +26,29 @@ public class Box extends ArrayList<Pokemon> {
         this.addAll(pokemons);
     }
 
+    @Override
+    public boolean add(Pokemon pokemon) {
+        boolean b = super.add(pokemon);
+        EventLog.getInstance().logEvent(new Event("Pokemon " + pokemon.getName() + " added to box"));
+        return b;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        boolean b = super.remove(o);
+        if (b) {
+            EventLog.getInstance().logEvent(new Event("Pokemon " + ((Pokemon) o).getName() + " removed from box"));
+        }
+        return b;
+    }
+
+    @Override
+    public Pokemon remove(int index) {
+        Pokemon p = super.remove(index);
+        EventLog.getInstance().logEvent(new Event("Pokemon " + p.getName() + " removed from box."));
+        return p;
+    }
+
     /**
      * Returns the Pokemon that equals to the Pokemon that is passed in.
      *

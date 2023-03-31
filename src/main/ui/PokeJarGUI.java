@@ -76,17 +76,31 @@ public class PokeJarGUI extends JFrame {
         /**
          * Asks the user to confirm before closing the app and autosaving.
          *
-         * @param e the WindowEvent
+         * @param we the WindowEvent
          */
         @Override
-        public void windowClosing(WindowEvent e) {
-            int canceled = showConfirmDialog(
+        public void windowClosing(WindowEvent we) {
+            int option = showConfirmDialog(
                     null, "Are you sure you want to close PokéJar?",
                     "Confirm Close", YES_NO_OPTION, WARNING_MESSAGE
             );
-            if (canceled == 0 && autosave()) {
-                System.exit(0);
+            if (option == NO_OPTION) { // if user selects no, abort close
+                return;
             }
+            if (!autosave()) { // if autosave failed, ask again for confirmation
+                option = showConfirmDialog(
+                        null, "Autosave failed! Continue to close?",
+                        "Autosave Error", YES_NO_OPTION, WARNING_MESSAGE
+                );
+                if (option == NO_OPTION) { // if user selects no, abort close
+                    return;
+                }
+            }
+            // if autosave didn't fail, or if user selects yes both times, app closes
+            for (model.Event e : model.EventLog.getInstance()) {
+                System.out.println(e);
+            }
+            System.exit(0);
         }
 
         /**
@@ -100,13 +114,6 @@ public class PokeJarGUI extends JFrame {
                 new JsonFile("data", "autosave.json").saveJarToFile(jar);
                 return true;
             } catch (IOException ex) {
-                int canceled = showConfirmDialog(
-                        null, "Autosave failed! Continue to close?",
-                        "Autosave Error", YES_NO_OPTION, WARNING_MESSAGE
-                );
-                if (canceled == 0) {
-                    return true;
-                }
                 return false;
             }
         }
@@ -643,8 +650,10 @@ public class PokeJarGUI extends JFrame {
         if (result == NO_OPTION) {
             return;
         }
-        jar.getBox().remove(boxList.getSelectedIndex());
-        boxModel.removeElementAt(boxList.getSelectedIndex());
+        int removedIndex = boxList.getSelectedIndex();
+        jar.getBox().remove(removedIndex);
+        boxModel.removeElementAt(removedIndex);
+        boxList.setSelectedIndex(removedIndex - 1);
         preventEmptyBox();
         preventBoxDeselect();
     }
