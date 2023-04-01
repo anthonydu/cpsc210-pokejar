@@ -36,12 +36,20 @@ public class BoxTest extends TestSubjects {
     }
 
     @Test
+    public void testAdd() {
+        assertTrue(box.add(tinkaton));
+    }
+
+    @Test
     public void testRemove() {
-        box.remove(1);
+        assertEquals(rotom, box.remove(1));
         assertEquals(2, box.size());
         assertEquals(tinkaton, box.get(0));
         assertEquals(cetitan, box.get(1));
-        box.remove(cetitan);
+        assertTrue(box.remove(cetitan));
+        assertEquals(1, box.size());
+        assertEquals(tinkaton, box.get(0));
+        assertFalse(box.remove(rotom));
         assertEquals(1, box.size());
         assertEquals(tinkaton, box.get(0));
     }

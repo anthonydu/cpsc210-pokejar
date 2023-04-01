@@ -116,7 +116,7 @@ though there are still many things that could be improved.
 In my opinion, what would benefit this program the most 
 is to, instead of having everything in one class, 
 refactor each component that make up the GUI into their own classes
-while allowing them to update each other through a main class, 
+while allowing them to update each other through a main class
 which they all have bidirectional relationships with.
 This would increase the cohesion of the program 
 without introducing too much coupling. 
