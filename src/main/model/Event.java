@@ -6,6 +6,8 @@ import java.util.Date;
 
 /**
  * Represents an alarm system event.
+ *
+ * @author CPSC210
  */
 public class Event {
     private static final int HASH_CONSTANT = 13;

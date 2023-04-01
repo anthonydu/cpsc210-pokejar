@@ -29,7 +29,7 @@ public class Box extends ArrayList<Pokemon> {
     @Override
     public boolean add(Pokemon pokemon) {
         boolean b = super.add(pokemon);
-        EventLog.getInstance().logEvent(new Event("Pokemon " + pokemon.getName() + " added to box"));
+        EventLog.getInstance().logEvent(new Event("Pokemon " + pokemon.getName() + " added to box."));
         return b;
     }
 
@@ -37,7 +37,7 @@ public class Box extends ArrayList<Pokemon> {
     public boolean remove(Object o) {
         boolean b = super.remove(o);
         if (b) {
-            EventLog.getInstance().logEvent(new Event("Pokemon " + ((Pokemon) o).getName() + " removed from box"));
+            EventLog.getInstance().logEvent(new Event("Pokemon " + ((Pokemon) o).getName() + " removed from box."));
         }
         return b;
     }

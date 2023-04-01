@@ -485,7 +485,7 @@ public class PokeJarGUI extends JFrame {
      */
     private void preventEmptyBox() {
         if (boxModel.isEmpty()) {
-            boxModel.addElement(new model.Pokemon());
+            boxModel.addElement(new model.Pokemon("New Pokémon", new ArrayList<>(), new ArrayList<>()));
         }
     }
 
@@ -631,7 +631,7 @@ public class PokeJarGUI extends JFrame {
      * MODIFIES: this
      */
     private void addPokemon() {
-        model.Pokemon newPokemon = new model.Pokemon();
+        model.Pokemon newPokemon = new model.Pokemon("New Pokémon", new ArrayList<>(), new ArrayList<>());
         boxModel.addElement(newPokemon);
         jar.getBox().add(newPokemon);
         boxList.setSelectedIndex(boxModel.size() - 1);

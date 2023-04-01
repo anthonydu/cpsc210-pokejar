@@ -35,11 +35,6 @@ public class PokemonTest {
         assertEquals("myPokemon", pokemon.getName());
         assertEquals(Arrays.asList(DRAGON, FIRE), pokemon.getTypes());
         assertEquals(Arrays.asList(MOVE0, MOVE1, MOVE2, MOVE3), pokemon.getMoves());
-
-        pokemon = new Pokemon();
-        assertEquals("", pokemon.getName());
-        assertEquals(new ArrayList<>(), pokemon.getTypes());
-        assertEquals(new ArrayList<>(), pokemon.getMoves());
     }
 
     @Test
@@ -59,7 +54,8 @@ public class PokemonTest {
     @Test
     public void testEquals() {
         // 111
-        assertTrue(new Pokemon().equals(new Pokemon()));
+        assertTrue(new Pokemon("", new ArrayList<>(), new ArrayList<>())
+                .equals(new Pokemon("", new ArrayList<>(), new ArrayList<>())));
         // 110
         assertFalse(
                 new Pokemon("", new ArrayList<>(), new ArrayList<>(Arrays.asList(new Move("", Type.NORMAL, false))))

@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the EventLog class
+ *
+ * @author CPSC210
+ * @author Anthony Du
  */
 public class EventLogTest {
     private Event e1;

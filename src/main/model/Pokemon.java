@@ -14,12 +14,6 @@ public class Pokemon {
     private List<Type> types;
     private List<Move> moves;
 
-    public Pokemon() {
-        this.name = "";
-        this.types = new ArrayList<>();
-        this.moves = new ArrayList<>();
-    }
-
     /**
      * Constructs a Pokemon with name, Types, and moves.
      *

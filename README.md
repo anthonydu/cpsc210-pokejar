@@ -78,3 +78,47 @@ The targeted user group of this app are Pokémon trainers.
 #### Closing
 
 - When you close the app, the state of the app will be automatically saved to data/autosave.json to be restored the next time you open the app.
+
+## Phase 4: Event Logging and Design Reflection
+
+### Task 2: Event Log Sample
+
+```
+Fri Mar 31 12:55:10 PDT 2023
+Pokemon New Pokémon added to box.
+Fri Mar 31 12:55:12 PDT 2023
+Pokemon Rotom removed from box.
+Fri Mar 31 12:55:13 PDT 2023
+Pokemon New Pokémon added to box.
+Fri Mar 31 12:55:14 PDT 2023
+Pokemon New Pokémon added to box.
+Fri Mar 31 12:55:17 PDT 2023
+Pokemon Tinkaton removed from box.
+Fri Mar 31 12:55:19 PDT 2023
+Pokemon Cetitan removed from box.
+```
+
+### Task 3: Design Reflection
+
+#### UML Diagram
+
+![UML Diagram](UML_Design_Diagram.png)
+
+The diagram follows a tree-like structure with 
+associations generally pointing in one direction.
+There are no interfaces and abstract classes in the program.
+The coupling is loose and the cohesion is high 
+for the most part since the program is relatively small,
+though there are still many things that could be improved. 
+
+#### Refactoring Possibilities
+
+In my opinion, what would benefit this program the most 
+is to, instead of having everything in one class, 
+refactor each component that make up the GUI into their own classes
+while allowing them to update each other through a main class, 
+which they all have bidirectional relationships with.
+This would increase the cohesion of the program 
+without introducing too much coupling. 
+The benefits would be even more amplified when 
+more functionalities such as Team management are added.

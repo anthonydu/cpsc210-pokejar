@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Event class
+ *
+ * @author CPSC210
+ * @author Anthony Du
  */
 public class EventTest {
     private Event e;
@@ -39,6 +42,10 @@ public class EventTest {
 
     @Test
     public void testHashCode() {
+        assertEquals(
+                new Event("Sensor open at door").hashCode(),
+                new Event("Sensor open at door").hashCode()
+        );
     }
 
     @Test
