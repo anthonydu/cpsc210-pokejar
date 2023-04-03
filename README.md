@@ -2,6 +2,8 @@
 
 CPSC 210 Personal Project
 
+![GUI Screenshot](screenshot.png)
+
 ## Phase 0-2: Project Idea and User Stories
 
 ### What?

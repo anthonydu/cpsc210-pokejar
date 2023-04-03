@@ -220,6 +220,7 @@ public class PokeJarGUI extends JFrame {
      */
     private void addLeftPane() {
         leftPane = new JTabbedPane();
+        leftPane.setForeground(Color.black);
         // Box Panel
         boxPanel = new JPanel();
         boxModel = new DefaultListModel<>();
@@ -253,6 +254,7 @@ public class PokeJarGUI extends JFrame {
      */
     private void addRightPane() {
         rightPane = new JTabbedPane();
+        rightPane.setForeground(Color.black);
         rightPane.addChangeListener(e -> setInsightLabel());
         // Info Panel
         infoPanel = new JPanel();
