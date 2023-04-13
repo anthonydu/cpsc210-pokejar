@@ -102,7 +102,7 @@ Pokemon Cetitan removed from box.
 
 ### Task 3: Design Reflection
 
-#### UML Diagram
+#### UML Class Diagram
 
 ![UML Diagram](UML_Design_Diagram.png)
 
@@ -115,7 +115,7 @@ though there are still many things that could be improved.
 
 #### Refactoring Possibilities
 
-In my opinion, what would benefit this program the most 
+- In my opinion, what would benefit this program the most 
 is to, instead of having everything in one class, 
 refactor each component that make up the GUI into their own classes
 while allowing them to update each other through a main class
@@ -124,3 +124,8 @@ This would increase the cohesion of the program
 without introducing too much coupling. 
 The benefits would be even more amplified when 
 more functionalities such as Team management are added.
+
+- Some methods within the Pokemon, Team, and Type classes that 
+are related to analyzing could also be refactored into a single 
+or several new classes with private constructors and static methods   
+with the sole purpose of analyzing instances of those classes. 
